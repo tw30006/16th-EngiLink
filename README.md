@@ -1,16 +1,11 @@
 ## Setup
-
-### Frontend
-
 - install `node` and `npm`
-- run `npm install` to install necessary packages.
-- run `npm run dev` to start the frontend server.
-
-### Backend
-
 - install Python and package manager `poetry` via `pipx install poetry`
 - run `poetry shell` to enter or activate the virtual environment.
-- then run `poetry install` to install necessary packages.
-- run `python manage.py migrate` to apply migrations if necessary.
-- run `python manage.py runserver` to start the server.
+- run `make install` to install necessary packages.
+- run `npm run dev` to start the frontend server.
+- run `make migrate` to apply migrations if necessary.
+- run `make server` to start the server.
 - visit `http://localhost:8000` to see the app.
+
+.env.example 改名為 .env 在跟開發人員要 KEY

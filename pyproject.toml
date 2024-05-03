@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mypro"
+name = "EngiLink"
 version = "0.1.0"
 description = ""
 authors = ["andyhuangdev <ah052691@icloud.com>"]
