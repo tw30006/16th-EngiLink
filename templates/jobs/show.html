@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {%block content%}
-    {{ job.title }}
-    {{ job.experience }}
+    <div>
+        {{ job.title }}
+        {{ job.experience }}
+    </div>
+    
+    <button><a href="{% url 'jobs:edit' job.id%}">修改</a></button>
 {%endblock%}

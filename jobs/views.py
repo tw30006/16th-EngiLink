@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from .models import Job
 from .forms import JobForm
 
@@ -25,3 +25,11 @@ class ShowView(DetailView):
     model = Job
     context_object_name = "job"
     template_name = "jobs/show.html"
+
+
+class EditView(UpdateView):
+    model = Job
+    form_class = JobForm
+    template_name = "jobs/edit.html"
+    context_object_name = "job"
+    success_url = reverse_lazy("jobs:index")
