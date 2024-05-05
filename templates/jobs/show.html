@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{%block content%}
+{% block content %}
     <div>
         {{ job.title }}
         {{ job.experience }}
     </div>
     
-    <button><a href="{% url 'jobs:edit' job.id%}">修改</a></button>
+    <button><a href="{% url 'jobs:edit' job.id %}">修改</a></button>
 
-    <form action="{% url 'jobs:delete' job.id%}" method="post">
+    <form action="{% url 'jobs:delete' job.id %}" method="post">
         {% csrf_token %}
         <button>刪除</button>
     </form>
-{%endblock%}
+{% endblock %}

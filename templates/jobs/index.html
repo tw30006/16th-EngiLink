@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{%block content%}
+{% block content %}
     <h1 class="bg-blue-500 py-2 px-2">職缺列表</h1>
     {% for job in jobs %}
-        <div><a href="{% url 'jobs:show' job.id%}">{{ job.title }}</a></div>
+        <div><a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a></div>
     {% endfor %}
-    <button><a href="{% url 'jobs:create'%}">刊登職缺</a></button>
-{%endblock%}
+    <button><a href="{% url 'jobs:create' %}">刊登職缺</a></button>
+{% endblock %}
