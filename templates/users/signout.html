@@ -3,7 +3,17 @@
 {% block title %}signout{% endblock title %}
 {% block main %}
 
-    <h2>Logout Successfully</h2>
+    {% comment %} <h2>Logout Successfully</h2> {% endcomment %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Logout Successfully',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        });
+    </script>
     <div >
         <small>
             <a href="{% url 'signin' %}">Log In Again</a>

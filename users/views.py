@@ -27,10 +27,11 @@ class SignupView(CreateView):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user)
-            messages.success(self.request, f"註冊成功, {name} 你好!")
+            messages.success(self.request, f"Registration successfully, {name} Hello!")
         return response
     
     def form_invalid(self, form):
+        messages.error(self.request, "Registration failed. Please check your input.")
         return self.render_to_response(self.get_context_data(form=form))
     
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -43,7 +44,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, "更新完成!")
+        messages.success(self.request, "Update completed!")
         return super().form_valid(form)
 
 class UserProfileView(LoginRequiredMixin, DetailView):

@@ -4,7 +4,7 @@
 {% block title %}signin{% endblock title %}
 {% block main %}
 
-<div class="container mx-auto">
+<div>
     <form method="post">
         {% csrf_token %}
         <fieldset>
@@ -22,4 +22,17 @@
     </div>
 </div>
 
+{% if form.errors %}
+<script>    
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: 'Please check your input',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+{% endif %}
 {% endblock main %}

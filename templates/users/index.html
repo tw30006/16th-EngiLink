@@ -2,10 +2,20 @@
 {% load crispy_forms_tags %}
 {% block title %}index{% endblock title %}
 {% block main %}
-
+    
 <div>
     {% if user.is_authenticated %}
-        <h2>welcome，{{ user.username }}!</h2>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successfully',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            })
+        </script>
+        <h2>{{ user.username }}</h2>
         <form action="{% url 'signout' %}" method="post">
             {% csrf_token %}
             <button type="submit">Log Out</button>
@@ -14,7 +24,7 @@
         </form>
     {% else %}
         <h2>Log In Now</h2>
-        <form action="{% url 'signin' %}" method="post" class="mb-4">
+        <form id="login-form" action="{% url 'signin' %}" method="post" class="mb-4">
             {% csrf_token %}
             {{ form }}
             <button type="submit">Log In</button>
@@ -25,6 +35,7 @@
             </small>
         </div>
     {% endif %}
+
 </div>
 
 {% endblock main %}
