@@ -1,0 +1,25 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+{% block title %}signin{% endblock title %}
+{% block main %}
+
+<div class="container mx-auto">
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Log In Now</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div>
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+    <div>
+        <small>
+            Don't have an account yet?<a href="{% url 'signup' %}">Sign up</a>
+        </small>
+    </div>
+</div>
+
+{% endblock main %}

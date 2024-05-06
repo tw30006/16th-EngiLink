@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}profile{% endblock title %}
+{% block main %}
+
+
+<h2>User Info</h2>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Firstname: {{ user.first_name }}</p>
+<p>Lastname: {{ user.last_name }}</p>
+<div>
+    <p><a href="{% url 'edit' %}">Edit</a></p>
+</div>
+
+
+{% endblock main %}
