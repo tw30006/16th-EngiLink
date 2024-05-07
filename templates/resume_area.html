@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>履歷區</h1>
+    <div></div>
+    <a href="{% url 'resumes:create'%}">建立履歷</a>
+    <br>
+    <br>
+    <h2>My Resumes:</h2>
+    <div>
+        {% for resume in resumes %}
+            <a href="{% url 'resumes:show' pk=resume.pk %}">{{ resume.name }}</a>
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+    <p>您目前已建立 <i>{{ count }}</i> 份履歷。</p>
+{% endblock %}
