@@ -1,0 +1,15 @@
+.small-alert {
+    width: 300px;
+}
+
+.small-alert-title {
+    font-size: 14px; 
+}
+
+.small-alert-content {
+    font-size: 12px;
+}
+
+.icon-class {
+    width: 80px;
+}

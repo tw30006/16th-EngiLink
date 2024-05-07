@@ -1,20 +1,10 @@
-{% extends "users/base.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}index{% endblock title %}
 {% block main %}
     
 <div>
     {% if user.is_authenticated %}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successfully',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-            })
-        </script>
         <h2>{{ user.username }}</h2>
         <form action="{% url 'signout' %}" method="post">
             {% csrf_token %}

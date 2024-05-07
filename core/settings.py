@@ -143,3 +143,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
 CRISPY_TEMPLATE_PACK = 'tailwind'
 
+
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
+SWEETIFY_DEFAULT_ARGUMENTS = {
+    'showCancelButton': True,
+    'cancelButtonText': 'Cancel',
+}

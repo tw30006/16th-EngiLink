@@ -1,32 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <script src="{% static 'outfile/out.js' %}" type="module"></script>
+    <script defer src="{% static 'scripts/message.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
     <title>users|{% block title %}{% endblock title %}</title>
 </head>
 <body>
 
-
     {% block main %}{% endblock main %}
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if user.is_authenticated and request.path == '/users/' %}
+    {% endif %}
+    
     {% if messages %}    
         {% for message in messages %}
-            {% comment %} <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div> {% endcomment %}
             <script>
-                Swal.fire({
-                    position: "top-center:",
-                    icon: "{{ message.tags }}",
-                    title: "{{ message }}",
-                    showConfirmButton: false,
-                    timer: 2000
+                document.addEventListener('DOMContentLoaded', function() {
+                    Toast.fire({
+                        icon: '{{ message.tags }}',
+                        title: '{{ message }}',
+                    })
                 })
             </script>
         {% endfor %} 
     {% endif %}
+    
 </body>
 </html>
