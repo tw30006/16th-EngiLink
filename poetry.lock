@@ -15,6 +15,24 @@ files = [
 tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
+name = "crispy-tailwind"
+version = "1.0.3"
+description = "Tailwind CSS for Django Crispy Forms"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "crispy-tailwind-1.0.3.tar.gz", hash = "sha256:2bc9f616d406e4b003f25d46fcb0079f1c2522719d97adb107667271d849459a"},
+    {file = "crispy_tailwind-1.0.3-py3-none-any.whl", hash = "sha256:31427f66b1c4fd0d6fb040f4197cfb97d104cdbe7641ea2dea940c0057c4db4b"},
+]
+
+[package.dependencies]
+django = ">=4.2"
+django-crispy-forms = ">=2.0"
+
+[package.extras]
+test = ["pytest", "pytest-django"]
+
+[[package]]
 name = "django"
 version = "5.0.4"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -33,6 +51,20 @@ tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
+
+[[package]]
+name = "django-crispy-forms"
+version = "2.1"
+description = "Best way to have Django DRY forms"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-crispy-forms-2.1.tar.gz", hash = "sha256:4d7ec431933ad4d4b5c5a6de4a584d24613c347db9ac168723c9aaf63af4bb96"},
+    {file = "django_crispy_forms-2.1-py3-none-any.whl", hash = "sha256:d592044771412ae1bd539cc377203aa61d4eebe77fcbc07fbc8f12d3746d4f6b"},
+]
+
+[package.dependencies]
+django = ">=4.2"
 
 [[package]]
 name = "mysqlclient"
@@ -95,4 +127,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "fcc8788bfc9a53b3dc8d43940df92cd76e4d314b54c238b7544754f79bde7800"
+content-hash = "8db9bc37cfca057e79dcd9e1f789db967c26287b2e159942b17286a16bcd9799"
