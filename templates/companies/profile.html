@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+{% block content %}
+    <h2>Company Info</h2>
+    <p>Company Name: {{ user.company_name }}</p>
+    <p>TIN: {{ user.tin }}</p>
+    <p>User Name: {{ user.user_name }}</p>
+    <p>TEL: {{ user.tel }}</p>
+    <div>
+        <a href="{% url 'edit' %}">Edit</a>
+        <a href="{% url 'index' %}">Go Back</a>
+    </div>
+{% endblock %}
