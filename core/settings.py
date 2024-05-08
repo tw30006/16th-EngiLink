@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     "jobs",
     'resume',
+    'companies',
 ]
+
+AUTH_USER_MODEL = 'companies.Company'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
