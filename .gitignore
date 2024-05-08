@@ -1,5 +1,4 @@
-__pycache__
+**/__pycache__
 node_modules
 .env
 static/css/output.css
-core/__pycache__/*
