@@ -17,6 +17,10 @@ class UserIndexView(TemplateView):
 class SigninView(auth_views.LoginView):
     template_name = 'users/signin.html'
     
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        return url or '/users/'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.method == 'POST' and not self.request.POST.get('username') and not self.request.POST.get('password'):
