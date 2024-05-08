@@ -3,29 +3,36 @@
 {% load tailwind_filters %}
 {% block title %}signin{% endblock title %}
 {% block main %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
 
-<div>
-    <form method="post">
-        
-        {% csrf_token %}
-        <fieldset>
-            <legend>Log In Now</legend>
-            {{ form|crispy }}
-            {% if form.errors %}
-{% endif %}
-        </fieldset>
-        <div>
-            <button type="submit" id="login">Log In</button>
+    <div class="total">
+        <div class="header-bar" >Log In Now!</div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div>
+                    <button type="submit" class="button">Log In</button>
+                </div>
+            </form>
+            <small>
+                Don't have an account yet?<a href="{% url 'signup' %}">Sign up</a>
+            </small>
         </div>
-    </form>
-    <div>
-        <small>
-            Don't have an account yet?<a href="{% url 'signup' %}">Sign up</a>
-        </small>
     </div>
-</div>
 
-
-
-
+    {% if form.errors %}
+    <script>    
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: 'Please check your input',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        });
+    </script>
+{% endif %}
 {% endblock main %}

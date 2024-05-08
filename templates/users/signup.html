@@ -2,23 +2,26 @@
 {% load crispy_forms_tags %}
 {% block title %}signup{% endblock title %}
 {% block main %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
 
-<div>
-    <form action="{% url 'signup' %}" method="post">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Sign Up Now</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div>
-            <button type="submit">Sign Up</button>
+    <div class="total">
+        <div class="header-bar" >Sign Up Now!</div>
+        <div class="card-body">
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    {{ form|crispy }}
+                </fieldset>
+                <div>
+                    <button type="submit" class="button">Sign Up</button>
+                </div>
+            </form>
+            <div>
+                <small>
+                    Already Registered? <a href="{% url 'signin' %}">Sign In</a>
+                </small>
+            </div>
         </div>
-    </form>
-    <div>
-        <small>
-            Already Registered? <a href="{% url 'signin' %}">Sign In</a>
-        </small>
     </div>
-</div>
-
 {% endblock main %}
