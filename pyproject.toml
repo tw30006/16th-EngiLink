@@ -10,12 +10,8 @@ python = "^3.12"
 django = "^5.0.4"
 mysqlclient = "^2.2.4"
 python-dotenv = "^1.0.1"
-<<<<<<< HEAD
 django-crispy-forms = "^2.1"
 crispy-tailwind = "^1.0.3"
-=======
-
->>>>>>> 220bdc9 (fix: remove sweetify)
 
 [build-system]
 requires = ["poetry-core"]
