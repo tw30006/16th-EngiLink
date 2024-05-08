@@ -1,17 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'my_base.html' %}
 {% block content %}
-    <h1>履歷區</h1>
-    <div></div>
-    <a href="{% url 'resumes:create'%}">建立履歷</a>
-    <br>
-    <br>
-    <h2>My Resumes:</h2>
-    <div>
+
+    <div class="header-bar">
+        <div>
+            <h1>Hello,{{request.user|title}}</h1>
+            <a href="{% url 'resumes:create'%}">&#43;Create Resume</a>
+        </div>
+        {% if request.user.is_authenticated %}
+        <form action="{% url 'signin'%}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">Logout</button>
+        </form>
+        {% else %}
+        <a href="">Login</a>
+        {% endif %}
+    </div>
+    
+    <div class="task-items-wrapper">
+        <h2>My Resumes:</h2>
         {% for resume in resumes %}
-            <a href="{% url 'resumes:show' pk=resume.pk %}">{{ resume.name }}</a>
+            <div class="task-wrapper">
+                <a href="{% url 'resumes:show' pk=resume.pk %}"> {{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
+            </div>
+        {% empty %}
+        <h3>NO Resumes IN LIST</h3>
         {% endfor %}
     </div>
-    <br>
-    <br>
-    <p>您目前已建立 <i>{{ count }}</i> 份履歷。</p>
+    <h3> <p>You have currently created <i>{{ count }}</i> resume{{ count  |pluralize:'s'}}</p></h3>
+
 {% endblock %}

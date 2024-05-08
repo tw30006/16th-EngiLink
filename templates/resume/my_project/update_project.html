@@ -1,0 +1,27 @@
+{% extends 'my_base.html' %}
+
+{% block content %}
+    <div class="header-bar">
+        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
+    </div>
+    <div class="card-body">
+        <h2>編輯專案內容</h2>
+        <form method="post" id="myForm" action="{% url 'resumes:project-edit' pk=project.pk %}">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="button">提交</button>
+        <a href="#" id="cancelBtn" class="button">全部取消</a>
+        </form>
+        <form method="post" action="{% url 'resumes:project-delete' pk=project.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button">刪除</button>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById("cancelBtn").addEventListener("click", function() {
+        document.getElementById("myForm").reset();
+    });
+    </script>
+
+{% endblock %}
