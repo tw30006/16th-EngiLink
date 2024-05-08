@@ -3,14 +3,15 @@ from django.views.generic import TemplateView,ListView,CreateView,UpdateView,Del
 from .forms import ProfileForm,EducationForm,WorkForm,ProjectForm
 from .models import Profile,Education,Work,Project
 from django.shortcuts import get_object_or_404
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 class ResumeArea(TemplateView):
     template_name = 'resume_area.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['resumes'] = Profile.objects.all()
-        context['count'] = Profile.objects.count()
+        user_profiles = Profile.objects.filter(user=self.request.user)
+        context['resumes'] = user_profiles
+        context['count'] = user_profiles.count()
         return context
 
 class ProfileListView(ListView):
@@ -25,15 +26,22 @@ class ProfileListView(ListView):
         return context
 
 
-class ProfileCreateView(CreateView):
+class ProfileCreateView(LoginRequiredMixin, CreateView):
     model = Profile
     form_class = ProfileForm
     template_name = 'resume/my_information/create_information.html'
     success_url = reverse_lazy('resumes:index')
-
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+    
     def form_valid(self, form):
-        self.object = form.save()
+        form.instance.user = self.request.user
         return super().form_valid(form)
+
+
 
 class ProfileUpdateView(UpdateView):
     model = Profile
