@@ -2,4 +2,4 @@ __pycache__
 node_modules
 .env
 static/css/output.css
-core/__pycache__
+*core/__pycache__
