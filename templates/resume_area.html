@@ -21,6 +21,7 @@
         {% for resume in resumes %}
             <div class="task-wrapper">
                 <a href="{% url 'resumes:show' pk=resume.pk %}"> {{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
+                <a href="{% url 'resumes:total'  profile_id=resume.pk  %}">預覽</a>
             </div>
         {% empty %}
         <h3>NO Resumes IN LIST</h3>

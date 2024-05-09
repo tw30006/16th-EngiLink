@@ -164,3 +164,25 @@ class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('resumes:project-show')
 
+
+
+class TotalListView(ListView):
+    template_name = 'resume/total.html'
+    context_object_name = 'total_data'
+
+    def get_queryset(self):
+        profile_id = self.kwargs['profile_id']
+
+        profile_data = Profile.objects.filter(profile_id=profile_id)
+        education_data = Education.objects.filter(profile_id=profile_id)
+        work_data = Work.objects.filter(profile_id=profile_id)
+        project_data = Project.objects.filter(profile_id=profile_id)
+
+        total_data = {
+            'education_data': education_data,
+            'work_data': work_data,
+            'project_data': project_data,
+            'profile_data':profile_data,
+        }
+        return total_data
+
