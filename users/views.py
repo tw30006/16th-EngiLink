@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class UserIndexView(TemplateView):
     template_name = "users/index.html"

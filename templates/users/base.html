@@ -12,8 +12,7 @@
 <body>
 
     {% block main %}{% endblock main %}
-    {% if user.is_authenticated and request.path == '/users/' %}
-    {% endif %}
+
     
     {% if messages %}    
         {% for message in messages %}
