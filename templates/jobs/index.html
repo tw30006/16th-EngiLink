@@ -4,5 +4,6 @@
     {% for job in jobs %}
         <div><a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a></div>
     {% endfor %}
+    <button><a href="{% url 'jobs:company' %}">會員系統</a></button>
     <button><a href="{% url 'jobs:create' %}">刊登職缺</a></button>
 {% endblock %}

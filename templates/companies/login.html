@@ -3,9 +3,9 @@
   <form method="post">
     {% csrf_token %} 
     {{ form }}
-    <button type="submit">Log In</button>
+    <button type="submit">登入</button>
   </form>
   <div>
-    <p>Don't have an account yet?<a href="{% url 'signup' %}">Sign Up</a></p>
+    <p>尚未登入?<a href="{% url 'signup' %}">註冊</a></p>
   </div>
 {% endblock %}

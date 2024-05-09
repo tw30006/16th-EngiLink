@@ -1,12 +1,12 @@
 {% extends 'base.html' %} 
 {% block content %}
-    <h2>Company Info</h2>
-    <p>Company Name: {{ user.company_name }}</p>
-    <p>TIN: {{ user.tin }}</p>
-    <p>User Name: {{ user.user_name }}</p>
-    <p>TEL: {{ user.tel }}</p>
+    <h2>公司資料</h2>
+    <p>公司名稱: {{ user.company_name }}</p>
+    <p>統一編號: {{ user.tin }}</p>
+    <p>聯絡人姓名: {{ user.user_name }}</p>
+    <p>電話: {{ user.tel }}</p>
     <div>
-        <a href="{% url 'edit' %}">Edit</a>
-        <a href="{% url 'index' %}">Go Back</a>
+        <a href="{% url 'edit' %}">編輯</a>
+        <a href="{% url 'index' %}">上一頁</a>
     </div>
 {% endblock %}

@@ -1,21 +1,22 @@
 {% extends 'base.html' %} 
 {% block content %} 
 {% if user.is_authenticated %}
-  <h2>welcome,{{ user.username }}!</h2>
+  <h2>你好, {{ user.username }}!</h2>
   <form action="{% url 'logout' %}" method="post">
     {% csrf_token %}
-    <button type="submit">Log Out</button>
-    <button><a href="{% url 'profile' user.id %}">Company Profile</a></button>
+    <button type="submit">登出</button>
+    <button><a href="{% url 'profile' user.id %}">公司資料</a></button>
+    <button><a href="{% url 'jobs' %}">職缺刊登</a></button>
   </form>
 {% else %}
-  <h2>Log In</h2>
+  <h2>登入</h2>
   <form action="{% url 'login' %}" method="post">
     {% csrf_token %} 
     {{ form }}
-    <button type="submit">Log In</button>
+    <button type="submit">登入</button>
   </form>
   <div>
-    <p>Don't have an account yet? <a href="{% url 'signup' %}">Sign Up</a></p>
+    <p>尚未登入? <a href="{% url 'signup' %}">註冊</a></p>
   </div>
 {% endif %} 
 {% endblock %}
