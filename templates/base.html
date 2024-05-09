@@ -5,9 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <script src="{% static 'scripts/app.js' %}" type="module"></script>
     <title>EngiLink</title>
 </head>
 <body>
+    {% include "shared/navbar.html" %}
     {% block content %} 
     {% endblock %}
 </body>
