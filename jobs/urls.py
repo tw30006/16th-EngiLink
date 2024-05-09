@@ -1,12 +1,10 @@
 from django.urls import path
 from .views import IndexView, AddView, ShowView, EditView, JobDeleteView
-from companies import views
 
 app_name = "jobs"
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
-    path("company/", views.IndexView.as_view(), name="company"),
     path("create/", AddView.as_view(), name="create"),
     path("edit/<pk>/", EditView.as_view(), name="edit"),
     path("delete/<pk>/", JobDeleteView.as_view(), name="delete"),

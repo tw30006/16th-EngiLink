@@ -6,7 +6,7 @@
     {% csrf_token %}
     <button type="submit">登出</button>
     <button><a href="{% url 'profile' user.id %}">公司資料</a></button>
-    <button><a href="{% url 'jobs' %}">職缺刊登</a></button>
+    <button><a href="http://127.0.0.1:8000/jobs/">職缺刊登</a></button>
   </form>
 {% else %}
   <h2>登入</h2>
