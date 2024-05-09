@@ -44,7 +44,7 @@ class SignoutView(SuccessMessageMixin, auth_views.LogoutView):
     
     def dispatch(self, request, *args, **kwargs):
         messages.success(request, "登出成功!")
-        logout(request)  # This is to ensure the user is logged out before redirecting
+        logout(request)  
         return super().dispatch(request, *args, **kwargs)
 
 class SignupView(CreateView):
