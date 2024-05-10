@@ -20,6 +20,8 @@ class LogInView(LoginView):
 
 class IndexView(TemplateView):
     template_name = "companies/index.html"
+    context_object_name = 'user'
+
 
 class SignUpView(CreateView):
     form_class = CompanyUserCreationForm
@@ -33,17 +35,17 @@ class SignUpView(CreateView):
         return response
     
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+class UpdateView(LoginRequiredMixin, UpdateView):
     model = Company
     form_class = CompanyUserChangeForm
-    template_name = "companies/edit.html"
+    template_name = "companies/update.html"
     success_url = reverse_lazy("index")
     
     def get_object(self):
         return self.request.user
 
-class ProfileView(LoginRequiredMixin, DetailView):
+class ShowView(LoginRequiredMixin, DetailView):
     model = Company
     form_class = CompanyUserChangeForm
-    template_name = 'companies/profile.html'
+    template_name = 'companies/show.html'
     context_object_name = 'user'

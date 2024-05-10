@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm
 from django.views.generic import TemplateView, UpdateView, DetailView
@@ -40,7 +39,7 @@ class SigninView(auth_views.LoginView):
 
 class SignoutView(SuccessMessageMixin, auth_views.LogoutView):
     template_name = 'users/signout.html'
-    next_page = reverse_lazy('userindex')
+    success_url = reverse_lazy('userindex')
     
     def dispatch(self, request, *args, **kwargs):
         messages.success(request, "登出成功!")

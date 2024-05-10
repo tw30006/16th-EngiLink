@@ -1,10 +1,10 @@
 {% extends 'base.html' %} 
 {% block content %}
   <h2>註冊</h2>
-  <form action="{% url 'signup' %}" method="post">
+  <form action="{% url 'companies:signup' %}" method="post">
     {% csrf_token %} 
     {{ form.as_p }}
     <button type="submit">註冊</button>
   </form>
-  <p>已經註冊? <a href="{% url 'login' %}">登入</a></p>
+  <p>已經註冊? <a href="{% url 'companies:login' %}">登入</a></p>
 {% endblock %}

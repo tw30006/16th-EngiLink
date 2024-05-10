@@ -6,7 +6,7 @@
     <p>聯絡人姓名: {{ user.user_name }}</p>
     <p>電話: {{ user.tel }}</p>
     <div>
-        <a href="{% url 'edit' %}">編輯</a>
-        <a href="{% url 'index' %}">上一頁</a>
+        <a href="{% url 'companies:update' %}">編輯</a>
+        <a href="{% url 'companies:index' %}">上一頁</a>
     </div>
 {% endblock %}

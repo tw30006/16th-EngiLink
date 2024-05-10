@@ -3,6 +3,8 @@ from .views import SignupView, UserIndexView, ProfileUpdateView, UserProfileView
 from django.contrib.auth import views as auth_views
 from resume.views import ResumeArea
 
+app_name = "users"
+
 urlpatterns = [
     path("", UserIndexView.as_view(), name="userindex"),
     path("resume/", ResumeArea.as_view(), name="resume"),

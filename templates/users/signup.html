@@ -8,7 +8,7 @@
     <div class="total">
         <div class="header-bar" >Sign Up Now!</div>
         <div class="card-body">
-            <form action="{% url 'users_signup' %}" method="post">
+            <form action="{% url 'user:users_signup' %}" method="post">
                 {% csrf_token %}
                 <fieldset>
                     {{ form|crispy }}
@@ -19,7 +19,7 @@
             </form>
             <div>
                 <small>
-                    Already Registered? <a href="{% url 'users_signin' %}">Sign In</a>
+                    Already Registered? <a href="{% url 'user:users_signin' %}">Sign In</a>
                 </small>
             </div>
         </div>

@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <div class="container-info">
-            <img src="static/css/img/logo.png" style="width: 150px;">
+            <img src="static/img/logo.png" style="width: 150px;">
             <h1>EngiLink</h1>
             <br>
             <br>
@@ -24,10 +24,11 @@
             <p>Connecting top engineers and businesses worldwide. Join us now!</p>
             <br>
             <br>
-            <button><a href="http://127.0.0.1:8000/users/">登入</a></button>
+            <button onclick="location.href='{% url 'users:userindex' %}'">求職者登入</button>
+            <button onclick="location.href='{% url 'companies:index' %}'">公司登入</button>
         </div>
         <div class="container-pic">
-            <img src="static/css/img/englink.png">
+            <img src="static/img/englink.png">
         </div>
     </div>
 </body>

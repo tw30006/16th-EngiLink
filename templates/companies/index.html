@@ -2,21 +2,21 @@
 {% block content %} 
 {% if user.is_authenticated %}
   <h2>你好, {{ user.username }}!</h2>
-  <form action="{% url 'logout' %}" method="post">
+  <form action="{% url 'companies:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">登出</button>
-    <button><a href="{% url 'profile' user.id %}">公司資料</a></button>
-    <button><a href="http://127.0.0.1:8000/jobs/">職缺刊登</a></button>
+    <button><a href="{% url 'companies:show' user.id %}">公司資料</a></button>
+    <button><a href="{% url 'companies:jobs' user.id %}">職缺刊登</a></button>
   </form>
 {% else %}
   <h2>登入</h2>
-  <form action="{% url 'login' %}" method="post">
+  <form action="{% url 'companies:login' %}" method="post">
     {% csrf_token %} 
     {{ form }}
     <button type="submit">登入</button>
   </form>
   <div>
-    <p>尚未登入? <a href="{% url 'signup' %}">註冊</a></p>
+    <p>尚未登入? <a href="{% url 'companies:signup' %}">註冊</a></p>
   </div>
 {% endif %} 
 {% endblock %}

@@ -6,23 +6,23 @@
 <div>
     {% if user.is_authenticated %}
         <h2>{{ user.username }}</h2>
-        <form action="{% url 'users_signout' %}" method="post">
+        <form action="{% url 'users:users_signout' %}" method="post">
             {% csrf_token %}
             <button type="submit">Log Out</button>
-            <button><a href="{% url 'users_profile' user.id %}">User Profile</a></button>
-            <button><a href="{% url 'users_edit' %}">Edit Profile</a></button>
-            <button><a href="{% url 'resume' %}">我的履歷</a></button>
+            <button><a href="{% url 'users:users_profile' user.id %}">User Profile</a></button>
+            <button><a href="{% url 'users:users_edit' %}">Edit Profile</a></button>
+            <button><a href="{% url 'resumes:index' %}">我的履歷</a></button>
         </form>
     {% else %}
         <h2>Log In Now</h2>
-        <form id="login-form" action="{% url 'users_signin' %}" method="post" class="mb-4">
+        <form id="login-form" action="{% url 'users:users_signin' %}" method="post" class="mb-4">
             {% csrf_token %}
             {{ form }}
             <button type="submit">Log In</button>
         </form>
         <div>
             <small>
-                Don't have an account yet? <a href="{% url 'users_signup' %}">Sign up</a>
+                Don't have an account yet? <a href="{% url 'users:users_signup' %}">Sign up</a>
             </small>
         </div>
     {% endif %}

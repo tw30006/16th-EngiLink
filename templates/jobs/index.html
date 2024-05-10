@@ -4,6 +4,6 @@
     {% for job in jobs %}
         <div><a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a></div>
     {% endfor %}
-    <button><a href="http://127.0.0.1:8000/companies/">會員系統</a></button>
-    <button><a href="{% url 'jobs:create' %}">刊登職缺</a></button>
+    <button><a href="{% url 'companies:index' %}">會員系統</a></button>
+    <button><a href="{% url 'companies:jobs_create' user.id %}">刊登職缺</a></button>
 {% endblock %}
