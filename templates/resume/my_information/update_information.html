@@ -6,16 +6,20 @@
     </div>
     <div class="card-body">
         <h2>編輯個人信息</h2>
-        <form method="post" id="myForm" action="{% url 'resumes:edit' pk=profile.pk %}">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="button">提交</button>
-        <a href="#" id="cancelBtn" class="button">全部取消</a>
-        </form>
-        <form method="post" action="{% url 'resumes:delete' pk=profile.pk %}">
+        <form method="post" id="myForm" action="{% url 'resumes:edit' pk=profile.pk %}"  enctype="multipart/form-data">
             {% csrf_token %}
-            <button type="submit" class="button">刪除</button>
-        </form>
+            {{ form }}
+            {% if profile.picture %}
+            <input type="checkbox" name="delete_photo" id="delete_photo">
+            {% else %}
+            <p>No photo delete</p>
+            {% endif %}
+            <button type="submit" class="button">提交</button>
+            </form>
+            <form method="post" action="{% url 'resumes:delete' pk=profile.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="button">刪除</button>
+            </form>
     </div>
 
     <script>

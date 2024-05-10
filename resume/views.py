@@ -4,6 +4,7 @@ from .forms import ProfileForm,EducationForm,WorkForm,ProjectForm
 from .models import Profile,Education,Work,Project
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 class ResumeArea(TemplateView):
     template_name = 'resume_area.html'
 
@@ -50,8 +51,16 @@ class ProfileUpdateView(UpdateView):
     success_url = reverse_lazy('resumes:index')
 
     def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
+        profile = form.save(commit=False)
+        delete_photo = form.cleaned_data.get('delete_photo', False)
+        new_photo = self.request.FILES.get('new_photo')
+
+        if delete_photo:
+            profile.photo = None 
+        elif new_photo:
+            profile.photo = new_photo 
+        profile.save()
+        return HttpResponseRedirect(self.get_success_url())
     
 class ProfileDeleteView(DeleteView):
     model = Profile

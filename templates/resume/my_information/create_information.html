@@ -7,17 +7,11 @@
 
     <div class="card-body">
         <h3>新增個人信息</h3>
-        <form method="post" id="myForm" action="{% url 'resumes:create'%}">
+        <form method="post" id="myForm" action="{% url 'resumes:create'%}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
             <button type="submit" class="button">提交</button>
             <a href="#" id="cancelBtn" class="button">全部取消</a>
         </form>
     </div>
-
-    <script>
-        document.getElementById("cancelBtn").addEventListener("click", function() {
-            document.getElementById("myForm").reset();
-        });
-    </script>
 {% endblock %}

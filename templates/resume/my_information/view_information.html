@@ -13,6 +13,11 @@
         <p><i>點擊姓名進入編輯</i></p>
         <section>
             <div>
+                {% if profile.picture %}
+                <img src="{{ profile.picture.url }}" alt="photo" style="width: 150px;">
+                {% else %}
+                <p>No photo available</p>
+                {% endif %}
                 姓名：<strong><a href="{% url 'resumes:edit' pk=profile.pk %}">{{ profile.name }}</a></strong>
                 <p>性別：{{ profile.gender }}</p>
                 <p>生日：{{profile.birthday}}</p>

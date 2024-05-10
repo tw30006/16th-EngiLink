@@ -9,6 +9,11 @@
     <h2>個人資訊</h2>
     <ul>
         {% for profile in total_data.profile_data %}
+            {% if profile.picture %}
+            <img src="{{ profile.picture.url }}" alt="photo" style="width: 150px;">
+            {% else %}
+            <p>No photo available</p>
+            {% endif %}
             <p>姓名：{{ profile.name }}</p>
             <span>性別：{{ profile.get_gender_display }}</span>
             &nbsp; &nbsp; &nbsp; &nbsp; 
