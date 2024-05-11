@@ -27,7 +27,7 @@ class SignUpView(CreateView):
     form_class = CompanyUserCreationForm
     model = Company
     template_name = "companies/signup.html"
-    success_url = reverse_lazy('index')
+    success_url = "/companies/"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -39,7 +39,7 @@ class UpdateView(LoginRequiredMixin, UpdateView):
     model = Company
     form_class = CompanyUserChangeForm
     template_name = "companies/update.html"
-    success_url = reverse_lazy("index")
+    success_url = "/companies/"
     
     def get_object(self):
         return self.request.user
