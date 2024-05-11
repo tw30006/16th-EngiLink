@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "jobs",
     'resume',
     'companies',
+    'storages',
 ]
 
 AUTH_USER_MODEL = 'companies.Company'
