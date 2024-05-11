@@ -28,11 +28,6 @@ class Company(AbstractUser):
         if not re.match(r'^(0\d{1,2}-?\d{6,8})$', self.tel):
             raise ValidationError("電話號碼格式不正確")
 
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
-<<<<<<< HEAD
-=======
 
     def is_valid_tin_number(self, tin):
            index = [1, 2, 1, 2, 1, 2, 4, 1]
@@ -51,4 +46,7 @@ class Company(AbstractUser):
            if tin[6] == '7':
                return result % 5 == 0 or (result + 1) % 5 == 0
            return result % 5 == 0    
->>>>>>> 15a9785 (feat: add is_valid_tin_number)
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
