@@ -2,11 +2,11 @@ from django.db import models
 from resume.models import Profile
 from django.utils import timezone
 
-class EducationsManager(models.Manager):
+class EducationManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at=None)
 
-class Educations(models.Model):
+class Education(models.Model):
     DEGREE_CHOICES = [
         ('1', '高中職以下'),
         ('2', '高中職'),
@@ -27,7 +27,7 @@ class Educations(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     objects = models.Manager()
-    edu_objects = EducationsManager()  
+    edu_objects = EducationManager()  
 
     def __str__(self):
         return f"{self.name}'s Profile ({self.profile_id})"
@@ -35,4 +35,4 @@ class Educations(models.Model):
     def delete(self, *args, **kwargs):
         self.deleted_at = timezone.now()  
         self.save()
-        super(Educations, self).delete(*args, **kwargs)
+        super(Education, self).delete(*args, **kwargs)

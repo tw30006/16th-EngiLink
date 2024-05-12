@@ -1,8 +1,9 @@
 from django import forms
-from .models import Education
+from .models import Work
 from datetime import date
 
-class EducationForm(forms.ModelForm):
+
+class WorkForm(forms.ModelForm):
     default_date = date(1990, 1, 15)
     date_widget = forms.SelectDateWidget(years=range(1960, 2025))  
     start_date = forms.DateField(
@@ -16,5 +17,5 @@ class EducationForm(forms.ModelForm):
         required=False
     )
     class Meta:
-        model = Education
+        model = Work
         exclude = ['deleted_at','created_at']

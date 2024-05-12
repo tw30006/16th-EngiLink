@@ -1,6 +1,5 @@
 from django import forms
-from .models import Profile, Work,Project
-from educations.models import Educations
+from .models import Profile, Project
 from datetime import date
 import re
 from django.core.exceptions import ValidationError
@@ -82,22 +81,6 @@ class ProfileForm(forms.ModelForm):
             raise ValidationError('請輸入正確格式!')
         return address
 
-class WorkForm(forms.ModelForm):
-    default_date = date(1990, 1, 15)
-    date_widget = forms.SelectDateWidget(years=range(1960, 2025))  
-    start_date = forms.DateField(
-        widget=date_widget,
-        initial=default_date,
-        required=False
-    )
-    end_date = forms.DateField(
-        widget=date_widget,
-        initial=default_date,
-        required=False
-    )
-    class Meta:
-        model = Work
-        exclude = ['deleted_at','created_at']
 
 class ProjectForm(forms.ModelForm):
     technologies_used= forms.MultipleChoiceField(choices=Project.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple)
