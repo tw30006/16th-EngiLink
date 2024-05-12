@@ -33,7 +33,7 @@
 
     <h2>教育經驗</h2>
     <ul>
-        {% for education in total_data.education_data %}
+        {% for education in total_data.educations_data %}
             <li>{{ education.school_name }}-{{education.major}}</li>
             <p>{{ education.get_degree_display }}</p>
             <p>{{ education.start_date}}-{{ education.end_date}}</p>

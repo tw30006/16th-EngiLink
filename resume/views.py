@@ -1,10 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView
-from .forms import ProfileForm,EducationForm,WorkForm,ProjectForm
-from .models import Profile,Education,Work,Project
+from .forms import ProfileForm, WorkForm,ProjectForm
+from .models import Profile, Work,Project
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from educations.models import Educations
+
+
 class ResumeArea(TemplateView):
     template_name = 'resume_area.html'
 
@@ -61,40 +63,6 @@ class ProfileDeleteView(DeleteView):
 
 
 
-class EducationCreateView(CreateView):
-    model = Education
-    form_class = EducationForm
-    template_name = 'resume/my_education/create_education.html'
-    success_url = reverse_lazy('resumes:edu-show')
-
-    
-    def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
-
-
-class EducationListView(ListView):
-    model = Education
-    template_name = 'resume/my_education/show_education.html'
-    context_object_name = 'educations' 
-
-    def get_queryset(self):
-        return Education.objects.filter(profile__user=self.request.user)
-
-
-class EducationUpdateView(UpdateView):
-    model = Education
-    form_class = EducationForm
-    template_name = 'resume/my_education/update_education.html'
-    success_url = reverse_lazy('resumes:edu-show')
-    
-    def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
-
-class EducationDeleteView(DeleteView):
-    model = Education
-    success_url = reverse_lazy('resumes:edu-show')
 
 
 class WorkCreateView(CreateView):
@@ -175,12 +143,12 @@ class TotalListView(ListView):
         profile_id = self.kwargs['profile_id']
 
         profile_data = Profile.objects.filter(profile_id=profile_id)
-        education_data = Education.objects.filter(profile_id=profile_id)
+        educations_data = Educations.objects.filter(profile_id=profile_id)
         work_data = Work.objects.filter(profile_id=profile_id)
         project_data = Project.objects.filter(profile_id=profile_id)
 
         total_data = {
-            'education_data': education_data,
+            'educations_data': educations_data,
             'work_data': work_data,
             'project_data': project_data,
             'profile_data':profile_data,
