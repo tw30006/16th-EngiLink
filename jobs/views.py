@@ -2,7 +2,6 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Job
 from .forms import JobForm
-from django.urls import reverse_lazy
 
 
 class IndexView(ListView):
