@@ -5,10 +5,6 @@ from .views import (
     ProfileCreateView,
     ProfileUpdateView,
     ProfileDeleteView,
-    ProjectCreateView,
-    ProjectListView,
-    ProjectUpdateView,
-    ProjectDeleteView,
     TotalListView,
 )
 from educations.views import (
@@ -22,6 +18,12 @@ from works.views import (
     WorkListView,
     WorkUpdateView,
     WorkDeleteView,
+)
+from projects.views import (
+    ProjectCreateView,
+    ProjectListView,
+    ProjectUpdateView,
+    ProjectDeleteView,
 )
 
 
@@ -46,11 +48,12 @@ urlpatterns = [
     path("work/edit/<pk>", WorkUpdateView.as_view(), name="work-edit"),
     path("work/delete/<pk>", WorkDeleteView.as_view(), name="work-delete"),
 
-    
+
     path("project/", ProjectCreateView.as_view(), name="project"),
     path("project/show/", ProjectListView.as_view(), name="project-show"),
     path("project/edit/<pk>", ProjectUpdateView.as_view(), name="project-edit"),
     path("project/delete/<pk>", ProjectDeleteView.as_view(), name="project-delete"),
-    
+
+
     path("<pk>/", ProfileListView.as_view(), name="show"),
 ]

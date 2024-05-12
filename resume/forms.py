@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Project
+from .models import Profile
 from datetime import date
 import re
 from django.core.exceptions import ValidationError
@@ -80,13 +80,3 @@ class ProfileForm(forms.ModelForm):
         if re.match(r'^[a-zA-Z0-9-]+$', address):
             raise ValidationError('請輸入正確格式!')
         return address
-
-
-class ProjectForm(forms.ModelForm):
-    technologies_used= forms.MultipleChoiceField(choices=Project.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple)
-    class Meta:
-        model = Project
-        exclude = ['deleted_at','created_at']
-        
-    def clean_skills(self):
-        return ', '.join(self.cleaned_data['technologies_used'])

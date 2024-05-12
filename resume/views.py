@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView
-from .forms import ProfileForm, ProjectForm
-from .models import Profile, Project
+from .forms import ProfileForm
+from .models import Profile
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from educations.models import Education
 from works.models import Work
+from projects.models import Project
 
 
 
@@ -58,45 +59,11 @@ class ProfileUpdateView(UpdateView):
         profile = form.save(commit=False)
         profile.save()
         return super().form_valid(form)
-    
+
+
 class ProfileDeleteView(DeleteView):
     model = Profile
     success_url = reverse_lazy('resumes:index')
-
-
-class ProjectCreateView(CreateView):
-    model = Project
-    form_class = ProjectForm
-    template_name = 'resume/my_project/create_project.html'
-    success_url = reverse_lazy('resumes:project-show')
-
-    
-    def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
-    
-class ProjectListView(ListView):
-    model = Project
-    template_name = 'resume/my_project/show_project.html'
-    context_object_name = 'projects' 
-
-    def get_queryset(self):
-        return Project.objects.filter(profile__user=self.request.user)
-    
-class ProjectUpdateView(UpdateView):
-    model = Project
-    form_class = ProjectForm
-    template_name = 'resume/my_project/update_project.html'
-    success_url = reverse_lazy('resumes:project-show')
-
-    def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
-
-class ProjectDeleteView(DeleteView):
-    model = Project
-    success_url = reverse_lazy('resumes:project-show')
-
 
 
 class TotalListView(ListView):
