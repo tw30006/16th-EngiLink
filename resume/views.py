@@ -52,20 +52,12 @@ class ProfileUpdateView(UpdateView):
 
     def form_valid(self, form):
         profile = form.save(commit=False)
-        delete_photo = form.cleaned_data.get('delete_photo', False)
-        new_photo = self.request.FILES.get('new_photo')
-
-        if delete_photo:
-            profile.photo = None 
-        elif new_photo:
-            profile.photo = new_photo 
         profile.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
     
 class ProfileDeleteView(DeleteView):
     model = Profile
     success_url = reverse_lazy('resumes:index')
-
 
 
 

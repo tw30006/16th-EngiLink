@@ -9,11 +9,6 @@
         <form method="post" id="myForm" action="{% url 'resumes:edit' pk=profile.pk %}"  enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
-            {% if profile.picture %}
-            <input type="checkbox" name="delete_photo" id="delete_photo">
-            {% else %}
-            <p>No photo delete</p>
-            {% endif %}
             <button type="submit" class="button">提交</button>
             </form>
             <form method="post" action="{% url 'resumes:delete' pk=profile.pk %}">
