@@ -29,6 +29,18 @@ class ResumeForm(forms.ModelForm):
         initial=date(1990, 1, 15), 
         required=False
     )
+
+    field_labels = {
+        'name': '姓名',
+        'gender': '性別',
+        'phone_number': '手機',
+        'address': '地址',
+        'website': '個人網站',
+        'experience': '工作經驗',
+        'linkedin': 'Linkedin',
+        'github': 'GitHub',
+        'picture':'照片'
+    }
     
     class Meta:
         model = Resume
@@ -37,6 +49,9 @@ class ResumeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
+
+        for field_name, label in self.field_labels.items():
+            self.fields[field_name].label = label
         
         if request:
             full_name = f"{request.user.last_name}{request.user.first_name}"
@@ -80,3 +95,4 @@ class ResumeForm(forms.ModelForm):
         if re.match(r'^[a-zA-Z0-9-]+$', address):
             raise ValidationError('請輸入正確格式!')
         return address
+    

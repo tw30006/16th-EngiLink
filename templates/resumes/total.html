@@ -12,7 +12,7 @@
             {% if resume.picture %}
             <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
             {% else %}
-            <p>No photo available</p>
+            <p>無照片顯示</p>
             {% endif %}
             <p>姓名：{{ resume.name }}</p>
             <span>性別：{{ resume.get_gender_display }}</span>

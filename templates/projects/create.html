@@ -3,7 +3,7 @@
 {% block content %}
     <div class="header-bar">
         <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-        <a href="{% url 'resumes:project-show'%}">List</a>
+        <a href="{% url 'resumes:project-show'%}">專案內容清單</a>
     </div>
 
     <div class="card-body">
@@ -12,13 +12,6 @@
             {% csrf_token %}
             {{ form }}
             <button type="submit" class="button">提交</button>
-            <a href="#" id="cancelBtn" class="button">全部取消</a>
         </form>
     </div>
-
-    <script>
-        document.getElementById("cancelBtn").addEventListener("click", function() {
-            document.getElementById("myForm").reset();
-        });
-    </script>
 {% endblock %}

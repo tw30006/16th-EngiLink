@@ -11,17 +11,10 @@
         {% csrf_token %}
         {{ form }}
         <button type="submit" class="button">提交</button>
-        <a href="#" id="cancelBtn" class="button">全部取消</a>
         </form>
         <form method="post" action="{% url 'resumes:work-delete' pk=work.pk %}">
             {% csrf_token %}
             <button type="submit" class="button">刪除</button>
         </form>
     </div>
-    <script>
-    document.getElementById("cancelBtn").addEventListener("click", function() {
-        document.getElementById("myForm").reset();
-    });
-    </script>
-
 {% endblock %}

@@ -44,7 +44,7 @@ class Resume(models.Model):
     objects =ResumeManager() 
 
     def __str__(self):
-        return f"{self.name}'s Resume ({self.resume_id})"
+        return f"{self.name}"
 
     def delete(self):
         self.deleted_at = timezone.now()  

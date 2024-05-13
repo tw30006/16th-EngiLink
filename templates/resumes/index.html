@@ -4,19 +4,19 @@
     <div class="header-bar">
         <a href="{% url 'resumes:index' %}">&#8592;Back</a>
         <br>
-        <a href="{% url 'resumes:edu'%}" class="edu">Create Education&#43;</a>
-        <a href="{% url 'resumes:work'%}">Create Work&#43;</a>
-        <a href="{% url 'resumes:project'%}">Create Projects&#43;</a>
+        <a href="{% url 'resumes:edu'%}" class="edu">教育經歷&#43;</a>
+        <a href="{% url 'resumes:work'%}">工作經驗&#43;</a>
+        <a href="{% url 'resumes:project'%}">專案內容&#43;</a>
     </div>
     <div class="card-body">
-        <h1>我的個人信息</h1>
+        <h1>我的個人資料</h1>
         <p><i>點擊姓名進入編輯</i></p>
         <section>
             <div>
                 {% if resume.picture %}
                 <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
                 {% else %}
-                <p>No photo available</p>
+                <p>無照片顯示</p>
                 {% endif %}
                 姓名：<strong><a href="{% url 'resumes:edit' pk=resume.pk %}">{{ resume.name }}</a></strong>
                 <p>性別：{{ resume.gender }}</p>

@@ -20,3 +20,4 @@ class Work(models.Model):
     def soft_delete(self):
         self.deleted_at = timezone.now() 
         self.save()
+    

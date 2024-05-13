@@ -4,29 +4,29 @@
     <div class="header-bar">
         <div>
             <h1>Hello,{{request.user|title}}</h1>
-            <a href="{% url 'resumes:create'%}">&#43;Create Resume</a>
+            <a href="{% url 'resumes:create'%}">&#43;創建履歷</a>
         </div>
         {% if request.user.is_authenticated %}
         <form action="{% url 'users:users_signout'%}" method="post">
             {% csrf_token %}
-            <button type="submit" class="button">Logout</button>
+            <button type="submit" class="button">登出</button>
         </form>
         {% else %}
-        <a href="">Login</a>
+        <a href="">登入</a>
         {% endif %}
     </div>
     
     <div class="task-items-wrapper">
-        <h2>My Resumes:</h2>
+        <h2>我的履歷:</h2>
         {% for resume in resumes %}
             <div class="task-wrapper">
                 <a href="{% url 'resumes:show' pk=resume.pk %}"> {{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
                 <a href="{% url 'resumes:total'  resume_id=resume.pk  %}">預覽</a>
             </div>
         {% empty %}
-        <h3>NO Resumes IN LIST</h3>
+        <h3>目前無創建履歷</h3>
         {% endfor %}
     </div>
-    <h3> <p>You have currently created <i>{{ count }}</i> resume{{ count  |pluralize:'s'}}</p></h3>
+    <h3> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
 
 {% endblock %}

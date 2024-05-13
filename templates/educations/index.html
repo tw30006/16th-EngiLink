@@ -5,7 +5,7 @@
         <a href="{% url 'resumes:edu'%}">&#43;</a>
     </div>
     <div class="card-body">
-        <h1>Educations</h1>
+        <h1>教育經驗</h1>
         {% if educations %}
             <ul>
                 {% for education in educations %}
@@ -16,7 +16,7 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No educations found.</p>
+            <p>目前無教育經驗</p>
         {% endif %}
     </div>
 {% endblock %}
