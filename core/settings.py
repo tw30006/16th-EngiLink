@@ -53,6 +53,11 @@ INSTALLED_APPS = [
     'storages',
     'works',
     'projects',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 AUTH_USER_MODEL = 'companies.Company'
@@ -65,6 +70,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -199,3 +205,27 @@ AWS_S3_REGION_NAME = 'us-west-2'
 
 AWS_DEFAULT_ACL = None
 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'APP': {
+            'client_id': os.environ['GOOGLE_CLIENT_ID'],
+            'secret': os.environ['GOOGLE_CLIENT_SECRET'],
+        },
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SITE_ID = int(os.getenv('SITE_ID', 1))
+
+LOGIN_REDIRECT_URL = "/users"
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
