@@ -7,7 +7,7 @@ from .forms import ProjectForm
 class ProjectCreateView(CreateView):
     model = Project
     form_class = ProjectForm
-    template_name = 'resume/my_project/create_project.html'
+    template_name = 'projects/create.html'
     success_url = reverse_lazy('resumes:project-show')
 
     
@@ -17,7 +17,7 @@ class ProjectCreateView(CreateView):
     
 class ProjectListView(ListView):
     model = Project
-    template_name = 'resume/my_project/show_project.html'
+    template_name = 'projects/index.html'
     context_object_name = 'projects' 
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class ProjectListView(ListView):
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm
-    template_name = 'resume/my_project/update_project.html'
+    template_name = 'projects/update.html'
     success_url = reverse_lazy('resumes:project-show')
 
     def form_valid(self, form):

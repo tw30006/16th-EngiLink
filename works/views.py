@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 class WorkCreateView(CreateView):
     model = Work
     form_class = WorkForm
-    template_name = 'resume/my_work/create_work.html'
+    template_name = 'works/create.html'
     success_url = reverse_lazy('resumes:work-show')
 
     def form_valid(self, form):
@@ -18,7 +18,7 @@ class WorkCreateView(CreateView):
 
 class WorkListView(ListView):
     model = Work
-    template_name = 'resume/my_work/show_work.html'
+    template_name = 'works/index.html'
     context_object_name = 'works' 
 
     def get_queryset(self):
@@ -28,7 +28,7 @@ class WorkListView(ListView):
 class WorkUpdateView(UpdateView):
     model = Work
     form_class = WorkForm
-    template_name = 'resume/my_work/update_work.html'
+    template_name = 'works/update.html'
     success_url = reverse_lazy('resumes:work-show')
 
     def form_valid(self, form):

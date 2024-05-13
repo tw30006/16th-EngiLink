@@ -6,7 +6,7 @@ from .forms import EducationForm
 class EducationCreateView(CreateView):
     model = Education
     form_class = EducationForm
-    template_name = 'resume/my_education/create_education.html'
+    template_name = 'educations/create.html'
     success_url = reverse_lazy('resumes:edu-show')
 
     
@@ -17,7 +17,7 @@ class EducationCreateView(CreateView):
 
 class EducationListView(ListView):
     model = Education
-    template_name = 'resume/my_education/show_education.html'
+    template_name = 'educations/index.html'
     context_object_name = 'educations' 
 
     def get_queryset(self):
@@ -27,7 +27,7 @@ class EducationListView(ListView):
 class EducationUpdateView(UpdateView):
     model = Education
     form_class = EducationForm
-    template_name = 'resume/my_education/update_education.html'
+    template_name = 'educations/update.html'
     success_url = reverse_lazy('resumes:edu-show')
     
     def form_valid(self, form):
