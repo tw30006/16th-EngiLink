@@ -1,5 +1,4 @@
 {% extends "users/base.html" %}
-{% load crispy_forms_tags %}
 {% block title %}signup{% endblock title %}
 {% block main %}
 {% load static %}
@@ -11,7 +10,7 @@
             <form action="{% url 'users:users_signup' %}" method="post">
                 {% csrf_token %}
                 <fieldset>
-                    {{ form|crispy }}
+                    {{ form }}
                 </fieldset>
                 <div>
                     <button type="submit" class="button">Sign Up</button>

@@ -1,5 +1,4 @@
 {% extends "users/base.html" %}
-{% load crispy_forms_tags %}
 {% load tailwind_filters %}
 {% block title %}signin{% endblock title %}
 {% block main %}
@@ -11,7 +10,7 @@
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {{ form }}
                 <div>
                     <button type="submit" class="button">Log In</button>
                 </div>

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tailwindcss -i ./static/css/style.css -o ./static/css/output.css --watch",
-    "build-css": "tailwindcss -i ./static/css/style.css -o ./static/css/output.css",
+    "dev": "tailwindcss -i ./css/style.css -o ./css/output.css --watch",
+    "build-css": "tailwindcss -i ./css/style.css -o ./css/output.css",
     "build-alpine": "esbuild ./static/outfile/app.js --minify --bundle --outfile=./static/scripts/app.js"
   },
   "keywords": [],
