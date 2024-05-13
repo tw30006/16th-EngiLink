@@ -1,18 +1,14 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.exceptions import ValidationError
 import re
 
-class Company(AbstractUser):
+class Company(models.Model):
     email = models.EmailField(max_length=255)
     company_name = models.CharField(max_length=100)
     tin = models.CharField(max_length=8)
     user_name = models.CharField(max_length=100)
     tel = models.CharField(max_length=10)
     
-    class Meta:
-        verbose_name = 'Company'
-        verbose_name_plural = 'Companies'
 
     # def clean(self):
     #     if Company.objects.filter(email=self.email).exclude(id=self.id).exists():

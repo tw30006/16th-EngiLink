@@ -1,4 +1,12 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
+class CustomUser(AbstractUser):
+    role_choice = (
+        ('user', 'user'),
+        ('company', 'company'),
+    )
+    
+    role = models.CharField(max_length=20, choices=role_choice)
+    
+    

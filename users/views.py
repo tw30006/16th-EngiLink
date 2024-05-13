@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.shortcuts import redirect
 from .forms import UserRegisterForm, UserUpdateForm
 from django.views.generic import TemplateView, UpdateView, DetailView
 from django.views.generic.edit import CreateView
@@ -37,6 +38,17 @@ class SigninView(auth_views.LoginView):
         messages.error(self.request, "登入失敗, 請確認輸入的訊息!")
         return self.render_to_response(self.get_context_data(form=form))
 
+    def dispatch(self, request, *args, **kwargs):
+        identity = self.request.GET.get('identity')
+        
+        if identity == "user":
+            return redirect(reverse_lazy('users:userindex'))
+        elif identity == 'company':
+            return redirect(reverse_lazy('companies:index'))
+        else:
+            return super().dispatch(request, *args, **kwargs)
+    
+    
 class SignoutView(SuccessMessageMixin, auth_views.LogoutView):
     template_name = 'users/signout.html'
     success_url = "/users/"
