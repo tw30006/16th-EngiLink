@@ -45,10 +45,13 @@ INSTALLED_APPS = [
     'users',
     'crispy_forms',
     'crispy_tailwind',
-    "jobs",
+    'jobs',
     'resume',
+    'educations',
     'companies',
     'storages',
+    'works',
+    'projects',
 ]
 
 AUTH_USER_MODEL = 'companies.Company'
