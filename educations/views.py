@@ -21,7 +21,7 @@ class EducationListView(ListView):
     context_object_name = 'educations' 
 
     def get_queryset(self):
-        return Education.objects.filter(profile__user=self.request.user)
+        return Education.objects.filter(resume__user=self.request.user)
 
 
 class EducationUpdateView(UpdateView):

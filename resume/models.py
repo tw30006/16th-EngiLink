@@ -5,11 +5,11 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 
-class ProfileManager(models.Manager):
+class ResumeManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at=None)
 
-class Profile(models.Model):
+class Resume(models.Model):
     GENDER_CHOICES = [
         ('M', '男'),
         ('F', '女'),
@@ -24,7 +24,7 @@ class Profile(models.Model):
     SKILL_CHOICES = [(skill, skill) for skill in ['Python', 'JavaScript', 'Java', 'C++', 'HTML/CSS', 'PHP', 'Ruby', 'Swift', '其他']]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    profile_id = models.AutoField(primary_key=True)
+    resume_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birthday = models.DateField(null=True, blank=True)
@@ -41,10 +41,10 @@ class Profile(models.Model):
     picture = models.FileField(upload_to = 'img/',null=True)
     
 
-    objects =ProfileManager() 
+    objects =ResumeManager() 
 
     def __str__(self):
-        return f"{self.name}'s Profile ({self.profile_id})"
+        return f"{self.name}'s Resume ({self.resume_id})"
 
     def delete(self):
         self.deleted_at = timezone.now()  

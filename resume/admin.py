@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Profile
-from .forms import ProfileForm
+from .models import Resume
+from .forms import ResumeForm
 
 
-class ProfileAdmin(admin.ModelAdmin):
-    form = ProfileForm
+class ResumeAdmin(admin.ModelAdmin):
+    form = ResumeForm
     exclude = ['deleted_at','created_at']
     radio_fields = {'gender': admin.HORIZONTAL, 'experience': admin.HORIZONTAL}
 
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Resume, ResumeAdmin)

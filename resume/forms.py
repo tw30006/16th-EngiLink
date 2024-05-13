@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from .models import Resume
 from datetime import date
 import re
 from django.core.exceptions import ValidationError
@@ -19,11 +19,11 @@ class EmailValidator(forms.EmailField):
             raise ValidationError('請確認輸入的信箱!')
 
 
-class ProfileForm(forms.ModelForm):
+class ResumeForm(forms.ModelForm):
     
     email = EmailValidator()
     
-    skills = forms.MultipleChoiceField(choices=Profile.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple)
+    skills = forms.MultipleChoiceField(choices=Resume.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple)
     birthday = forms.DateField(
         widget=forms.SelectDateWidget(years=range(1960, 2025)),
         initial=date(1990, 1, 15), 
@@ -31,7 +31,7 @@ class ProfileForm(forms.ModelForm):
     )
     
     class Meta:
-        model = Profile
+        model = Resume
         exclude = ['deleted_at','created_at', 'user']
     
     def __init__(self, *args, **kwargs):

@@ -13,22 +13,22 @@
         <p><i>點擊姓名進入編輯</i></p>
         <section>
             <div>
-                {% if profile.picture %}
-                <img src="{{ profile.picture.url }}" alt="photo" style="width: 150px;">
+                {% if resume.picture %}
+                <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
                 {% else %}
                 <p>No photo available</p>
                 {% endif %}
-                姓名：<strong><a href="{% url 'resumes:edit' pk=profile.pk %}">{{ profile.name }}</a></strong>
-                <p>性別：{{ profile.gender }}</p>
-                <p>生日：{{profile.birthday}}</p>
-                <p>電子信箱：{{profile.email}}</p>
-                <p>手機：{{profile.phone_number}}</p>
-                <p>地址：{{profile.address}}</p>
-                <p>技能：{{profile.skills}}</p>
-                <p>個人網站：{{profile.website}}</p>
-                <p>工作經驗：{{profile.experience}}</p>
-                <p>Linkedin：{{profile.linkedin}}</p>
-                <p>GitHub：{{profile.github}}</p>
+                姓名：<strong><a href="{% url 'resumes:edit' pk=resume.pk %}">{{ resume.name }}</a></strong>
+                <p>性別：{{ resume.gender }}</p>
+                <p>生日：{{resume.birthday}}</p>
+                <p>電子信箱：{{resume.email}}</p>
+                <p>手機：{{resume.phone_number}}</p>
+                <p>地址：{{resume.address}}</p>
+                <p>技能：{{resume.skills}}</p>
+                <p>個人網站：{{resume.website}}</p>
+                <p>工作經驗：{{resume.experience}}</p>
+                <p>Linkedin：{{resume.linkedin}}</p>
+                <p>GitHub：{{resume.github}}</p>
             </div>
         </section>
     </div>

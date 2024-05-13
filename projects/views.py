@@ -21,7 +21,7 @@ class ProjectListView(ListView):
     context_object_name = 'projects' 
 
     def get_queryset(self):
-        return Project.objects.filter(profile__user=self.request.user)
+        return Project.objects.filter(resume__user=self.request.user)
     
 class ProjectUpdateView(UpdateView):
     model = Project

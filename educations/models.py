@@ -1,5 +1,5 @@
 from django.db import models
-from resume.models import Profile
+from resume.models import Resume
 from django.utils import timezone
 
 class EducationManager(models.Manager):
@@ -17,7 +17,7 @@ class Education(models.Model):
         ('7', '肄業'),
     ]
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     school_name = models.CharField(max_length=100)
     major = models.CharField(max_length=100)
     degree = models.CharField(max_length=1, choices=DEGREE_CHOICES)
@@ -30,7 +30,7 @@ class Education(models.Model):
     edu_objects = EducationManager()  
 
     def __str__(self):
-        return f"{self.name}'s Profile ({self.profile_id})"
+        return f"{self.name}'s Resume ({self.Resume_id})"
 
     def delete(self, *args, **kwargs):
         self.deleted_at = timezone.now()  

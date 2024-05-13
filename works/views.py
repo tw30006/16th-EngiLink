@@ -22,7 +22,7 @@ class WorkListView(ListView):
     context_object_name = 'works' 
 
     def get_queryset(self):
-        return Work.objects.filter(profile__user=self.request.user)
+        return Work.objects.filter(resume__user=self.request.user)
     
 
 class WorkUpdateView(UpdateView):

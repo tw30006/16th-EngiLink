@@ -1,10 +1,10 @@
 from django.urls import path
 from .views import (
     ResumeArea,
-    ProfileListView,
-    ProfileCreateView,
-    ProfileUpdateView,
-    ProfileDeleteView,
+    ResumeListView,
+    ResumeCreateView,
+    ResumeUpdateView,
+    ResumeDeleteView,
     TotalListView,
 )
 from educations.views import (
@@ -31,10 +31,10 @@ app_name = "resumes"
 
 urlpatterns = [
     path("", ResumeArea.as_view(), name="index"),
-    path("create/", ProfileCreateView.as_view(), name="create"),
-    path("edit/<pk>", ProfileUpdateView.as_view(), name="edit"),
-    path("delete/<pk>", ProfileDeleteView.as_view(), name="delete"),
-    path("total/<int:profile_id>", TotalListView.as_view(), name="total"),
+    path("create/", ResumeCreateView.as_view(), name="create"),
+    path("edit/<pk>", ResumeUpdateView.as_view(), name="edit"),
+    path("delete/<pk>", ResumeDeleteView.as_view(), name="delete"),
+    path("total/<int:resume_id>", TotalListView.as_view(), name="total"),
 
 
     path("edu/", EducationCreateView.as_view(), name="edu"),
@@ -55,5 +55,5 @@ urlpatterns = [
     path("project/delete/<pk>", ProjectDeleteView.as_view(), name="project-delete"),
 
 
-    path("<pk>/", ProfileListView.as_view(), name="show"),
+    path("<pk>/", ResumeListView.as_view(), name="show"),
 ]
