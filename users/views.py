@@ -39,7 +39,7 @@ class SigninView(auth_views.LoginView):
 
 class SignoutView(SuccessMessageMixin, auth_views.LogoutView):
     template_name = 'users/signout.html'
-    success_url = reverse_lazy('userindex')
+    success_url = "/users/"
     
     def dispatch(self, request, *args, **kwargs):
         messages.success(request, "登出成功!")
@@ -50,7 +50,7 @@ class SignupView(CreateView):
     model = User
     template_name = "users/signup.html"
     form_class = UserRegisterForm
-    success_url = reverse_lazy('userindex')
+    success_url = "/users/"
     
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -71,7 +71,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = "users/edit.html"
     form_class = UserUpdateForm
-    success_url = reverse_lazy("userindex")
+    success_url = "/users/"
 
     def get_object(self, queryset=None):
         return self.request.user
