@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("resume", "0003_profile_picture"),
+        ("resumes", "0003_profile_picture"),
     ]
 
     operations = [

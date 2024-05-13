@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("resume", "0001_initial"),
+        ("resumes", "0001_initial"),
     ]
 
     operations = [
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 (
                     "profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="resume.profile"
+                        on_delete=django.db.models.deletion.CASCADE, to="resumes.profile"
                     ),
                 ),
             ],
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
                 (
                     "profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="resume.profile"
+                        on_delete=django.db.models.deletion.CASCADE, to="resumes.profile"
                     ),
                 ),
             ],
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
                 (
                     "profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="resume.profile"
+                        on_delete=django.db.models.deletion.CASCADE, to="resumes.profile"
                     ),
                 ),
             ],

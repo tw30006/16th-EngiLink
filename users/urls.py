@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import SignupView, UserIndexView, ProfileUpdateView, UserProfileView, SigninView, SignoutView
 from django.contrib.auth import views as auth_views
-from resume.views import ResumeArea
+from resumes.views import ResumeArea
 
 app_name = "users"
 

@@ -1,5 +1,5 @@
 from django.db import models
-from resume.models import Resume
+from resumes.models import Resume
 from django.utils import timezone
 
 

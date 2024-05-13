@@ -5,8 +5,8 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("resume", "0004_alter_profile_picture"),
-        ("resume", "0005_delete_project"),
+        ("resumes", "0004_alter_profile_picture"),
+        ("resumes", "0005_delete_project"),
     ]
 
     operations = []

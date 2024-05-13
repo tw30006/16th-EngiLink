@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'jobs',
-    'resume',
+    'resumes',
     'educations',
     'companies',
     'storages',

@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('resume', '0005_delete_project'),
+        ('resumes', '0005_delete_project'),
     ]
 
     operations = [
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('deleted_at', models.DateTimeField(null=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='resume.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='resumes.profile')),
             ],
         ),
     ]

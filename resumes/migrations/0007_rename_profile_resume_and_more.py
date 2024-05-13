@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ("educations", "0003_rename_profile_education_resume"),
         ("projects", "0002_rename_profile_project_resume"),
-        ("resume", "0006_merge_0004_alter_profile_picture_0005_delete_project"),
+        ("resumes", "0006_merge_0004_alter_profile_picture_0005_delete_project"),
         ("works", "0002_rename_profile_work_resume"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

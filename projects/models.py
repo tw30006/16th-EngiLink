@@ -1,5 +1,5 @@
 from django.db import models
-from resume.models import Resume
+from resumes.models import Resume
 
 class Project(models.Model):
     SKILL_CHOICES = [(skill, skill) for skill in ['Python', 'JavaScript', 'Java', 'C++', 'HTML/CSS', 'PHP', 'Ruby', 'Swift', '其他']]
