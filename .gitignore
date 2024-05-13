@@ -1,5 +1,5 @@
 **/__pycache__
 node_modules
 .env
-static/css/output.css
-logs/*.log
+css/output.css
+**/logs/
