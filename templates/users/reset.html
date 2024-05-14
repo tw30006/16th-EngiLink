@@ -1,0 +1,7 @@
+{% block content %} 
+    You're receiving this email because you requested a password reset for your user account.
+    Please click the following link to reset your password:
+    {{ protocol }}://{{ domain }}{% url 'users:password_reset_confirm' uidb64=uid token=token %}
+    If you did not request a password reset, please ignore this email.
+    Thank you!
+{% endblock %}

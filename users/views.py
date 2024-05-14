@@ -8,7 +8,9 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
-
+from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib import messages
 
 
 class UserRegisterView(FormView):
@@ -59,4 +61,37 @@ class UserPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
+
+
+class UserPasswordResetView(PasswordResetView):
+    email_template_name = 'users/reset.html'  
+
+    def form_valid(self, form):
+        messages.success(self.request, 'A password reset link has been sent to your email.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Failed to send password reset link. Please check the email address.')
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('users:password_reset_done')
+
+class UserPasswordResetDoneView(PasswordResetDoneView):
+    pass  
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy('users:password_reset_complete')  
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Your password has been reset successfully.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Failed to reset password. Please try again.')
+        return super().form_invalid(form)
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    pass  
+
 

@@ -30,7 +30,6 @@ SECRET_KEY = "django-insecure-qjfp6rzdx(c-b!jm$$lm&z392wl&6_fi4x35kmc+c^0w%d&%$@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
@@ -229,3 +228,14 @@ SITE_ID = int(os.getenv('SITE_ID', 1))
 LOGIN_REDIRECT_URL = "/users/"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+#SMTP Configuration
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']

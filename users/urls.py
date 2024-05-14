@@ -6,7 +6,11 @@ from .views import (
     UserDetailView,
     UserUpdateView,
     UserRegisterView, 
-    UserPasswordChangeView
+    UserPasswordChangeView,
+    UserPasswordResetView,
+    UserPasswordResetDoneView,
+    UserPasswordResetConfirmView, 
+    UserPasswordResetCompleteView
 )
 from resumes import views as resumes
 
@@ -21,4 +25,8 @@ urlpatterns = [
     path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
+    path('reset/', UserPasswordResetView.as_view(), name='reset'),
+    path('reset_done/', UserPasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_complete/', UserPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
