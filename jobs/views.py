@@ -17,7 +17,7 @@ class AddView(CreateView):
 
     def form_valid(self, form):
         pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs" 
+        self.success_url = f"/companies/{pk}/jobs/" 
         return super().form_valid(form)
 
 
@@ -36,7 +36,7 @@ class EditView(UpdateView):
 
     def form_valid(self, form):
         pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs" 
+        self.success_url = f"/companies/{pk}/jobs/" 
         return super().form_valid(form)
 
 
@@ -46,5 +46,5 @@ class JobDeleteView(DeleteView):
 
     def form_valid(self, form):
         pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs" 
+        self.success_url = f"/companies/{pk}/jobs/" 
         return super().form_valid(form)

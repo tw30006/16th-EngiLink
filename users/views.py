@@ -30,7 +30,7 @@ class UserLoginView(LoginView):
         return reverse_lazy('users:home')
 
 class UserLogoutView(LogoutView):
-    next_page = "/"
+    next_page = reverse_lazy('home')
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = CustomUser

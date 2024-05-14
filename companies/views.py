@@ -43,7 +43,7 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = CompanyUpdateForm
     template_name = 'companies/update.html'
-    success_url = reverse_lazy('company_detail')
+    success_url = "/companies/"
     login_url = "/companies/"
 
     def get_queryset(self):
