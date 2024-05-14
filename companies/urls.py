@@ -1,16 +1,26 @@
 from django.urls import path
-from .views import IndexView, SignUpView, UpdateView, ShowView, LogInView, LogOutView
+from .views import (
+    CompanyHomeView,
+    CompanyLoginView,
+    CompanyLogoutView,
+    CompanyDetailView,
+    CompanyUpdateView,
+    CompanyRegisterView, 
+    CompanyPasswordChangeView
+)
 from jobs import views as jobs
 
 app_name = "companies"
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    path('signup/', SignUpView.as_view(), name='signup'),
-    path('login/', LogInView.as_view(), name='login'),
-    path('logout/', LogOutView.as_view(), name='logout'),
-    path('update/', UpdateView.as_view(), name='update'),
+    path("", CompanyHomeView.as_view(), name="home"),
+    path('register/', CompanyRegisterView.as_view(), name='register'),
+    path("login/", CompanyLoginView.as_view(), name="login"),
+    path("logout/", CompanyLogoutView.as_view(), name="logout"),
+    path("password_change/",CompanyPasswordChangeView.as_view(),name="password_change",),
+    path("<int:pk>/update/", CompanyUpdateView.as_view(), name="update"),
     path('<pk>/jobs/', jobs.IndexView.as_view(), name="jobs"),
     path('<pk>/create/', jobs.AddView.as_view(), name="jobs_create"),
-    path('<pk>/', ShowView.as_view(), name='show'),
+    path("<int:pk>/", CompanyDetailView.as_view(), name="detail"),
 ]
+

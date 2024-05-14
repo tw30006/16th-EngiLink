@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Company Registration</h1>
+<form method="post" action="{% url 'companies:register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
+<a href="{% url 'companies:login' %}">Already have an account? Log in here</a>
+{% endblock %}

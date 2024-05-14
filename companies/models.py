@@ -1,13 +1,13 @@
-from django.db import models
-from django.core.exceptions import ValidationError
-import re
+# from django.db import models
+# from django.core.exceptions import ValidationError
+# import re
 
-class Company(models.Model):
-    email = models.EmailField(max_length=255)
-    company_name = models.CharField(max_length=100)
-    tin = models.CharField(max_length=8)
-    user_name = models.CharField(max_length=100)
-    tel = models.CharField(max_length=10)
+# class Company(models.Model):
+#     email = models.EmailField(max_length=255)
+#     company_name = models.CharField(max_length=100)
+#     tin = models.CharField(max_length=8)
+#     user_name = models.CharField(max_length=100)
+#     tel = models.CharField(max_length=10)
     
 
     # def clean(self):

@@ -1,40 +1,29 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
-User = get_user_model()
+
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
-    role = forms.ChoiceField(choices=CustomUser.role_choice)
-    
     class Meta:
         model = CustomUser
-        fields = ["username", "email"]
-    
-class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
-    first_name = forms.CharField(max_length=30, required=False)
-    last_name = forms.CharField(max_length=30, required=False)
-    password1 = forms.CharField(label="New Password", widget=forms.PasswordInput, required=False)
-    password2 = forms.CharField(label="Confirm New Password", widget=forms.PasswordInput, required=False)
-    
-    class Meta:
-        model = CustomUser
-        fields = ["email", "first_name", "last_name", "password1", "password2"]  
-    
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
-    
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        self.initial['user_type'] = 1  # Automatically set user_type for 'user'
+
     def save(self, commit=True):
-        user = super().save(commit=False)
-        if self.cleaned_data["password1"]:
-            user.set_password(self.cleaned_data["password1"])
-            if commit:
-                user.save()
+        user = super(UserRegisterForm, self).save(commit=False)
+        user.user_type = 1  # Set user_type for 'user'
+        if commit:
+            user.save()
         return user
+    
+class UserUpdateForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        del self.fields['password']

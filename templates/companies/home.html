@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>Welcome, Company!</h1>
+    <a href="{% url 'companies:detail' user.id %}">View Profile</a>
+    <br>
+    <form action="{% url 'companies:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <br>
+    <a href="{% url 'companies:jobs' user.id %}">職缺刊登</a>
+{% else %}
+    <h1>Welcome to Our Site!</h1>
+    <p>Please <a href="{% url 'companies:login' %}">login</a> or <a href="{% url 'companies:register' %}">register</a>.</p>
+{% endif %} 
+{% endblock %}

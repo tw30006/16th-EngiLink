@@ -1,18 +1,28 @@
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Company
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from users.models import CustomUser
 
-class CompanyUserCreationForm(forms.Form):
-
+class CompanyRegisterForm(UserCreationForm):
     class Meta:
-        model = Company
-        fields = ['username', 'email', 'company_name', 'tin', 'user_name', 'tel']
+        model = CustomUser
+        fields = ('username', 'email', 'password1', 'password2')
 
-class CompanyUserChangeForm(forms.Form):
-    password = None
-    
+    def __init__(self, *args, **kwargs):
+        super(CompanyRegisterForm, self).__init__(*args, **kwargs)
+        self.initial['user_type'] = 2  # Automatically set user_type for 'company'
+
+    def save(self, commit=True):
+        user = super(CompanyRegisterForm, self).save(commit=False)
+        user.user_type = 2  # Set user_type for 'company'
+        if commit:
+            user.save()
+        return user
+
+class CompanyUpdateForm(UserChangeForm):
     class Meta:
-        model = Company
-        fields = ['email', 'user_name', 'tel']
+        model = CustomUser
+        fields = ['username', 'email']
 
-    
+    def __init__(self, *args, **kwargs):
+        super(CompanyUpdateForm, self).__init__(*args, **kwargs)
+        del self.fields['password']

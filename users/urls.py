@@ -1,16 +1,22 @@
 from django.urls import path
-from .views import SignupView, UserIndexView, ProfileUpdateView, UserProfileView, SigninView, SignoutView
-from django.contrib.auth import views as auth_views
-from resumes.views import ResumeArea
+from .views import (
+    UserHomeView,
+    UserLoginView,
+    UserLogoutView,
+    UserDetailView,
+    UserUpdateView,
+    UserRegisterView, 
+    UserPasswordChangeView
+)
 
 app_name = "users"
 
 urlpatterns = [
-    path("", UserIndexView.as_view(), name="userindex"),
-    path("resume/", ResumeArea.as_view(), name="resume"),
-    path("signup/", SignupView.as_view(), name="users_signup"),
-    path("edit/", ProfileUpdateView.as_view(template_name="users/edit.html"), name="users_edit"),
-    path("signin/", SigninView.as_view(), name="users_signin"),
-    path("signout/", SignoutView.as_view(), name="users_signout"),
-    path("show/<int:pk>/", UserProfileView.as_view(), name="users_profile"),
+    path("", UserHomeView.as_view(), name="home"),
+    path("register/", UserRegisterView.as_view(), name="register"),
+    path("login/", UserLoginView.as_view(), name="login"),
+    path("logout/", UserLogoutView.as_view(), name="logout"),
+    path("password_change/",UserPasswordChangeView.as_view(),name="password_change",),
+    path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
+    path("<int:pk>/", UserDetailView.as_view(), name="detail"),
 ]

@@ -1,101 +1,62 @@
-from django.contrib import messages
-from django.shortcuts import redirect
-from .forms import UserRegisterForm, UserUpdateForm
-from django.views.generic import TemplateView, UpdateView, DetailView
-from django.views.generic.edit import CreateView
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-class UserIndexView(TemplateView):
-    template_name = "users/index.html"
+from .forms import UserRegisterForm, UserUpdateForm
+from .models import CustomUser
 
 
-class SigninView(auth_views.LoginView):
-    template_name = 'users/signin.html'
-    
-    def get_success_url(self):
-        url = self.get_redirect_url()
-        return url or '/users/'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.method == 'POST' and not self.request.POST.get('username') and not self.request.POST.get('password'):
-            messages.info(self.request, "請輸入使用者代號與密碼!")
-        return context
-    
-    def form_valid(self, form):
-        messages.success(self.request, "登入成功!")
-        return super().form_valid(form)
-    
-    def form_invalid(self, form):
-        messages.error(self.request, "登入失敗, 請確認輸入的訊息!")
-        return self.render_to_response(self.get_context_data(form=form))
 
-    def dispatch(self, request, *args, **kwargs):
-        identity = self.request.GET.get('identity')
-        
-        if identity == "user":
-            return redirect(reverse_lazy('users:userindex'))
-        elif identity == 'company':
-            return redirect(reverse_lazy('companies:index'))
-        else:
-            return super().dispatch(request, *args, **kwargs)
-    
-    
-class SignoutView(SuccessMessageMixin, auth_views.LogoutView):
-    template_name = 'users/signout.html'
-    success_url = "/users/"
-    
-    def dispatch(self, request, *args, **kwargs):
-        messages.success(request, "登出成功!")
-        logout(request)  
-        return super().dispatch(request, *args, **kwargs)
-
-class SignupView(CreateView):
-    model = User
-    template_name = "users/signup.html"
+class UserRegisterView(FormView):
+    template_name = 'users/register.html'
     form_class = UserRegisterForm
     success_url = "/users/"
     
     def form_valid(self, form):
-        response = super().form_valid(form)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password1']
-        name = form.cleaned_data.get("username")
-        user = authenticate(username=username, password=password)
-        messages.success(self.request, "註冊成功!")
-        if user is not None:
-            login(self.request, user)
-        return response
-    
-    def form_invalid(self, form):
-        messages.error(self.request, "註冊失敗, 請確認輸入的訊息!")
-        return self.render_to_response(self.get_context_data(form=form))
-    
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    template_name = "users/edit.html"
-    form_class = UserUpdateForm
-    success_url = "/users/"
+        user = form.save()
+        login(self.request, user)
+        return super(UserRegisterView, self).form_valid(form)
 
-    def get_object(self, queryset=None):
-        return self.request.user
+class UserHomeView(TemplateView):
+    template_name = 'users/home.html'
+
+class UserLoginView(LoginView):
+    template_name = 'users/login.html'
+    def get_success_url(self):
+        return reverse_lazy('users:home')
+
+class UserLogoutView(LogoutView):
+    next_page = "/"
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = 'users/detail.html'
+    context_object_name = 'user'
+    login_url = "/users/"
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(user_type=1)
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = UserUpdateForm
+    template_name = 'users/update.html'
+    success_url = "/users/"
+    login_url = "/users/"
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(user_type=1, id=self.request.user.id)
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name="users/password_change_form.html"
+    success_url="/users/"
 
     def form_valid(self, form):
-        messages.success(self.request, "更新完成!")
-        return super().form_valid(form)
-    
-    def form_invalid(self, form):
-        messages.error(self.request, "更新失敗, 請確認輸入的訊息!")
+        response = super().form_valid(form)
+        logout(self.request)
+        return response
 
-class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'users/profile.html'
-    context_object_name = 'user'
