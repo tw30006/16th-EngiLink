@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 User = settings.AUTH_USER_MODEL
 
 
@@ -52,4 +54,19 @@ class Resume(models.Model):
     
     def get_skills(self):
         return self.skills.split(', ')
-
+    
+    def save(self, *args, **kwargs):
+        if self.picture:
+            img = Image.open(self.picture)
+            max_size = (300, 300)
+            img.thumbnail(max_size, Image.LANCZOS)
+            thumb_io = BytesIO()
+            img_format = 'PNG' if img.mode == 'RGBA' else 'JPEG'
+            img.save(thumb_io, format=img_format)
+            thumb_io.seek(0)
+            self.picture.save(
+                self.picture.name,
+                ContentFile(thumb_io.read()),
+                save=False
+            )
+        super().save(*args, **kwargs)

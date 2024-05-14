@@ -17,6 +17,7 @@ boto3 = "^1.34.102"
 rich = "^13.7.1"
 django-allauth = {extras = ["socialaccount"], version = "^0.62.1"}
 google-auth-oauthlib = "^1.2.0"
+pillow = "^10.3.0"
 
 [build-system]
 requires = ["poetry-core"]
