@@ -2,7 +2,15 @@
 {% block content %}
     <h1 class="bg-blue-500 py-2 px-2">職缺列表</h1>
     {% for job in jobs %}
-        <div><a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a></div>
+        <div>
+            <a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a>
+            <form action="{% url 'jobs:setpublish' job.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm {{ book.is_published|yesno:'bg-blue-800 text-white,bg-blue-200' }}">
+                    {{ job.is_published | yesno:"刊登中,已下架" }}
+                </button>
+            </form> 
+        </div>
     {% endfor %}
     <button><a href="{% url 'companies:home' %}">會員系統</a></button>
     <button><a href="{% url 'companies:jobs_create' user.id %}">刊登職缺</a></button>
