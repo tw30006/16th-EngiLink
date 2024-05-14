@@ -7,7 +7,7 @@
             <a href="{% url 'resumes:create'%}">&#43;創建履歷</a>
         </div>
         {% if request.user.is_authenticated %}
-        <form action="{% url 'users:users_signout'%}" method="post">
+        <form action="{% url 'users:logout'%}" method="post">
             {% csrf_token %}
             <button type="submit" class="button">登出</button>
         </form>
