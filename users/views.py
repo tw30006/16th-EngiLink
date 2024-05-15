@@ -51,3 +51,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return CustomUser.objects.filter(user_type=1, id=self.request.user.id)
 
+class UserPasswordChangeView(PasswordChangeView):
+    template_name="users/password_change_form.html"
+    success_url="/users/"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        logout(self.request)
+        return response
