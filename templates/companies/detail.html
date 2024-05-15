@@ -1,7 +1,11 @@
 {% extends 'backend.html' %}
 {% block content %}
 <h2>Company Profile</h2>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-<a href="{% url 'companies:update' user.id%}">Edit Profile</a>
+    <p>帳號: {{ user.username }}</p>
+    <p>公司信箱: {{ user.email }}</p>
+    <p>公司名稱: {{ user.company.company_name }}</p>
+    <p>統一編號: {{ user.company.tin }}</p>
+    <p>聯絡人: {{ user.company.user_name }}</p>
+    <p>聯絡電話: {{ user.company.tel }}</p>
+<a href="{% url 'companies:update' user.id%}">編輯</a>
 {% endblock %}

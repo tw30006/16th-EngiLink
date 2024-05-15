@@ -32,6 +32,7 @@ class CompanyLogoutView(LogoutView):
 
 class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = CustomUser
+    form_class=CompanyRegisterForm
     template_name = 'companies/detail.html'
     context_object_name = 'user'
     login_url = "/companies/"
