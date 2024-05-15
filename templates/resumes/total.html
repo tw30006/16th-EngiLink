@@ -1,63 +1,65 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
+
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
+            <a href="{% url 'resumes:index' %}" class="text-white hover:text-blue-800">&#8592;返回</a>
+        </div>
+        <h1 class="text-2xl font-bold mb-6">履歷預覽</h1>
+
+        <h2 class="text-lg">個人資訊</h2>
+        <ul class="pl-5">
+            {% for resume in total_data.resume_data %}
+                {% if resume.picture %}
+                    <img src="{{ resume.picture.url }}" alt="照片" class="w-40 h-32 mr-6">
+                {% else %}
+                    <p class="text-gray-600">無照片顯示</p>
+                {% endif %}
+                <p class="mb-2">姓名：<strong class="text-blue">{{ resume.name }}</strong></p>
+                <p class="mb-2">性別：{{ resume.get_gender_display }}</p>
+                <p class="mb-2">生日：{{ resume.birthday }}</p>
+                <p class="mb-2">信箱：{{ resume.email }}</p>
+                <p class="mb-2">電話：{{ resume.phone_number }}</p>
+                <p class="mb-2">地址：{{ resume.address }}</p>
+                <p class="mb-2">技能：{{resume.skills}}</p>
+                <p class="mb-2">個人網站：{{resume.website}}</p>
+                <p class="mb-2">工作經驗：{{resume.experience}}</p>
+                <p class="mb-2">Linkedin：{{resume.linkedin}}</p>
+                <p class="mb-2">GitHub：{{resume.github}}</p>
+            {% endfor %}
+        </ul>
+        <hr>
+
+        <h2 class="text-lg">教育經驗</h2>
+        <ul class="pl-5">
+            {% for education in total_data.education_data %}
+                <li>{{ education.school_name }}-{{education.major}}</li>
+                <p>{{ education.get_degree_display }}</p>
+                <p>{{ education.start_date}}-{{ education.end_date}}</p>
+            {% endfor %}
+        </ul>
+        <hr>
+
+        <h2 class="text-lg">工作經驗</h2>
+        <ul class="pl-5">
+            {% for work in total_data.work_data %}
+                <li>{{ work.company_name }}-{{work.position}}</li>
+                <p>{{ work.start_date}}-{{ work.end_date}}</p>
+            {% endfor %}
+        </ul>
+        <hr>
+
+        <h2 class="text-lg">專案經驗</h2>
+        <ul class="pl-5">
+            {% for project in total_data.project_data %}
+                <li>{{ project.project_name }}</li>
+                <p>{{ project.responsibility }}</p>
+                <p>{{ project.technologies_used}}</p>
+                <p>{{project.description}}</p>
+            {% endfor %}
+        </ul>
+        <hr>
     </div>
-    <h1>履歷預覽</h1>
-
-
-    <h2>個人資訊</h2>
-    <ul>
-        {% for resume in total_data.resume_data %}
-            {% if resume.picture %}
-            <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
-            {% else %}
-            <p>無照片顯示</p>
-            {% endif %}
-            <p>姓名：{{ resume.name }}</p>
-            <span>性別：{{ resume.get_gender_display }}</span>
-            &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span>生日：{{ resume.birthday }}</span>
-            <p>信箱：{{ resume.email }}</p>
-            <span>電話：{{ resume.phone_number }}</span>
-            &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span>地址：{{ resume.address }}</span>    
-            <p>技能：{{resume.skills}}</p>
-            <p>個人網站：{{resume.website}}</p>
-            <p>工作經驗：{{resume.experience}}</p>
-            <p>Linkedin：{{resume.linkedin}}</p>
-            <p>GitHub：{{resume.github}}</p>  
-        {% endfor %}
-    </ul>
-    <hr>
-
-    <h2>教育經驗</h2>
-    <ul>
-        {% for education in total_data.education_data %}
-            <li>{{ education.school_name }}-{{education.major}}</li>
-            <p>{{ education.get_degree_display }}</p>
-            <p>{{ education.start_date}}-{{ education.end_date}}</p>
-        {% endfor %}
-    </ul>
-    <hr>
-
-    <h2>工作經驗</h2>
-    <ul>
-        {% for work in total_data.work_data %}
-            <li>{{ work.company_name }}-{{work.position}}</li>
-            <p>{{ work.start_date}}-{{ work.end_date}}</p>
-        {% endfor %}
-    </ul>
-    <hr>
-
-    <h2>專案經驗</h2>
-    <ul>
-        {% for project in total_data.project_data %}
-            <li>{{ project.project_name }}</li>
-            <p>{{ project.responsibility }}</p>
-            <p>{{ project.technologies_used}}</p>
-            <p>{{project.description}}</p>
-        {% endfor %}
-    </ul>
-    <hr>
 {% endblock %}
+
+

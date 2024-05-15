@@ -1,17 +1,33 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-    </div>
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="flex justify-center">
+            <div class="w-full">
+                <div class="header-bar flex justify-start items-center bg-blue-600 text-white p-4 rounded-t-md">
+                    <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
+                </div>
 
-    <div class="card-body">
-        <h3>新增個人信息</h3>
-        <form method="post" id="myForm" action="{% url 'resumes:create'%}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit" class="button">提交</button>
-            <a href="#" id="cancelBtn" class="button">全部取消</a>
-        </form>
+                <div class="card-body p-4 shadow-md mt-4">
+                    <h3 class="text-lg font-semibold mb-4">新增個人信息</h3>
+                    <form method="post" id="myForm" action="{% url 'resumes:create'%}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="ml-4 mb-4">
+                            <div class="mb-2"> 
+                                {% for field in form %}
+                                    <div class="mb-2">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
