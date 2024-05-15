@@ -9,3 +9,5 @@
 - visit `http://localhost:8000` to see the app.
 
 .env.example 改名為 .env 在跟開發人員要 KEY
+
+brew install weasyprint
