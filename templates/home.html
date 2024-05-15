@@ -10,8 +10,8 @@
             <h4 class="text-xl mb-4">媒合英才，盡在EngiLink</h4>
             <p class="italic font-light">Connecting top engineers and businesses worldwide. Join us now!</p>
             <div class="flex">
-                <button class="bg-blue-500 text-white px-8 py-4 rounded-full mt-8 mr-4">求職者登入</button>
-                <button class="bg-blue-500 text-white px-8 py-4 rounded-full mt-8">公司登入</button>
+                <button class="bg-blue-500 text-white px-8 py-4 rounded-full mt-8 mr-4" onclick="location.href='{% url 'users:home' %}'">求職者登入</button>
+                <button class="bg-blue-500 text-white px-8 py-4 rounded-full mt-8" onclick="location.href='{% url 'companies:home' %}'">公司登入</button>
             </div>
         </div>
         <div class="container-pic">
