@@ -8,6 +8,8 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
@@ -18,8 +20,15 @@ class UserRegisterView(FormView):
     
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
-        return super(UserRegisterView, self).form_valid(form)
+        self.send_welcome_email(user.email)
+        return super().form_valid(form)
+
+    def send_welcome_email(self, user_email):
+        subject = 'Welcome to EngiLink!'
+        message = 'Thank you for registering on our site.'
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [user_email]  
+        send_mail(subject, message, from_email, recipient_list)
 
 class UserHomeView(TemplateView):
     template_name = 'users/home.html'
