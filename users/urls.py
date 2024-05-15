@@ -8,6 +8,7 @@ from .views import (
     UserRegisterView, 
     UserPasswordChangeView
 )
+from resumes import views as resumes
 
 app_name = "users"
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path("logout/", UserLogoutView.as_view(), name="logout"),
     path("password_change/",UserPasswordChangeView.as_view(),name="password_change",),
     path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
+    path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
 ]
