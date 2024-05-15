@@ -18,6 +18,11 @@ class CompanyRegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError("信箱已被人註冊")
+        return email
 
 class CompanyUpdateForm(UserChangeForm):
     company_name = forms.CharField(max_length=100)
