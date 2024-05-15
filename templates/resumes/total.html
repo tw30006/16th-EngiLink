@@ -4,6 +4,9 @@
     <div class="container mx-auto max-w-lg mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}" class="text-white hover:text-blue-800">&#8592;返回</a>
+            {% for resume in total_data.resume_data %}
+            <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}">Download PDF</a>
+            {% endfor %}
         </div>
         <h1 class="text-2xl font-bold mb-6">履歷預覽</h1>
 
