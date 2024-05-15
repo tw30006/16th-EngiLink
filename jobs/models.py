@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from resumes.models import Resume
 from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 import re
@@ -27,6 +28,7 @@ class Job(models.Model):
         default=1,
         verbose_name="openings",
     )
+    resumes = models.ManyToManyField(Resume, related_name='jobs')
     experience = models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(50,message="年資必須低於50")])
     salary = models.PositiveIntegerField(blank=True,validators=[MinValueValidator(0)])
     address = models.CharField(max_length=250,validators=[validate_taiwan_address])
