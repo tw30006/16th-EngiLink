@@ -1,32 +1,32 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-
-    <div class="header-bar">
-        <div>
-            <h1>Hello,{{request.user|title}}</h1>
-            <a href="{% url 'resumes:create'%}">&#43;創建履歷</a>
-        </div>
-        {% if request.user.is_authenticated %}
-        <form action="{% url 'users:logout'%}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="button">登出</button>
-        </form>
-        {% else %}
-        <a href="">登入</a>
-        {% endif %}
-    </div>
-    
-    <div class="task-items-wrapper">
-        <h2>我的履歷:</h2>
-        {% for resume in resumes %}
-            <div class="task-wrapper">
-                <a href="{% url 'resumes:show' pk=resume.pk %}"> {{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
-                <a href="{% url 'resumes:total'  resume_id=resume.pk  %}">預覽</a>
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg  pt-16">
+        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md w-full w-300px">
+            <div>
+                <h1 class="text-2xl">Hello,{{request.user|title}}</h1>
+                <a href="{% url 'resumes:create'%}" class="text-white text-sm mt-10">&#43;創建履歷</a>
             </div>
-        {% empty %}
-        <h3>目前無創建履歷</h3>
-        {% endfor %}
-    </div>
-    <h3> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'users:logout'%}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="button">登出</button>
+            </form>
+            {% else %}
+            <a href="" class="text-white">登入</a>
+            {% endif %}
+        </div>
 
+        <div class="task-items-wrapper flex flex-col  w-full">
+            <h2 class="text-lg font-semibold mb-4 mt-4 ml-4">我的履歷:</h2>
+            {% for resume in resumes %}
+                <div class="task-wrapper flex justify-between items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+                    <a href="{% url 'resumes:show' pk=resume.pk %}" class="text-blue-600">{{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
+                    <a href="{% url 'resumes:total'  resume_id=resume.pk  %}" class="text-blue-600">預覽</a>
+                </div>
+            {% empty %}
+            <h3 class="text-lg">目前無創建履歷</h3>
+            {% endfor %}
+        </div>
+        <h3 class="text-lg mt-10"> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
+    </div>
 {% endblock %}
