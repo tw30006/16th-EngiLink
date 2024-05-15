@@ -23,7 +23,7 @@ class CompanyUpdateForm(UserChangeForm):
     company_name = forms.CharField(max_length=100)
     tin = forms.CharField(max_length=8)
     user_name = forms.CharField(max_length=100)
-    tel = forms.CharField(max_length=10)
+    tel = forms.CharField(max_length=11)
 
     class Meta:
         model = CustomUser
