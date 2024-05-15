@@ -28,7 +28,7 @@ class Job(models.Model):
         default=1,
         verbose_name="openings",
     )
-    resumes = models.ManyToManyField(Resume, related_name='jobs')
+    resumes = models.ManyToManyField(Resume, through="Job_Resume")
     experience = models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(50,message="年資必須低於50")])
     salary = models.PositiveIntegerField(blank=True,validators=[MinValueValidator(0)])
     address = models.CharField(max_length=250,validators=[validate_taiwan_address])
@@ -43,3 +43,8 @@ class Job(models.Model):
     def delete(self):
         self.deleted_at = timezone.now()
         self.save()
+        
+class Job_Resume(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
