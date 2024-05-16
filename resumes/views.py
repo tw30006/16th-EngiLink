@@ -84,7 +84,7 @@ class TotalListView(ListView):
         }
         return total_data
 
-def generate_resume_pdf(request, resume_id):
+def GenerateResumePdf(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
