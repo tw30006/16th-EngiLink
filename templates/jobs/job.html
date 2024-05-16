@@ -1,0 +1,17 @@
+<p>職位名稱：{{ job.title }}</p>
+<p>需求人數：{{ job.openings }}</p>
+<p>工作年資：{{ job.experience }}</p>
+<p>工作經驗：{{ job.salary }}</p>
+<p>工作地點：{{ job.address }}</p>
+<p>工作描述：{{ job.description }}</p>
+<div class="flex">
+    <form>
+        {% csrf_token %}
+        <button type="button" hx-post="{% url 'jobs:setpublish' job.id %}" hx-swap="innerHTML" hx-target="#publish-{{ job.id }}" class="{% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %}">
+            {{ job.is_published | yesno:"刊登中,已下架" }}
+        </button>
+    </form>
+    <button><a href="{% url 'jobs:show' job.id %}">編輯</a></button>
+</div>
+
+

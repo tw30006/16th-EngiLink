@@ -1,6 +1,7 @@
+from typing import Any
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import redirect,HttpResponse
+from django.shortcuts import redirect,HttpResponse,render
 from .models import Job
 from .forms import JobForm
 from django.urls import reverse
@@ -50,7 +51,7 @@ class JobDeleteView(DeleteView):
         self.success_url = f"/companies/{pk}/jobs/" 
         return super().form_valid(form)
 
-class SetPublishView(UpdateView):
+class SetPublishView(DetailView):
     model=Job
     context_object_name = "job"
 
@@ -58,5 +59,4 @@ class SetPublishView(UpdateView):
         self.object = self.get_object()
         self.object.is_published = not self.object.is_published
         self.object.save()
-        new_button_html = f'<button hx-post="{request.build_absolute_uri()}" hx-swap="outerHTML">'+("刊登中"if self.object.is_published else "已下架")+'</button>'
-        return HttpResponse(new_button_html)
+        return render(request,"jobs/job.html",{"job":self.object})

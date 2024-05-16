@@ -1,8 +1,12 @@
 {% extends "backend.html" %}
 {% block content %}
     <div>
-        {{ job.title }}
-        {{ job.experience }}
+    <p>職位名稱：{{ job.title }}</p>
+    <p>需求人數：{{ job.openings }}</p>
+    <p>工作年資：{{ job.experience }}</p>
+    <p>工作經驗：{{ job.salary }}</p>
+    <p>工作地點：{{ job.address }}</p>
+    <p>工作描述：{{ job.description }}</p>
     </div>
     
     <button><a href="{% url 'jobs:edit' job.id %}">修改</a></button>

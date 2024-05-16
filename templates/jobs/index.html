@@ -1,18 +1,14 @@
 {% extends "backend.html" %}
 {% block content %}
     <h1 class="bg-blue-500 py-2 px-2">職缺列表</h1>
-    {% for job in jobs %}
-        <div>
-            <a href="{% url 'jobs:show' job.id %}">{{ job.title }}</a>
-            <form>
-                {% csrf_token %}
-                <button hx-post="{% url 'jobs:setpublish' job.id %}"
-                hx-swap="outerHTML">
-                    {{ job.is_published | yesno:"刊登中,已下架" }}
-                </button>
-            </form>
-        </div>
-    {% endfor %}
+        <section class="flex">
+            {% for job in jobs %}
+                <div id="publish-{{ job.id }}">
+                    {% include "jobs/job.html"%}
+                </div>   
+            {% endfor %}
+        </section>
+        
     <button><a href="{% url 'companies:home' %}">會員系統</a></button>
     <button><a href="{% url 'companies:jobs_create' user.id %}">刊登職缺</a></button>
 {% endblock %}
