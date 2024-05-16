@@ -9,6 +9,7 @@ class Company(models.Model):
     user_name = models.CharField(max_length=100)
     tel = models.CharField(max_length=11)
     custom_user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,null=True)
+    email = models.EmailField(unique=True,null=True)
 
     def clean(self):
         if not re.match(r'^[\u4e00-\u9fa5]{5,}$', self.company_name):
