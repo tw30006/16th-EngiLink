@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
         (2, 'company'),
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
-    email = models.EmailField(unique=True,null=True)
+    email = models.EmailField(unique=True,default='')
 
     
     
