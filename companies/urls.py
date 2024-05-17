@@ -19,8 +19,8 @@ urlpatterns = [
     path("logout/", CompanyLogoutView.as_view(), name="logout"),
     path("password_change/",CompanyPasswordChangeView.as_view(),name="password_change",),
     path("<int:pk>/update/", CompanyUpdateView.as_view(), name="update"),
-    path('<pk>/jobs/', jobs.IndexView.as_view(), name="jobs"),
-    path('<pk>/create/', jobs.AddView.as_view(), name="jobs_create"),
+    path('<int:pk>/jobs/', jobs.IndexView.as_view(), name="jobs"),
+    path('<int:pk>/create/', jobs.AddView.as_view(), name="jobs_create"),
     path("<int:pk>/", CompanyDetailView.as_view(), name="detail"),
 ]
 

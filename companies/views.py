@@ -8,22 +8,34 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .forms import CompanyRegisterForm, CompanyUpdateForm
 from users.models import CustomUser
+from .models import Company
 
 class CompanyRegisterView(FormView):
     template_name = 'companies/register.html'
     form_class = CompanyRegisterForm
-    success_url = "/companies/"
+
 
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
         return super(CompanyRegisterView, self).form_valid(form)
+    
+    def get_success_url(self):
+        user = self.request.user
+        company = Company.objects.filter(custom_user=user).first()
+
+        if user.user_type == 2 and company is None:
+            print("Redirecting to companies:update")
+            return reverse_lazy('companies:update',kwargs={'pk': user.pk})
+        else:
+            return reverse_lazy('companies:home')
 
 class CompanyHomeView(TemplateView):
     template_name = 'companies/home.html'
 
 class CompanyLoginView(LoginView):
     template_name = 'companies/login.html'
+
     def get_success_url(self):
         return reverse_lazy('companies:home')
 
