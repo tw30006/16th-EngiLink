@@ -1,17 +1,23 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-        <a href="{% url 'resumes:project-show'%}">專案內容清單</a>
-    </div>
-
-    <div class="card-body">
-        <h3>新增專案內容</h3>
-        <form method="post" id="myForm" action="{% url 'resumes:project'%}">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit" class="button">提交</button>
-        </form>
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="flex justify-center">
+            <div class="w-full">
+                <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md">
+                    <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
+                    <a href="{% url 'resumes:project-show'%}">專案內容清單</a>
+                </div>
+                <div class="card-body p-4 shadow-md mt-4">
+                    <h3 class="text-lg font-semibold mb-4">新增專案內容</h3>
+                    <form method="post" id="myForm" action="{% url 'resumes:project'%}">
+                        {% csrf_token %}
+                        {{ form }}
+                    <div class="flex justify-end">
+                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}

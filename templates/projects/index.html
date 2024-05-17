@@ -1,12 +1,13 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-        <a href="{% url 'resumes:project' %}">&#43;</a>
-    </div>
-    <div class="card-body">
-        <h1>專案內容</h1>
-        {% if projects %}
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
+            <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592;Back</a>
+            <a href="{% url 'resumes:edu'%}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
+        </div>
+        <div class="card-body p-4 shadow-md">
+            <h1 class="text-3xl font-bold mb-6">專案內容</h1>
+            {% if projects %}
             <ul>
                 {% for project in projects %}
                     <strong><a href="{% url 'resumes:project-edit' pk=project.pk %}">{{ project.project_name }}</a></strong>

@@ -1,22 +1,25 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-        <a href="{% url 'resumes:edu'%}">&#43;</a>
-    </div>
-    <div class="card-body">
-        <h1>教育經驗</h1>
-        {% if educations %}
-            <ul>
-                {% for education in educations %}
-                    <strong><a href="{% url 'resumes:edu-edit' pk=education.pk %}">{{ education.school_name }} - {{ education.major }}</a></strong>
-                    <p>學位：{{ education.get_degree_display }}</p>
-                    <p>入學期間 {{ education.start_date }}--{{ education.end_date }}</p>
-                    <hr>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>目前無教育經驗</p>
-        {% endif %}
+
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
+            <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592;Back</a>
+            <a href="{% url 'resumes:edu'%}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
+        </div>
+        <div class="card-body p-4 shadow-md">
+            <h1 class="text-3xl font-bold mb-6">教育經驗</h1>
+            {% if educations %}
+                <ul>
+                    {% for education in educations %}
+                        <strong><a href="{% url 'resumes:edu-edit' pk=education.pk %}">{{ education.school_name }} - {{ education.major }}</a></strong>
+                        <p>學位：{{ education.get_degree_display }}</p>
+                        <p>入學期間 {{ education.start_date }}--{{ education.end_date }}</p>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>目前無教育經驗</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

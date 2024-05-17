@@ -1,12 +1,13 @@
-{% extends 'my_base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-    <div class="header-bar">
-        <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-        <a href="{% url 'resumes:work' %}">&#43;</a>
-    </div>
-    <div class="card-body">
-        <h1>工作經驗</h1>
-        {% if works %}
+    <div class="container mx-auto max-w-lg mt-8">
+        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
+            <a href="{% url 'resumes:index' %}">&#8592;Back</a>
+            <a href="{% url 'resumes:work' %}">&#43;</a>
+        </div>
+        <div class="card-body p-4 shadow-md">
+            <h1 class="text-3xl font-bold mb-6">工作經驗</h1>
+            {% if works %}
             <ul>
                 {% for work in works %}
                     <strong><a href="{% url 'resumes:work-edit' pk=work.pk %}">{{ work.company_name }} - {{ work.position }}</a></strong>
