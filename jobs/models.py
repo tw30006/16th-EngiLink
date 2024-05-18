@@ -3,6 +3,7 @@ from django.utils import timezone
 from resumes.models import Resume
 from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
+from companies.models import Company
 import re
 from companies.models import Company
 
@@ -32,7 +33,7 @@ class Job(models.Model):
         verbose_name="openings",
     )
     resumes = models.ManyToManyField(Resume, through="Job_Resume")
-    experience = models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(50,message="年資必須低於50")])
+    experience= models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(50,message="年資必須低於50")])
     salary = models.PositiveIntegerField(blank=True,validators=[MinValueValidator(0)])
     address = models.CharField(max_length=250,validators=[validate_taiwan_address])
     description = models.TextField(default="")

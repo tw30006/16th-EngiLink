@@ -1,6 +1,6 @@
 **/__pycache__
+**/output.css
 node_modules
 .env
-**/output.css
 logs
 bundle.js

@@ -16,3 +16,7 @@ class JobForm(ModelForm):
             "description": "工作內容",
             "is_published":"是否刊登"
         }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)

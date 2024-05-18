@@ -1,9 +1,10 @@
 from typing import Any
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import redirect,HttpResponse,render
+from django.shortcuts import render, get_object_or_404
 from .models import Job
 from .forms import JobForm
+from companies.models import Company
 from django.urls import reverse
 from companies.models import Company
 from django.shortcuts import get_object_or_404
@@ -14,12 +15,20 @@ class IndexView(ListView):
     model = Job
     context_object_name = "jobs"
 
+    def get_queryset(self):
+        company = get_object_or_404(Company, pk=self.kwargs['pk'])
+        return Job.objects.filter(company=company)
 
 class AddView(CreateView):
     template_name = "jobs/create.html"
     model = Job
     form_class = JobForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+    
     def form_valid(self, form):
         form.instance.company = get_object_or_404(Company, pk=self.kwargs.get('pk'))
         self.success_url = reverse('companies:jobs', kwargs={'pk': form.instance.company.pk})
