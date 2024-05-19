@@ -9,7 +9,7 @@
         <button type="submit">Logout</button>
     </form>
     <br>
-    <a href="{% url 'companies:jobs' user.id %}">職缺刊登</a>
+    <a href="{% url 'companies:jobs' user.company.id %}">職缺刊登</a>
 {% else %}
     <h1>Welcome to Our Site!</h1>
     <p>Please <a href="{% url 'companies:login' %}">login</a> or <a href="{% url 'companies:register' %}">register</a>.</p>
