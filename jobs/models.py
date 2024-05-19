@@ -4,6 +4,7 @@ from resumes.models import Resume
 from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 import re
+from companies.models import Company
 
 class JobManager(models.Manager):
     def get_queryset(self):
@@ -21,7 +22,9 @@ def validate_taiwan_address(value):
     if not re.match(address_re,value):
         raise ValidationError("請輸入正確的地址")
     
+
 class Job(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='jobs')
     title = models.CharField(max_length=100)
     openings = models.IntegerField(
         choices=OPENINGS_CHOICES,

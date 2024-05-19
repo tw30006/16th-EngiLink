@@ -10,7 +10,12 @@ from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
 from django.core.mail import send_mail
 from django.conf import settings
-
+from companies.models import Company
+from jobs.models import Job
+import pandas as pd
+from django.views import View
+from django.http import HttpResponse
+from companies.models import Company
 
 
 class UserRegisterView(FormView):
@@ -32,6 +37,19 @@ class UserRegisterView(FormView):
 
 class UserHomeView(TemplateView):
     template_name = 'users/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        companies = Company.objects.all()
+        jobs = Job.objects.select_related('company').all()
+        search_keyword = self.request.GET.get('q')
+        if search_keyword:
+            companies = Company.objects.filter(company_name__icontains=search_keyword)
+        else:
+            companies = Company.objects.all()
+        context['companies'] = companies
+        context['jobs'] = jobs
+        return context
 
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
@@ -68,3 +86,18 @@ class UserPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
+    
+
+class ImportDataView(View):
+    def get(self, request):
+        data = pd.read_csv("data.csv")
+        top_25 = data.head(25)[['公司名稱', '統一編號']]
+        for index, row in top_25.iterrows():
+            tin = str(row['統一編號']) 
+            if len(tin) < 8:
+                tin = tin.zfill(8)
+            company = Company.objects.create(
+                company_name=row['公司名稱'],
+                tin=tin,
+            )  
+        return HttpResponse("資料已成功導入到資料庫")

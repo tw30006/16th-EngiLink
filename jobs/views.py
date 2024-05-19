@@ -5,6 +5,8 @@ from django.shortcuts import redirect,HttpResponse,render
 from .models import Job
 from .forms import JobForm
 from django.urls import reverse
+from companies.models import Company
+from django.shortcuts import get_object_or_404
 
 
 class IndexView(ListView):
@@ -19,9 +21,10 @@ class AddView(CreateView):
     form_class = JobForm
 
     def form_valid(self, form):
-        pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs/" 
+        form.instance.company = get_object_or_404(Company, pk=self.kwargs.get('pk'))
+        self.success_url = reverse('companies:jobs', kwargs={'pk': form.instance.company.pk})
         return super().form_valid(form)
+
 
 
 

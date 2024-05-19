@@ -8,8 +8,34 @@
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form>
+    <br>
+    <hr>
+    <form action="{% url 'users:home' %}" method="get" class="mb-4">
+        <input type="text" name="q" placeholder="搜尋公司名稱" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+        <button type="submit" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">Search</button>
+    </form>
+    
+    {% if companies %}
+    <h2>推薦工作與職缺:</h2>
+    <div class="grid grid-cols-3 gap-4">
+        {% for company in companies %}
+        <div class="bg-white p-4 shadow rounded-lg">
+            <h3 class="text-lg font-semibold">{{ company.company_name }}</h3>
+            <ul class="mt-2 flex items-center justify-between">
+                最新職缺：
+                {% for job in jobs %}
+                    <li class="ml-2">{{ job.title }}</li>
+                {% endfor %}
+                <button class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">收藏</button>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No companies found.</p>
+{% endif %}
 {% else %}
     <h1>Welcome to Our Site!</h1>
     <p>Please <a href="{% url 'users:login' %}">login</a> or <a href="{% url 'users:register' %}">register</a>.</p>
-{% endif %} 
+{% endif %}
 {% endblock %}

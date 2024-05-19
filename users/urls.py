@@ -7,6 +7,7 @@ from .views import (
     UserUpdateView,
     UserRegisterView, 
     UserPasswordChangeView,
+    ImportDataView,
 )
 from resumes import views as resumes
 
@@ -21,4 +22,5 @@ urlpatterns = [
     path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
+    path('import_data/', ImportDataView.as_view(), name='import_data'),
 ]
