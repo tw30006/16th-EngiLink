@@ -7,16 +7,20 @@ from companies.models import Company
 from django.urls import reverse
 from companies.models import Company
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class IndexView(ListView):
+class IndexView(PermissionRequiredMixin,ListView):
     template_name = "jobs/index.html"
     model = Job
     context_object_name = "jobs"
+    permission_required = "jobs.show_job"
 
     def get_queryset(self):
-        company = get_object_or_404(Company, pk=self.kwargs['pk'])
+        pk = self.kwargs.get('pk')
+        company = get_object_or_404(Company, pk=pk)
         return Job.objects.filter(company=company)
+    
 
 class AddView(CreateView):
     template_name = "jobs/create.html"

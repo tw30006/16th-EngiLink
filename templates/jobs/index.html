@@ -10,5 +10,5 @@
         </section>
         
     <button><a href="{% url 'companies:home' %}">會員系統</a></button>
-    <button><a href="{% url 'companies:jobs_create' user.id %}">刊登職缺</a></button>
+    <button><a href="{% url 'companies:jobs_create' user.company.id %}">刊登職缺</a></button>
 {% endblock %}

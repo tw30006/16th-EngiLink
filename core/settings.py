@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'rules',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -201,7 +202,12 @@ AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-AUTHENTICATION_BACKENDS = ['allauth.account.auth_backends.AuthenticationBackend']
+AUTHENTICATION_BACKENDS = [
+    # 'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'rules.permissions.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
