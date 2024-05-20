@@ -1,7 +1,7 @@
 {% extends 'frontend.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-    <h1>Welcome, User!</h1>
+    <h1 class="h-16">Welcome, User!</h1>
     <a href="{% url 'users:detail' user.id %}">View Profile</a>
     <br>
     <form action="{% url 'users:logout' %}" method="post">
