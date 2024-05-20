@@ -6,7 +6,7 @@ class ProjectForm(forms.ModelForm):
     technologies_used= forms.MultipleChoiceField(choices=Project.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple)
     class Meta:
         model = Project
-        exclude = ['deleted_at','created_at']
+        exclude = ['deleted_at','created_at', 'posit']
     
     field_labels = {
         'project_name': '專案名稱',

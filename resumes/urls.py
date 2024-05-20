@@ -7,6 +7,7 @@ from .views import (
     ResumeDeleteView,
     TotalListView,
     GenerateResumePdf,
+    update_positions,
 )
 from educations.views import (
     EducationCreateView,
@@ -37,7 +38,7 @@ urlpatterns = [
     path("delete/<pk>", ResumeDeleteView.as_view(), name="delete"),
     path("resume/<int:resume_id>/pdf/", GenerateResumePdf, name="generate_resume_pdf"),
     path("total/<int:resume_id>", TotalListView.as_view(), name="total"),
-
+    path('update_positions/', update_positions, name='update_positions'),
 
     path("edu/", EducationCreateView.as_view(), name="edu"),
     path("edu/show/", EducationListView.as_view(), name="edu-show"),

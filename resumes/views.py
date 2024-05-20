@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +11,9 @@ from projects.models import Project
 from weasyprint import HTML, CSS
 from django.template.loader import render_to_string
 
+
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 class ResumeArea(TemplateView):
@@ -33,6 +36,8 @@ class ResumeListView(ListView):
         resume = get_object_or_404(Resume, pk=self.kwargs['pk'])
         context['resume'] = resume
         return context
+    
+    
 
 class ResumeCreateView(LoginRequiredMixin, CreateView):
     model = Resume
@@ -83,7 +88,24 @@ class TotalListView(ListView):
             'resume_data':resume_data,
         }
         return total_data
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        resume_id = self.kwargs['resume_id']
+        user = self.request.user
 
+        resume_data = Resume.objects.filter(resume_id=resume_id, user=user)
+        education_data = Education.objects.filter(resume_id=resume_id).order_by('posit')
+        work_data = Work.objects.filter(resume_id=resume_id).order_by('posit')
+        project_data = Project.objects.filter(resume_id=resume_id).order_by('posit')
+
+        context['total_data'] = {
+            'resume_data': resume_data,
+            'education_data': education_data,
+            'work_data': work_data,
+            'project_data': project_data,
+        }
+        return context
 def GenerateResumePdf(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
@@ -103,3 +125,54 @@ def GenerateResumePdf(request, resume_id):
     response = HttpResponse(result, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="resume_{user.username}.pdf"'
     return response
+
+
+@csrf_exempt
+def update_positions(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            positions = data.get('positions', [])
+
+            # 更新数据库中的顺序
+            for item in positions:
+                obj_id = item.get('id')
+                new_position = item.get('position')
+                
+                # 确保 obj_id 和 new_position 是整数
+                try:
+                    obj_id = int(obj_id)
+                    new_position = int(new_position)
+                except ValueError:
+                    return JsonResponse({'status': 'fail', 'error': 'Invalid ID or position'})
+
+                # 根据 ID 获取对象并更新位置
+                if obj_id and new_position is not None:
+                    # 尝试更新 Education、Work 和 Project 对象
+                    try:
+                        education = Education.objects.get(id=obj_id)
+                        education.posit = new_position
+                        education.save()
+                    except Education.DoesNotExist:
+                        pass
+
+                    try:
+                        work = Work.objects.get(id=obj_id)
+                        work.posit = new_position
+                        work.save()
+                    except Work.DoesNotExist:
+                        pass
+
+                    try:
+                        project = Project.objects.get(id=obj_id)
+                        project.posit = new_position
+                        project.save()
+                    except Project.DoesNotExist:
+                        pass
+
+            return JsonResponse({'status': 'success'})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'fail', 'error': 'Invalid JSON'})
+
+    return JsonResponse({'status': 'fail', 'error': 'Invalid request method'})

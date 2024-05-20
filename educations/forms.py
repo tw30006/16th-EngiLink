@@ -25,7 +25,7 @@ class EducationForm(forms.ModelForm):
     
     class Meta:
         model = Education
-        exclude = ['deleted_at','created_at']
+        exclude = ['deleted_at','created_at', 'posit']
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request', None)

@@ -41,7 +41,7 @@ class Resume(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
     picture = models.FileField(upload_to = 'img/',null=True)
-    
+    posit = models.IntegerField(default=0)
 
     objects =ResumeManager() 
 

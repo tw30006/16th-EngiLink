@@ -25,6 +25,7 @@ class Education(models.Model):
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+    posit = models.PositiveIntegerField(default=0)
 
     objects = models.Manager()
     edu_objects = EducationManager()  
