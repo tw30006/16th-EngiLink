@@ -5,8 +5,9 @@ from .views import (
     CompanyLogoutView,
     CompanyDetailView,
     CompanyUpdateView,
-    CompanyRegisterView,
+    CompanyRegisterView, 
     CompanyPasswordChangeView,
+    CompanyListView,
 )
 from jobs import views as jobs
 
@@ -14,6 +15,7 @@ app_name = "companies"
 
 urlpatterns = [
     path("", CompanyHomeView.as_view(), name="home"),
+    path('list/', CompanyListView.as_view(), name='company_list'),
     path("register/", CompanyRegisterView.as_view(), name="register"),
     path("login/", CompanyLoginView.as_view(), name="login"),
     path("logout/", CompanyLogoutView.as_view(), name="logout"),

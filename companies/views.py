@@ -10,6 +10,7 @@ from .forms import CompanyRegisterForm, CompanyUpdateForm
 from users.models import CustomUser
 from .models import Company
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import ListView
 
 
 def get_user_backend(user):
@@ -87,3 +88,8 @@ class CompanyPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
+    
+class CompanyListView(ListView):
+    model = Company
+    template_name = 'companies/list.html'
+    context_object_name = 'companies_list' 
