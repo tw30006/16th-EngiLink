@@ -134,21 +134,19 @@ def update_positions(request):
             data = json.loads(request.body)
             positions = data.get('positions', [])
 
-            # 更新数据库中的顺序
+
             for item in positions:
                 obj_id = item.get('id')
                 new_position = item.get('position')
                 
-                # 确保 obj_id 和 new_position 是整数
                 try:
                     obj_id = int(obj_id)
                     new_position = int(new_position)
                 except ValueError:
                     return JsonResponse({'status': 'fail', 'error': 'Invalid ID or position'})
-
-                # 根据 ID 获取对象并更新位置
+                
                 if obj_id and new_position is not None:
-                    # 尝试更新 Education、Work 和 Project 对象
+                    
                     try:
                         education = Education.objects.get(id=obj_id)
                         education.posit = new_position

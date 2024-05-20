@@ -1,8 +1,7 @@
 import { Sortable } from '@shopify/draggable';
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded event fired');
-    console.log('Draggable:', window.Draggable);
+
     const sortable = new Sortable(document.querySelectorAll('ul'), {
         draggable: 'li',
     });
@@ -30,7 +29,7 @@ function sendPositionUpdate(list) {
     const positions = items.map((item, index) => {
         const id = item.dataset.id;
         console.log(`Item ID: ${id}, Position: ${index + 1}`);
-        return { id: parseInt(id), position: index + 1 }; // Ensure ID is an integer
+        return { id: parseInt(id), position: index + 1 }; 
     });
 
     fetch('/resumes/update_positions/', {
