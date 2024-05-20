@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qjfp6rzdx(c-b!jm$$lm&z392wl&6_fi4x35kmc+c^0w%d&%$@"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -160,7 +160,7 @@ if settings.DEBUG:
             "file": {
                 "level": "DEBUG",
                 "class": "logging.FileHandler",
-                "filename": "logs/development.log",  # Choose a file name and path
+                "filename": "logs/development.log",
             },
         },
         "loggers": {
