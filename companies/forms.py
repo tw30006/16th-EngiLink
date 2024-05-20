@@ -10,11 +10,11 @@ class CompanyRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CompanyRegisterForm, self).__init__(*args, **kwargs)
-        self.initial['user_type'] = 2  # Automatically set user_type for 'company'
+        self.initial['user_type'] = 2  
 
     def save(self, commit=True):
         user = super(CompanyRegisterForm, self).save(commit=False)
-        user.user_type = 2  # Set user_type for 'company'
+        user.user_type = 2  
         if commit:
             user.save()
         return user
