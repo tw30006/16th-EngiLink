@@ -107,7 +107,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -126,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -137,7 +135,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -175,11 +172,8 @@ if settings.DEBUG:
         },
     }
 
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
 CRISPY_TEMPLATE_PACK = 'tailwind'
-
-
 
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 SWEETIFY_DEFAULT_ARGUMENTS = {
@@ -200,15 +194,13 @@ AWS_SECRET_ACCESS_KEY =  AMAZON_CREDENTIAL["SECRET_ACCESS_KEY"]
 AWS_STORAGE_BUCKET_NAME = AMAZON_CREDENTIAL['STORAGE_BUCKET_NAME']
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_REGION_NAME = 'us-west-2'
-
-
+AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-AUTHENTICATION_BACKENDS = [
-    # 'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
+AUTHENTICATION_BACKENDS = ['allauth.account.auth_backends.AuthenticationBackend']
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -224,8 +216,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = int(os.getenv('SITE_ID', 1))
-
-LOGIN_REDIRECT_URL = "/users/"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 

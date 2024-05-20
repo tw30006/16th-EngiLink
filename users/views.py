@@ -90,7 +90,7 @@ class UserPasswordChangeView(PasswordChangeView):
 
 class ImportDataView(View):
     def get(self, request):
-        data = pd.read_csv("data.csv")
+        data = pd.read_csv("static/other/data.csv")
         top_25 = data.head(25)[['公司名稱', '統一編號']]
         for index, row in top_25.iterrows():
             tin = str(row['統一編號']) 

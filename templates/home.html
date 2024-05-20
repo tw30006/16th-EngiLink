@@ -1,9 +1,10 @@
 {% extends "frontend.html" %}
+{% load static %}
 
 {% block content %}
     <div class="flex justify-center items-center h-screen">
         <div class="flex flex-col justify-center items-center">
-            <img src="img/logo.png" class="w-40 mb-4 mr-2"> 
+            <img src="{% static 'img/logo.png' %}" class="w-40 mb-4 mr-2"> 
             <h1 class="text-blue-800 font-bold text-5xl">EngiLink</h1>
             <h4 class="text-xl mb-4">Connect me, just EngiLink</h4>
             <h4 class="text-xl mb-4">媒合英才，盡在EngiLink</h4>
@@ -14,7 +15,7 @@
             </div>
         </div>
         <div class="container-pic">
-            <img src="img/englink.png" class="max-w-lg">
+            <img src="{% static 'img/engilink.png' %}" class="max-w-lg">
         </div>
     </div>
 {% endblock %}

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"tailwindcss -i ./css/style.css -o ./css/output.css --watch\" \"esbuild ./scripts/entry.js --minify --bundle --outfile=./bundle.js --watch\""
+    "dev": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css --watch\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js --watch\"",
+    "build": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js\""
   },
   "keywords": [],
   "author": "",
