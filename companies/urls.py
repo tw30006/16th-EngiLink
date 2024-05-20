@@ -7,7 +7,7 @@ from .views import (
     CompanyUpdateView,
     CompanyRegisterView, 
     CompanyPasswordChangeView,
-    CompanyListView,
+    CompanyListView
 )
 from jobs import views as jobs
 
