@@ -127,7 +127,6 @@ def GenerateResumePdf(request, resume_id):
     return response
 
 
-@csrf_exempt
 def update_positions(request):
     if request.method == 'POST':
         try:
