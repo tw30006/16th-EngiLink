@@ -17,10 +17,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG") == "True"
-DEBUG = "True"
+DEBUG = True
 
-MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
@@ -160,9 +160,18 @@ SWEETIFY_DEFAULT_ARGUMENTS = {
     "cancelButtonText": "Cancel",
 }
 
-AWS_ACCESS_KEY_ID = os.getenv("ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME")
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AMAZON_CREDENTIAL = {
+    "ACCESS_KEY_ID": os.getenv("ACCESS_KEY_ID"),
+    "SECRET_ACCESS_KEY": os.getenv("SECRET_ACCESS_KEY"),
+    "STORAGE_BUCKET_NAME": "engilink",
+}
+AWS_ACCESS_KEY_ID = AMAZON_CREDENTIAL["ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = AMAZON_CREDENTIAL["SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = AMAZON_CREDENTIAL["STORAGE_BUCKET_NAME"]
+AWS_QUERYSTRING_AUTH = False
 AWS_S3_REGION_NAME = os.getenv("S3_REGION_NAME")
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False

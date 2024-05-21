@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ShowView, EditView, JobDeleteView,SetPublishView
+from .views import ShowView, EditView, JobDeleteView, SetPublishView
 
 app_name = "jobs"
 

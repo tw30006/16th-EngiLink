@@ -13,11 +13,11 @@ class Work(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
     posit = models.PositiveIntegerField(default=0)
-    objects = models.Manager()  
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.name}'s Resume ({self.resume_id})"
 
     def soft_delete(self):
-        self.deleted_at = timezone.now() 
+        self.deleted_at = timezone.now()
         self.save()
-    

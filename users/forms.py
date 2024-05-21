@@ -6,13 +6,14 @@ from .models import CustomUser
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password1', 'password2')
-    
+        fields = ("username", "email", "password1", "password2")
+
+
 class UserUpdateForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email']
+        fields = ["username", "email"]
 
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
-        del self.fields['password']
+        del self.fields["password"]

@@ -2,19 +2,21 @@ from django.db import models
 from resumes.models import Resume
 from django.utils import timezone
 
+
 class EducationManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at=None)
 
+
 class Education(models.Model):
     DEGREE_CHOICES = [
-        ('1', '高中職以下'),
-        ('2', '高中職'),
-        ('3', '專科'),
-        ('4', '學士'),
-        ('5', '碩士'),
-        ('6', '博士'),
-        ('7', '肄業'),
+        ("1", "高中職以下"),
+        ("2", "高中職"),
+        ("3", "專科"),
+        ("4", "學士"),
+        ("5", "碩士"),
+        ("6", "博士"),
+        ("7", "肄業"),
     ]
 
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
@@ -28,12 +30,12 @@ class Education(models.Model):
     posit = models.PositiveIntegerField(default=0)
 
     objects = models.Manager()
-    edu_objects = EducationManager()  
+    edu_objects = EducationManager()
 
     def __str__(self):
         return f"{self.name}'s Resume ({self.Resume_id})"
 
     def delete(self, *args, **kwargs):
-        self.deleted_at = timezone.now()  
+        self.deleted_at = timezone.now()
         self.save()
         super(Education, self).delete(*args, **kwargs)

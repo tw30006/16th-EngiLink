@@ -22,6 +22,7 @@ class IndexView(PermissionRequiredMixin,ListView):
         return Job.objects.filter(company=company)
     
 
+
 class AddView(CreateView):
     template_name = "jobs/create.html"
     model = Job
@@ -29,15 +30,15 @@ class AddView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
+        kwargs["request"] = self.request
         return kwargs
-    
+
     def form_valid(self, form):
-        form.instance.company = get_object_or_404(Company, pk=self.kwargs.get('pk'))
-        self.success_url = reverse('companies:jobs', kwargs={'pk': form.instance.company.pk})
+        form.instance.company = get_object_or_404(Company, pk=self.kwargs.get("pk"))
+        self.success_url = reverse(
+            "companies:jobs", kwargs={"pk": form.instance.company.pk}
+        )
         return super().form_valid(form)
-
-
 
 
 class ShowView(DetailView):
@@ -53,25 +54,27 @@ class EditView(UpdateView):
     context_object_name = "job"
 
     def form_valid(self, form):
-        pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs/" 
+        pk = self.kwargs.get("pk")
+        self.success_url = f"/companies/{pk}/jobs/"
         return super().form_valid(form)
+
 
 class JobDeleteView(DeleteView):
     model = Job
     success_url = "companies/<pk>/jobs/"
 
     def form_valid(self, form):
-        pk = self.kwargs.get('pk')
-        self.success_url = f"/companies/{pk}/jobs/" 
+        pk = self.kwargs.get("pk")
+        self.success_url = f"/companies/{pk}/jobs/"
         return super().form_valid(form)
 
+
 class SetPublishView(DetailView):
-    model=Job
+    model = Job
     context_object_name = "job"
 
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.is_published = not self.object.is_published
         self.object.save()
-        return render(request,"jobs/job.html",{"job":self.object})
+        return render(request, "jobs/job.html", {"job": self.object})
