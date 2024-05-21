@@ -48,6 +48,19 @@ class UserHomeView(TemplateView):
         context['jobs'] = jobs
         return context
 
+class UserJobsView(TemplateView):
+    template_name = 'users/jobs.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_keyword = self.request.GET.get('jobs')
+        if search_keyword:
+            jobs = Job.objects.filter(title__icontains=search_keyword).select_related("company")
+        else:
+            jobs = Job.objects.select_related("company").all()
+        context['jobs'] = jobs       
+        return context
+
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
     def get_success_url(self):
