@@ -25,8 +25,12 @@
                 最新職缺：
                 {% for job in jobs %}
                     <li class="ml-2">{{ job.title }}</li>
+                    <form action="{% url 'users:collect' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="job_id" value="{{ job.id }}">
+                        <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">收藏</button>
+                    </form>
                 {% endfor %}
-                <button class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">收藏</button>
             </ul>
         </div>
         {% endfor %}

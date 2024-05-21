@@ -1,0 +1,14 @@
+{% extends 'frontend.html' %}
+{% block content %}
+{% if collected_jobs %}
+    <h2>你收藏的職缺</h2>
+    <ul>
+        {% for job in collected_jobs %}
+            <li>職缺: {{ job.title }}</li>
+            <li>公司名稱: {{ job.company.company_name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>你還沒有收藏任何職缺。</p>
+{% endif %}
+{% endblock %}

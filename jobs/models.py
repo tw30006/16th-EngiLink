@@ -5,7 +5,8 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 from companies.models import Company
 import re
-from companies.models import Company
+from users.models import CustomUser
+
 
 class JobManager(models.Manager):
     def get_queryset(self):
@@ -33,6 +34,7 @@ class Job(models.Model):
         verbose_name="openings",
     )
     resumes = models.ManyToManyField(Resume, through="Job_Resume")
+    users = models.ManyToManyField(CustomUser, through="User_Job")
     experience= models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(50,message="年資必須低於50")])
     salary = models.PositiveIntegerField(blank=True,validators=[MinValueValidator(0)])
     address = models.CharField(max_length=250,validators=[validate_taiwan_address])
@@ -52,3 +54,9 @@ class Job_Resume(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class User_Job(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    collect = models.BooleanField(default=False)
+    

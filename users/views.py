@@ -13,7 +13,8 @@ from django.conf import settings
 from companies.models import Company
 from jobs.models import Job
 from companies.models import Company
-
+from django.shortcuts import get_object_or_404, redirect, render
+from jobs.models import User_Job
 
 class UserRegisterView(FormView):
     template_name = 'users/register.html'
@@ -96,3 +97,34 @@ class UserPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
+    
+
+class ImportDataView(View):
+    def get(self, request):
+        data = pd.read_csv("static/other/data.csv")
+        top_25 = data.head(25)[['公司名稱', '統一編號']]
+        for index, row in top_25.iterrows():
+            tin = str(row['統一編號']) 
+            if len(tin) < 8:
+                tin = tin.zfill(8)
+            company = Company.objects.create(
+                company_name=row['公司名稱'],
+                tin=tin,
+            )  
+        return HttpResponse("資料已成功導入到資料庫")
+    
+class CollectJobView(LoginRequiredMixin, View):
+    def post(self, request):
+        job_id = request.POST.get("job_id")
+        job = get_object_or_404(Job, id=job_id)
+        user_job, created = User_Job.objects.get_or_create(job=job, user=request.user, defaults={'collect': True})
+        
+        if not created:
+            user_job.collect = True
+            user_job.save()
+        
+        return redirect("users:home")
+    
+    def get(self, request):
+        collected_jobs = Job.objects.filter(user_job__user=request.user, user_job__collect=True)
+        return render(request, "users/collect.html", {"collected_jobs": collected_jobs})

@@ -8,6 +8,7 @@ from .views import (
     UserRegisterView, 
     UserPasswordChangeView,
     UserJobsView,
+    CollectJobView,
 )
 from resumes import views as resumes
 
@@ -23,4 +24,5 @@ urlpatterns = [
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
     path("jobs/", UserJobsView.as_view(), name="jobs")
+    path("collect/", CollectJobView.as_view(), name="collect"),
 ]

@@ -8,6 +8,3 @@ class CustomUser(AbstractUser):
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
     email = models.EmailField(unique=True, blank=False)
-
-    
-    
