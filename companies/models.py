@@ -14,7 +14,6 @@ class Company(models.Model):
     area = models.CharField(max_length=50, default='')
     type = models.CharField(max_length=50, default='')
 
-
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
