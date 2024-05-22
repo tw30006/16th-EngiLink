@@ -15,6 +15,7 @@ from jobs.models import Job
 from companies.models import Company
 from django.shortcuts import get_object_or_404, redirect, render
 from jobs.models import User_Job
+from django.views import View
 
 
 class UserRegisterView(FormView):
