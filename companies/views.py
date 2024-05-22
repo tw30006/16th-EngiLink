@@ -88,7 +88,7 @@ class CompanyPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
-    
+
 class CompanyListView(ListView):
     model = Company
     template_name = 'companies/list.html'
