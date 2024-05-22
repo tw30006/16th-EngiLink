@@ -12,9 +12,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from companies.models import Company
 from jobs.models import Job
-import pandas as pd
-from django.views import View
-from django.http import HttpResponse
 from companies.models import Company
 
 
@@ -86,18 +83,3 @@ class UserPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
-    
-
-class ImportDataView(View):
-    def get(self, request):
-        data = pd.read_csv("static/other/data.csv")
-        top_25 = data.head(25)[['公司名稱', '統一編號']]
-        for index, row in top_25.iterrows():
-            tin = str(row['統一編號']) 
-            if len(tin) < 8:
-                tin = tin.zfill(8)
-            company = Company.objects.create(
-                company_name=row['公司名稱'],
-                tin=tin,
-            )  
-        return HttpResponse("資料已成功導入到資料庫")
