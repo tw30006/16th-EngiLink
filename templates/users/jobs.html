@@ -1,4 +1,4 @@
-{% extends 'frontend.html' %}
+{% comment %} {% extends 'frontend.html' %} {% endcomment %}
 {% block content %}
 <form action="{% url 'users:jobs' %}" method="get" class="mb-4">
     <input type="text" name="jobs" placeholder="搜尋職缺名稱" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
