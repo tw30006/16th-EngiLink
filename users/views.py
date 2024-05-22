@@ -42,13 +42,16 @@ class UserHomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         companies = Company.objects.all()
         jobs = Job.objects.select_related("company").all()
+        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
         search_keyword = self.request.GET.get("q")
+                
         if search_keyword:
             companies = Company.objects.filter(company_name__icontains=search_keyword)
         else:
             companies = Company.objects.all()
         context["companies"] = companies
         context["jobs"] = jobs
+        context["user_jobs"] = user_jobs
         return context
 
 class UserJobsView(TemplateView):
@@ -109,16 +112,14 @@ class CollectJobView(LoginRequiredMixin, View):
     def post(self, request):
         job_id = request.POST.get("job_id")
         job = get_object_or_404(Job, id=job_id)
-        user_job, created = User_Job.objects.get_or_create(
-            job=job, user=request.user, defaults={"collect": True}
-        )
-
-        if not created:
-            user_job.collect = not user_job.collect
-            user_job.save()
-
+        user_job = User_Job.objects.filter(user=request.user, job=job)
+        if user_job.exists():
+            user_job.delete()
+        else:
+            user_job = User_Job.objects.create(job=job, user=request.user)
         return redirect("users:home")
 
     def get(self, request):
-        collected_jobs = Job.objects.filter(user_job__user=request.user, user_job__collect=True)
-        return render(request, "users/collect.html", {"collected_jobs": collected_jobs})
+        jobs = Job.objects.select_related('company').all()
+        user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
+        return render(request, "users/collect.html", {'jobs': jobs, 'user_jobs': user_jobs})
