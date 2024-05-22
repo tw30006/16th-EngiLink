@@ -2,7 +2,7 @@
 name = "EngiLink"
 version = "0.1.0"
 description = ""
-authors = ["andyhuangdev <ah052691@icloud.com>"]
+authors = ["andyhuangdev <https://github.com/andyhuangdev>", "b89k57w62 <https://github.com/b89k57w62>", "ula0218 <https://github.com/ula0218>", "tw30006 <https://github.com/tw30006>", "yuling515 <https://github.com/yuling515>"]
 readme = "README.md"
 package-mode = false
 
