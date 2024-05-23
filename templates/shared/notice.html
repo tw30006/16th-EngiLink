@@ -1,0 +1,6 @@
+{% load static %}
+<script defer src="{% static 'js/bundle.js' %}"></script>
+
+{% for message in messages %}
+    <div class="notice-message" data-message="{{ message|escapejs }}" data-tags="{{ message.tags }}"></div>
+{% endfor %} 

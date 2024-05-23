@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,7 +13,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from companies.models import Company
 from jobs.models import Job
-from companies.models import Company
 from django.shortcuts import get_object_or_404, redirect, render
 from jobs.models import User_Job
 from django.views import View
@@ -25,6 +25,7 @@ class UserRegisterView(FormView):
 
     def form_valid(self, form):
         user = form.save()
+        messages.success(self.request, "註冊成功")
         self.send_welcome_email(user.email)
         return super().form_valid(form)
 
@@ -68,8 +69,17 @@ class UserJobsView(TemplateView):
         context['jobs'] = jobs       
         return context
 
+
 class UserLoginView(LoginView):
     template_name = "users/login.html"
+
+    def form_valid(self, form):
+        messages.success(self.request, "登入成功")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "登入失敗")
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy("users:home")
@@ -77,6 +87,10 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy("home")
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "登出成功")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -98,6 +112,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return CustomUser.objects.filter(user_type=1, id=self.request.user.id)
+
+    def form_valid(self, form):
+        messages.success(self.request, "更新成功")
+        return super().form_valid(form)
 
 
 class UserPasswordChangeView(PasswordChangeView):

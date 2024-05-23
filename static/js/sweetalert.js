@@ -1,4 +1,17 @@
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import Alpine from 'alpinejs';
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('notice', () => ({
+        
+        open: false,
+    
+        toggle() {
+            console.log(this);
+            this.open = ! this.open
+        },
+    }))
+})
 
 const Toast = Swal.mixin({
     toast: true,
@@ -22,4 +35,6 @@ const Toast = Swal.mixin({
 });
 
 
+
 window.Swal = Swal
+window.Toast = Toast

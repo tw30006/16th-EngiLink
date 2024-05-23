@@ -1,4 +1,5 @@
-from django.contrib.auth import logout, login,get_backends
+from django.contrib import messages
+from django.contrib.auth import logout, login, get_backends
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView, ListView
@@ -15,8 +16,7 @@ def get_user_backend(user):
     for backend in get_backends():
         if backend.get_user(user.pk) is not None:
             return backend
-    raise Exception('No backend found for user')
-
+    raise Exception("No backend found for user")
 
 
 class CompanyRegisterView(FormView):
@@ -26,10 +26,14 @@ class CompanyRegisterView(FormView):
     def form_valid(self, form):
         user = form.save()
         backend = get_user_backend(user)
-        login(self.request, user,backend=backend.__module__ + '.' + backend.__class__.__name__)
+        messages.success(self.request, "註冊成功")
+        login(
+            self.request,
+            user,
+            backend=backend.__module__ + "." + backend.__class__.__name__,
+        )
         return super(CompanyRegisterView, self).form_valid(form)
 
-    
     def get_success_url(self):
         user = self.request.user
         company = Company.objects.filter(custom_user=user).first()
@@ -41,12 +45,21 @@ class CompanyRegisterView(FormView):
             return reverse_lazy("companies:home")
 
 
-class CompanyHomeView(PermissionRequiredMixin,TemplateView):
-    template_name = 'companies/home.html'
+class CompanyHomeView(PermissionRequiredMixin, TemplateView):
+    template_name = "companies/home.html"
     permission_required = "companies.home_company"
+
 
 class CompanyLoginView(LoginView):
     template_name = "companies/login.html"
+
+    def form_valid(self, form):
+        messages.success(self.request, "登入成功")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "登入失敗")
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy("companies:home")
@@ -55,8 +68,12 @@ class CompanyLoginView(LoginView):
 class CompanyLogoutView(LogoutView):
     next_page = reverse_lazy("home")
 
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "登出成功")
+        return super().dispatch(request, *args, **kwargs)
 
-class CompanyDetailView(PermissionRequiredMixin,LoginRequiredMixin, DetailView):
+
+class CompanyDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     model = CustomUser
     template_name = "companies/detail.html"
     context_object_name = "user"
@@ -74,6 +91,14 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     success_url = "/companies/"
     login_url = "/companies/"
 
+    def form_valid(self, form):
+        messages.success(self.request, "更新成功")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "更新失敗")
+        return super().form_invalid(form)
+
     def get_queryset(self):
         return CustomUser.objects.filter(user_type=2, id=self.request.user.id)
 
@@ -83,6 +108,7 @@ class CompanyPasswordChangeView(PasswordChangeView):
     success_url = "/companies/"
 
     def form_valid(self, form):
+        messages.success(self.request, "更新成功")
         response = super().form_valid(form)
         logout(self.request)
         return response

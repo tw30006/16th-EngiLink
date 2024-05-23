@@ -1,7 +1,7 @@
 const esbuild = require('esbuild');
 
 esbuild.build({
-    entryPoints: ["scripts/entry.js"],
+    entryPoints: ["static/js/entry.js"],
     bundle: true,
-    outfile: "bundle.js",
+    outfile: "static/js/bundle.js",
 }).catch(() => process.exit(1));

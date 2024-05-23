@@ -1,3 +1,4 @@
+from django.contrib import messages
 from .forms import WorkForm
 from .models import Work
 from django.urls import reverse_lazy
@@ -12,6 +13,7 @@ class WorkCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        messages.success(self.request, "新增成功")
         return super().form_valid(form)
 
 
@@ -32,9 +34,14 @@ class WorkUpdateView(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        messages.success(self.request, "更新成功")
         return super().form_valid(form)
 
 
 class WorkDeleteView(DeleteView):
     model = Work
     success_url = reverse_lazy("resumes:work-show")
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "刪除成功")
+        return super().dispatch(request, *args, **kwargs)

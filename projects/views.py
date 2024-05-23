@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from .models import Project
@@ -11,6 +12,7 @@ class ProjectCreateView(CreateView):
     success_url = reverse_lazy("resumes:project-show")
 
     def form_valid(self, form):
+        messages.success(self.request, "新增成功")
         self.object = form.save()
         return super().form_valid(form)
 
@@ -31,6 +33,7 @@ class ProjectUpdateView(UpdateView):
     success_url = reverse_lazy("resumes:project-show")
 
     def form_valid(self, form):
+        messages.success(self.request, "更新成功")
         self.object = form.save()
         return super().form_valid(form)
 
@@ -38,3 +41,7 @@ class ProjectUpdateView(UpdateView):
 class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy("resumes:project-show")
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "刪除成功")
+        return super().dispatch(request, *args, **kwargs)

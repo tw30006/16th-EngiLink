@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -18,14 +19,11 @@ from weasyprint import HTML, CSS
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-
-from django.views.decorators.csrf import csrf_exempt
 import json
 
 
-
-class ResumeArea(PermissionRequiredMixin,TemplateView):
-    template_name = 'resumes/area.html'
+class ResumeArea(PermissionRequiredMixin, TemplateView):
+    template_name = "resumes/area.html"
     permission_required = "resumes.show_job"
 
     def get_context_data(self, **kwargs):
@@ -61,6 +59,7 @@ class ResumeCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "新增成功")
         return super().form_valid(form)
 
 
@@ -71,13 +70,19 @@ class ResumeUpdateView(UpdateView):
     success_url = reverse_lazy("resumes:index")
 
     def form_valid(self, form):
-        form.save()
+        resume = form.save(commit=False)
+        resume.save()
+        messages.success(self.request, "更新成功")
         return super().form_valid(form)
 
 
 class ResumeDeleteView(DeleteView):
     model = Resume
     success_url = reverse_lazy("resumes:index")
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "刪除成功")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class TotalListView(ListView):
@@ -189,5 +194,4 @@ def update_positions(request):
 
         except json.JSONDecodeError:
             return JsonResponse({"status": "fail", "error": "Invalid JSON"})
-
     return JsonResponse({"status": "fail", "error": "Invalid request method"})
