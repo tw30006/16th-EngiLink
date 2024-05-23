@@ -64,8 +64,7 @@ class ResumeUpdateView(UpdateView):
     success_url = reverse_lazy('resumes:index')
 
     def form_valid(self, form):
-        resume = form.save(commit=False)
-        resume.save()
+        form.save()
         return super().form_valid(form)
 
 class ResumeDeleteView(DeleteView):
