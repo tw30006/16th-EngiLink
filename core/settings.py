@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "rules",
+    'django.contrib.humanize',
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"

@@ -12,7 +12,7 @@
                         <a href="{% url 'companies:company_list' %}" class="text-sm duration-500 hover:text-blue-600">找公司</a>
                     </li>
                     <li class="px-1">
-                        <a href="{% url 'users:jobs'%}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
+                        <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
                     </li>
                     <li class="px-1">
                         <a href="#" class="text-sm duration-500 hover:text-blue-600 ">履歷工具</a>
@@ -82,7 +82,7 @@
                             <a href="#" class="text-sm duration-500 hover:text-blue-600">找公司</a>
                         </li>
                         <li class="px-1">
-                            <a href="#" class="text-sm duration-500 hover:text-blue-600">找工作</a>
+                            <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
                         </li>
                         <li class="px-1">
                             <a href="#" class="text-sm duration-500 hover:text-blue-600 ">履歷工具</a>
@@ -102,7 +102,7 @@
             <nav class="lg:hidden" aria-label="Global" id="mobile-menu"     :hidden='!openMenu' md:hidden>
             <div class="px-2 pt-2 pb-3 space-y-1">
               <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找公司</a>
-              <a href="{% url 'users:jobs'%}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">找工作</a>
+              <a href="{% url 'jobs:job_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">找工作</a>
             </div>
             </nav>
         </header>

@@ -5,9 +5,10 @@ from .models import Job
 from .forms import JobForm
 from companies.models import Company
 from django.urls import reverse
-from companies.models import Company
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views import View
+from django.shortcuts import render
 
 
 class IndexView(PermissionRequiredMixin,ListView):
@@ -77,4 +78,28 @@ class SetPublishView(DetailView):
         self.object = self.get_object()
         self.object.is_published = not self.object.is_published
         self.object.save()
-        return render(request, "jobs/job.html", {"job": self.object})
+        return render(request, "jobs/job.html", {"job":self.object})
+
+class JobListView(ListView):
+    model = Job
+    template_name = 'jobs/list.html'
+    context_object_name = 'jobs'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        job_list = []
+        for job in context['jobs']:
+            company = job.company
+            job_info = {
+                'title': job.title,
+                'company_name': company.company_name,
+                # 'company_logo_url': company.logo.url if company.logo else '',
+                # 'company_banner_url': company.banner.url if company.banner else '',
+                'address': job.address,
+                'salary': job.salary,
+                'description': job.description,
+                'id': job.id
+            }
+            job_list.append(job_info)
+        context['jobs'] = job_list
+        return context
