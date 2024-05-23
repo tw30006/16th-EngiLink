@@ -1,24 +1,31 @@
 {% extends 'frontend.html' %}
 {% load socialaccount %}
 {% block content %}
-    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg  pt-16">
-        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full w-300px'>
-            <h2 >User Login</h2>
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
+        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+            <h2>使用者登入</h2>
         </div>
-        <div class="task-items-wrapper flex flex-col  w-full">
+        <div class="task-items-wrapper flex flex-col w-full">
             <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
-                <form method="post">
+                <form method="post" class="w-full max-w-lg">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="flex justify-end py-2">
-                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">Login</button>
+                    <div class="mb-4">
+                        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">帳號：</label>
+                        <input type="text" name="username" autofocus required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
-                    <small><a href="{% provider_login_url 'google' %}">Google帳號登入</a></small>
-                    <br>
-                    <small><p>Don't have an account? <a href="{% url 'users:register' %}">Register here</a>.</p></small>
+                    <div class="mb-6">
+                        <label for="id_password" class="block text-gray-700 text-sm font-bold mb-2">密碼：</label>
+                        <input type="password" name="password" required id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">登入</button>
+                    </div>
                 </form>
             </div>
-            <br>
         </div>
+        <br>
+        <small><a href="{% provider_login_url 'google' %}" class="text-blue-600 hover:underline">Google帳號登入</a></small>
+        <br>
+        <small><a href="{% url 'users:register' %}" class="text-blue-600 hover:underline">前往註冊</a></small>
     </div>
 {% endblock %}
