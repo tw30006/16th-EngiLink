@@ -7,7 +7,6 @@ from .views import (
     UserUpdateView,
     UserRegisterView, 
     UserPasswordChangeView,
-    ImportDataView,
 )
 from resumes import views as resumes
 
