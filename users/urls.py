@@ -8,7 +8,6 @@ from .views import (
     UserRegisterView,
     UserPasswordChangeView,
     UserJobsView,
-    CollectJobView,
     ApplyForJobCreateView,
     ApplyForJobListView,
 )
@@ -32,5 +31,4 @@ urlpatterns = [
     path('<pk>/applications/', ApplyForJobListView.as_view(), name='applications'),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
     path("jobs/", UserJobsView.as_view(), name="jobs"),
-    path("collect/", CollectJobView.as_view(), name="collect"),
 ]
