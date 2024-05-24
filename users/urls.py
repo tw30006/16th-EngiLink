@@ -27,6 +27,6 @@ urlpatterns = [
     path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
-    path("jobs/", UserJobsView.as_view(), name="jobs")
+    path("jobs/", UserJobsView.as_view(), name="jobs"),
     path("collect/", CollectJobView.as_view(), name="collect"),
 ]
