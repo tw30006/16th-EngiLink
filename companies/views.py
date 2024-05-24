@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login,get_backends
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
@@ -9,8 +9,6 @@ from django.urls import reverse_lazy
 from .forms import CompanyRegisterForm, CompanyUpdateForm
 from users.models import CustomUser
 from .models import Company
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views.generic import ListView
 
 
 def get_user_backend(user):
