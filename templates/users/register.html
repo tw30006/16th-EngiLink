@@ -1,10 +1,21 @@
 {% extends 'frontend.html' %}
 {% block content %}
-<h1>User Registration</h1>
-<form method="post" action="{% url 'users:register' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
-<a href="{% url 'users:login' %}">Already have an account? Log in here</a>
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
+        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+            <h2>User Registration</h2>
+        </div>
+        <div class="task-items-wrapper flex flex-col w-full">
+            <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+                <form method="post" action="{% url 'users:register' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="flex justify-end py-2">
+                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">Register</button>
+                    </div>
+                </form>
+                <small><a href="{% url 'users:login' %}">Already have an account? Log in here</a></small>
+            </div>
+            <br>
+        </div>
+    </div>
 {% endblock %}

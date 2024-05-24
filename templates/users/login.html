@@ -1,14 +1,24 @@
 {% extends 'frontend.html' %}
 {% load socialaccount %}
 {% block content %}
-    <h2 class="h-16">User Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <br>
-    <a href="{% provider_login_url 'google' %}">Google帳號登入</a>
-    <br>
-    <p>Don't have an account? <a href="{% url 'users:register' %}">Register here</a>.</p>
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg  pt-16">
+        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full w-300px'>
+            <h2 >User Login</h2>
+        </div>
+        <div class="task-items-wrapper flex flex-col  w-full">
+            <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="flex justify-end py-2">
+                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">Login</button>
+                    </div>
+                    <small><a href="{% provider_login_url 'google' %}">Google帳號登入</a></small>
+                    <br>
+                    <small><p>Don't have an account? <a href="{% url 'users:register' %}">Register here</a>.</p></small>
+                </form>
+            </div>
+            <br>
+        </div>
+    </div>
 {% endblock %}
