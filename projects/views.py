@@ -3,24 +3,26 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from .models import Project
 from .forms import ProjectForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(PermissionRequiredMixin,CreateView):
     model = Project
     form_class = ProjectForm
-    template_name = "projects/create.html"
-    success_url = reverse_lazy("resumes:project-show")
+    template_name = 'projects/create.html'
+    success_url = reverse_lazy('resumes:project-show')
+    permission_required = "user_can_show"
 
     def form_valid(self, form):
         messages.success(self.request, "新增成功")
         self.object = form.save()
         return super().form_valid(form)
-
-
-class ProjectListView(ListView):
+    
+class ProjectListView(PermissionRequiredMixin,ListView):
     model = Project
-    template_name = "projects/index.html"
-    context_object_name = "projects"
+    template_name = 'projects/index.html'
+    context_object_name = 'projects' 
+    permission_required = "user_can_show"
 
     def get_queryset(self):
         return Project.objects.filter(resume__user=self.request.user)
@@ -31,6 +33,7 @@ class ProjectUpdateView(UpdateView):
     form_class = ProjectForm
     template_name = "projects/update.html"
     success_url = reverse_lazy("resumes:project-show")
+
 
     def form_valid(self, form):
         messages.success(self.request, "更新成功")

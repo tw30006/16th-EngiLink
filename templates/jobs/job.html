@@ -7,7 +7,7 @@
 <div class="flex">
     <form>
         {% csrf_token %}
-        <button type="button" hx-post="{% url 'jobs:setpublish' job.id %}" hx-swap="innerHTML" hx-target="#publish-{{ job.id }}" class="{% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %}">
+        <button type="button" hx-post="{% url 'jobs:publish' job.id %}" hx-swap="innerHTML" hx-target="#publish-{{ job.id }}" class="{% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %}">
             {{ job.is_published | yesno:"刊登中,已下架" }}
         </button>
     </form>

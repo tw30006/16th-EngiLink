@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login,authenticate
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import redirect,get_object_or_404,render
@@ -8,24 +8,18 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
-from django.conf import settings
 from resumes.models import Resume 
 from companies.models import Company
-from jobs.models import Job,User_Job
-from django.views import View
+from jobs.models import Job, User_Job, Job_Resume
 from mailchimp3 import MailChimp
-
-
-from jobs.models import Job,Job_Resume
-from jobs.models import Job,Job_Resume,User_Job
-from .forms import UserRegisterForm, UserUpdateForm
+from django.http import HttpResponseRedirect
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
@@ -51,9 +45,9 @@ class UserRegisterView(FormView):
             'status': 'subscribed',
         })
 
-
-class UserHomeView(TemplateView):
-    template_name = "users/home.html"
+class UserHomeView(PermissionRequiredMixin,TemplateView):
+    template_name = 'users/home.html'
+    permission_required = "user_can_show"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -132,10 +126,16 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class UserPasswordChangeView(PasswordChangeView):
+class UserPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
     template_name = "users/password_change_form.html"
     success_url = "/users/"
+    permission_required = "user_can_show"
 
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('users:login'))
+        return super().handle_no_permission() 
+    
     def form_valid(self, form):
         response = super().form_valid(form)
         logout(self.request)

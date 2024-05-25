@@ -2,7 +2,7 @@
 {% block content %}
 {% if user.is_authenticated %}
     <h1>Welcome, {{request.user}}!</h1>
-    <a href="{% url 'companies:detail' user.id %}">View Profile</a>
+    <a href="{% url 'companies:detail' user.company.id %}">View Profile</a>
     <br>
     <form action="{% url 'companies:logout' %}" method="post">
         {% csrf_token %}

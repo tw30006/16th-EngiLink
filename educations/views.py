@@ -3,13 +3,14 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from .models import Education
 from .forms import EducationForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
-
-class EducationCreateView(CreateView):
+class EducationCreateView(PermissionRequiredMixin,CreateView):
     model = Education
     form_class = EducationForm
-    template_name = "educations/create.html"
-    success_url = reverse_lazy("resumes:edu-show")
+    template_name = 'educations/create.html'
+    success_url = reverse_lazy('resumes:edu-show')
+    permission_required = "user_can_show"
 
     def form_valid(self, form):
         messages.success(self.request, "新增成功")
@@ -17,10 +18,11 @@ class EducationCreateView(CreateView):
         return super().form_valid(form)
 
 
-class EducationListView(ListView):
+class EducationListView(PermissionRequiredMixin,ListView):
     model = Education
-    template_name = "educations/index.html"
-    context_object_name = "educations"
+    template_name = 'educations/index.html'
+    context_object_name = 'educations' 
+    permission_required = "user_can_show"
 
     def get_queryset(self):
         return Education.objects.filter(resume__user=self.request.user)

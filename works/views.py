@@ -3,13 +3,15 @@ from .forms import WorkForm
 from .models import Work
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class WorkCreateView(CreateView):
+class WorkCreateView(PermissionRequiredMixin,CreateView):
     model = Work
     form_class = WorkForm
-    template_name = "works/create.html"
-    success_url = reverse_lazy("resumes:work-show")
+    template_name = 'works/create.html'
+    success_url = reverse_lazy('resumes:work-show')
+    permission_required = "user_can_show"
 
     def form_valid(self, form):
         self.object = form.save()
@@ -17,10 +19,11 @@ class WorkCreateView(CreateView):
         return super().form_valid(form)
 
 
-class WorkListView(ListView):
+class WorkListView(PermissionRequiredMixin,ListView):
     model = Work
-    template_name = "works/index.html"
-    context_object_name = "works"
+    template_name = 'works/index.html'
+    context_object_name = 'works' 
+    permission_required = "user_can_show"
 
     def get_queryset(self):
         return Work.objects.filter(resume__user=self.request.user)
@@ -31,6 +34,7 @@ class WorkUpdateView(UpdateView):
     form_class = WorkForm
     template_name = "works/update.html"
     success_url = reverse_lazy("resumes:work-show")
+
 
     def form_valid(self, form):
         self.object = form.save()

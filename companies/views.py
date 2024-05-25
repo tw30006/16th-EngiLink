@@ -1,21 +1,20 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import View
 from django.views.generic import TemplateView, ListView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
 from users.models import CustomUser
 from .models import Company
 from jobs.models import Job_Resume
-from .forms import CompanyRegisterForm, CompanyUpdateForm
-
+from .forms import CompanyRegisterForm, CompanyUpdateForm 
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+import rules
 
 
 def get_user_backend(user):
@@ -45,19 +44,20 @@ class CompanyRegisterView(FormView):
         company = Company.objects.filter(custom_user=user).first()
 
         if user.user_type == 2 and company is None:
-            print("Redirecting to companies:update")
-            return reverse_lazy("companies:update", kwargs={"pk": user.pk})
+            return reverse_lazy('companies:update',kwargs={'pk': user.pk})
         else:
             return reverse_lazy("companies:home")
 
 
-class CompanyHomeView(PermissionRequiredMixin, TemplateView):
-    template_name = "companies/home.html"
-    permission_required = "companies.home_company"
+class CompanyHomeView(PermissionRequiredMixin,TemplateView):
+    template_name = 'companies/home.html'
+    permission_required = "company_can_show"
+
 
 
 class CompanyLoginView(LoginView):
-    template_name = "companies/login.html"
+    template_name = 'companies/login.html'
+    
 
     def form_valid(self, form):
         messages.success(self.request, "登入成功")
@@ -71,31 +71,40 @@ class CompanyLoginView(LoginView):
         return reverse_lazy("companies:home")
 
 
-class CompanyLogoutView(LogoutView):
-    next_page = reverse_lazy("home")
+class CompanyLogoutView(PermissionRequiredMixin,LogoutView):
+    next_page = reverse_lazy('home')
+    permission_required = "company_can_show"
 
     def dispatch(self, request, *args, **kwargs):
         messages.success(self.request, "登出成功")
         return super().dispatch(request, *args, **kwargs)
 
-
 class CompanyDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
-    model = CustomUser
+    model = Company
     template_name = "companies/detail.html"
-    context_object_name = "user"
+    context_object_name = "company"
     login_url = "/companies/"
-    permission_required = "companies.detail_company"
+    permission_required = "company_can_show"
 
-    def get_queryset(self):
-        return CustomUser.objects.filter(user_type=2)
+    def dispatch(self, request, *args, **kwargs):
+        self.company = self.get_object()
+        if not rules.test_rule('is_current_company', request.user, self.company):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.object.custom_user
+        return context
 
-class CompanyUpdateView(LoginRequiredMixin, UpdateView):
-    model = CustomUser
+class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
+    model = Company
     form_class = CompanyUpdateForm
     template_name = "companies/update.html"
+    context_object_name = "company"
     success_url = "/companies/"
     login_url = "/companies/"
+    permission_required = "company_can_show"
 
     def form_valid(self, form):
         messages.success(self.request, "更新成功")
@@ -109,9 +118,15 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
         return CustomUser.objects.filter(user_type=2, id=self.request.user.id)
 
 
-class CompanyPasswordChangeView(PasswordChangeView):
-    template_name = "companies/password_change_form.html"
-    success_url = "/companies/"
+class CompanyPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
+    template_name="companies/password_change_form.html"
+    success_url="/companies/"
+    permission_required = "company_can_show"
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('companies:login'))
+        return super().handle_no_permission()
 
     def form_valid(self, form):
         messages.success(self.request, "更新成功")

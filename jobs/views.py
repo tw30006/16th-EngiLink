@@ -5,10 +5,9 @@ from .models import Job
 from .forms import JobForm
 from companies.models import Company
 from django.urls import reverse
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views import View
-from django.shortcuts import render
+from django.http import HttpResponseForbidden
+import rules
 
 
 class IndexView(PermissionRequiredMixin,ListView):
@@ -17,17 +16,30 @@ class IndexView(PermissionRequiredMixin,ListView):
     context_object_name = "jobs"
     permission_required = "jobs.show_job"
 
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        company = get_object_or_404(Company, pk=pk)
+        if not rules.test_rule('is_current_company',request.user,company):
+            return HttpResponseForbidden()
+        return super().dispatch(request,*args, **kwargs)
+
     def get_queryset(self):
         pk = self.kwargs.get('pk')
         company = get_object_or_404(Company, pk=pk)
         return Job.objects.filter(company=company)
-    
-
+        
 
 class AddView(CreateView):
     template_name = "jobs/create.html"
     model = Job
     form_class = JobForm
+
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        company = get_object_or_404(Company, pk=pk)
+        if not rules.test_rule('is_current_company',request.user,company):
+            return HttpResponseForbidden()
+        return super().dispatch(request,*args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -70,9 +82,10 @@ class JobDeleteView(DeleteView):
         return super().form_valid(form)
 
 
-class SetPublishView(DetailView):
-    model = Job
+class PublishView(DetailView):
+    model=Job
     context_object_name = "job"
+    template_name = "jobs/job.html"
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()

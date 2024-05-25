@@ -2,8 +2,8 @@ import rules
 
 
 @rules.predicate
-def is_user(custom_user):
-    return custom_user.user_type == 1
+def is_resume_user(user,resume):
+    return user == resume.user
 
-
-rules.add_perm('resumes.show_job',is_user)
+def add_rule():
+    rules.add_rule('is_resume_user',is_resume_user)
