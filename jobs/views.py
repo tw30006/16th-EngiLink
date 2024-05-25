@@ -93,8 +93,8 @@ class JobListView(ListView):
             job_info = {
                 'title': job.title,
                 'company_name': company.company_name,
-                # 'company_logo_url': company.logo.url if company.logo else '',
-                # 'company_banner_url': company.banner.url if company.banner else '',
+                'company_logo_url': company.logo.url if company.logo else '',
+                'company_banner_url': company.banner.url if company.banner else '',
                 'address': job.address,
                 'salary': job.salary,
                 'description': job.description,
