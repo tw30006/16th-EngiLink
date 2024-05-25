@@ -7,7 +7,6 @@
                 <strong>職缺:{{ job_resume.job.title }}<br>
                 <strong>應徵時間:{{ job_resume.created_at|date:"Y.m.d H:i" }}<br>
                 <strong>使用履歷:{{ job_resume.resume.name }}<br>
-                <strong>狀態: {{ job_resume.status }}<br>
                 {% if job_resume.status == 'applied' %}
                     <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
                         {% csrf_token %}
