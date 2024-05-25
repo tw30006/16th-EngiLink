@@ -7,5 +7,22 @@
     <p>統一編號: {{ user.company.tin }}</p>
     <p>聯絡人: {{ user.company.user_name }}</p>
     <p>聯絡電話: {{ user.company.tel }}</p>
+    <p>地址: {{ user.company.address }}</p>
+    <p>簡介: {{ user.company.description }}</p>
+    <p>類型: {{ user.company.type }}</p>
+    <p>橫幅: 
+        {% if user.company.banner %}
+            <img src="{{ user.company.banner.url }}" alt="Company Banner">
+        {% else %}
+            <span>No banner available</span>
+        {% endif %}
+    </p>
+    <p>Logo: 
+        {% if user.company.logo %}
+            <img src="{{ user.company.logo.url }}" alt="Company Logo">
+        {% else %}
+            <span>No logo available</span>
+        {% endif %}
+    </p>
 <a href="{% url 'companies:update' user.id%}">編輯</a>
 {% endblock %}

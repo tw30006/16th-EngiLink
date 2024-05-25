@@ -122,6 +122,23 @@ class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return CustomUser.objects.filter(user_type=2, id=self.request.user.id)
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        company, created = Company.objects.get_or_create(custom_user=self.object)
+        company.company_name = form.cleaned_data['company_name']
+        company.tin = form.cleaned_data['tin']
+        company.user_name = form.cleaned_data['user_name']
+        company.tel = form.cleaned_data['tel']
+        company.address = form.cleaned_data['address']
+        company.description = form.cleaned_data['description']
+        company.type = form.cleaned_data['type']
+        if 'banner' in form.cleaned_data and form.cleaned_data['banner']:
+            company.banner = form.cleaned_data['banner']
+        if 'logo' in form.cleaned_data and form.cleaned_data['logo']:
+            company.logo = form.cleaned_data['logo']
+        company.save()
+        return response
 
 
 class CompanyPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
