@@ -9,7 +9,7 @@
                 <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
                 <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
                 <br>
-                <a href=""class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
+                <a href="{% url 'companies:candidate' job_resume.pk %}"class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
             </li>
         </div>
     {% endfor %}

@@ -19,7 +19,7 @@ class Education(models.Model):
         ("7", "肄業"),
     ]
 
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='educations')
     school_name = models.CharField(max_length=100)
     major = models.CharField(max_length=100)
     degree = models.CharField(max_length=1, choices=DEGREE_CHOICES)
@@ -38,4 +38,3 @@ class Education(models.Model):
     def delete(self, *args, **kwargs):
         self.deleted_at = timezone.now()
         self.save()
-        super(Education, self).delete(*args, **kwargs)

@@ -18,7 +18,7 @@ class Project(models.Model):
         ]
     ]
 
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE,related_name='projects')
     project_name = models.CharField(max_length=100)
     responsibility = models.CharField(max_length=200)
     technologies_used = models.CharField(max_length=200, null=True, blank=True)

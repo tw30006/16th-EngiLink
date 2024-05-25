@@ -14,6 +14,7 @@ from django.views.generic import ListView
 from users.models import CustomUser
 from .models import Company
 from jobs.models import Job_Resume
+from resumes.models import Resume
 from .forms import CompanyRegisterForm, CompanyUpdateForm
 
 
@@ -138,3 +139,18 @@ class JobApplicationsView(ListView):
     def get_queryset(self):
         company = get_object_or_404(Company, custom_user=self.request.user)
         return Job_Resume.objects.filter(job__company=company)
+
+class JobApplicationDetailView(DetailView):
+    model = Job_Resume
+    template_name = 'companies/candidate.html'
+    context_object_name = 'candidate'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        candidate = self.get_object()
+        resume = candidate.resume
+        context['resume'] = resume
+        context['educations'] = resume.educations.all()
+        context['works'] = resume.works.all()
+        context['projects'] = resume.projects.all()
+        return context

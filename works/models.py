@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class Work(models.Model):
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE,related_name='works')
     company_name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     start_date = models.DateField(null=True, blank=True)
