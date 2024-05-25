@@ -143,12 +143,12 @@ class JobApplicationsView(ListView):
 class JobApplicationDetailView(DetailView):
     model = Job_Resume
     template_name = 'companies/candidate.html'
-    context_object_name = 'candidate'
+    context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        candidate = self.get_object()
-        resume = candidate.resume
+        user = self.get_object()
+        resume = user.resume
         context['resume'] = resume
         context['educations'] = resume.educations.all()
         context['works'] = resume.works.all()

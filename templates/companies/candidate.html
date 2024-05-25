@@ -2,26 +2,26 @@
 {% block content %}
     <h1>應徵詳情</h1>
     <div class="bg-white p-4 shadow rounded-lg border-4 border-blue-500 p-4">
-        <strong>應徵者: {{ candidate.resume.name }}</strong><br>
-        <strong>應徵公司: {{ candidate.job.company.company_name }}</strong><br>
-        <strong>職缺: {{ candidate.job.title }}</strong><br>
-        <strong>應徵時間: {{ candidate.created_at|date:"Y.m.d H:i" }}</strong><br>
+        <strong>應徵者: {{ user.resume.name }}</strong><br>
+        <strong>應徵公司: {{ user.job.company.company_name }}</strong><br>
+        <strong>職缺: {{ user.job.title }}</strong><br>
+        <strong>應徵時間: {{ user.created_at|date:"Y.m.d H:i" }}</strong><br>
     </div>
     <hr>
     <div>
         <h2 class="text-lg">個人資訊</h2>
         <p><img src="{{ resume.picture.url }}" alt="照片" class="w-40 h-32 mr-6"></p>
-        <p class="mb-2">姓名：<strong class="text-blue">{{ candidate.resume.name }}</strong></p>
+        <p class="mb-2">姓名：<strong class="text-blue">{{ user.resume.name }}</strong></p>
         <p class="mb-2">性別：{{ resume.get_gender_display }}</p>
         <p class="mb-2">生日：{{ resume.birthday }}</p>
         <p class="mb-2">信箱：{{ resume.email }}</p>
         <p class="mb-2">電話：{{ resume.phone_number }}</p>
         <p class="mb-2">地址：{{ resume.address }}</p>
-        <p class="mb-2">技能：{{resume.skills}}</p>
-        <p class="mb-2">個人網站：{{resume.website}}</p>
-        <p class="mb-2">工作經驗：{{resume.experience}}</p>
-        <p class="mb-2">Linkedin：{{resume.linkedin}}</p>
-        <p class="mb-2">GitHub：{{resume.github}}</p>
+        <p class="mb-2">技能：{{ resume.skills }}</p>
+        <p class="mb-2">個人網站：{{ resume.website }}</p>
+        <p class="mb-2">工作經驗：{{ resume.experience }}</p>
+        <p class="mb-2">Linkedin：{{ resume.linkedin }}</p>
+        <p class="mb-2">GitHub：{{ resume.github }}</p>
     </div>
     <hr>
     <h2 class="text-lg">教育經驗</h2>
@@ -31,8 +31,8 @@
             <p><strong>學校:</strong> {{ education.school_name }}</p>
             <p><strong>系所:</strong> {{ education.major }}</p>
             <p><strong>學位:</strong> {{ education.get_degree_display }}</p>
-            <p><strong>入學時間:</strong> {{ education.start_date }}</p>
-            <p><strong>畢業時間:</strong> {{ education.end_date }}</p>
+            <p><strong>入學時間:</strong> {{ education.start_date |date:"Y.m.d" }}</p>
+            <p><strong>畢業時間:</strong> {{ education.end_date |date:"Y.m.d" }}</p>
         </li>
         {% endfor %}
     </ul>
@@ -43,8 +43,8 @@
         <li>
             <p><strong>公司名:</strong> {{ work.company_name }}</p>
             <p><strong>職位:</strong> {{ work.position }}</p>
-            <p><strong>入職時間:</strong> {{ work.start_date }}</p>
-            <p><strong>離職時間:</strong> {{ work.end_date }}</p>
+            <p><strong>入職時間:</strong> {{ work.start_date  |date:"Y.m.d" }}</p>
+            <p><strong>離職時間:</strong> {{ work.end_date  |date:"Y.m.d" }}</p>
             <p><strong>在職中：{% if work.is_current %}是{% else %}否{% endif %}</strong></p>
         </li>
         {% endfor %}
