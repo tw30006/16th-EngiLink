@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils import timezone
 from django.shortcuts import redirect,get_object_or_404,render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -155,7 +156,7 @@ class ApplyForJobCreateView(View):
     def post(self, request, *args, **kwargs):
         job_id = request.POST.get('job_id')
         resume_id = request.POST.get('resume_id')               
-        Job_Resume.objects.create(job_id=job_id, resume_id=resume_id)
+        Job_Resume.objects.create(job_id=job_id, resume_id=resume_id, status='applied')
         return redirect('users:home')
 
 class ApplyForJobListView(ListView):
@@ -163,3 +164,13 @@ class ApplyForJobListView(ListView):
     template_name = 'users/apply.html'
     def get_queryset(self):
         return Job_Resume.objects.filter(resume__user=self.request.user)
+
+@method_decorator(login_required, name='dispatch')
+class WithdrawApplicationView(View):
+    def post(self, request, *args, **kwargs):
+        job_resume_id = self.kwargs.get('pk')
+        job_resume = get_object_or_404(Job_Resume, pk=job_resume_id, resume__user=request.user)
+        job_resume.status = 'withdrawn'
+        job_resume.withdrawn_at = timezone.now()
+        job_resume.save()
+        return redirect('users:home')

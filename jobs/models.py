@@ -62,6 +62,8 @@ class Job_Resume(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default='applied') 
+    withdrawn_at = models.DateTimeField(null=True, blank=True) 
 
 
 class User_Job(models.Model):
