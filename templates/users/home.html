@@ -31,10 +31,10 @@
                         <li class="ml-2">{{ job.title }}</li>
                         <li>{{ job.collect }}</li>
                         <div>
-                            <form action="{% url 'users:collect' %}" method="post">
+                            <form action="{% url 'users:collect' %}" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
                                 {% csrf_token %}
                                 <input type="hidden" name="job_id" value="{{ job.id }}">
-                                <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <button id="collect-button-{{ job.id }}" type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     {% if job.id in user_jobs %}
                                         已收藏
                                     {% else %}
