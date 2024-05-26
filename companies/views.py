@@ -41,12 +41,16 @@ class CompanyRegisterView(FormView):
 
     def get_success_url(self):
         user = self.request.user
-        company = Company.objects.filter(custom_user=user).first()
+
+        try:
+            company = Company.objects.get(custom_user=user)
+        except Company.DoesNotExist:
+            company = None
 
         if user.user_type == 2 and company is None:
-            return reverse_lazy('companies:update',kwargs={'pk': user.pk})
+            return reverse_lazy('companies:update', kwargs={'pk': user.pk})
         else:
-            return reverse_lazy("companies:home")
+            return reverse_lazy('companies:home')
 
 
 class CompanyHomeView(PermissionRequiredMixin,TemplateView):
@@ -59,16 +63,18 @@ class CompanyLoginView(LoginView):
     template_name = 'companies/login.html'
     
 
-    def form_valid(self, form):
-        messages.success(self.request, "登入成功")
-        return super().form_valid(form)
+    def get_default_redirect_url(self):
+        user = self.request.user
 
-    def form_invalid(self, form):
-        messages.error(self.request, "登入失敗")
-        return super().form_invalid(form)
+        try:
+            company = Company.objects.get(custom_user=user)
+        except Company.DoesNotExist:
+            company = None
 
-    def get_success_url(self):
-        return reverse_lazy("companies:home")
+        if user.user_type == 2 and company is None:
+            return reverse_lazy('companies:update', kwargs={'pk': user.pk})
+        else:
+            return reverse_lazy('companies:home')
 
 
 class CompanyLogoutView(PermissionRequiredMixin,LogoutView):
@@ -174,6 +180,6 @@ class MarkAsReadView(View):
         job_resume_id = self.kwargs.get('pk')
         job_resume = get_object_or_404(Job_Resume, id=job_resume_id)
         if request.user == job_resume.job.company.custom_user:
-            job_resume.read_at = timezone.now()  # 标记为已读，将 read_at 设置为当前时间
+            job_resume.read_at = timezone.now()
             job_resume.save()
         return redirect('companies:applications', pk=job_resume.job.company_id)
