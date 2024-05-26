@@ -10,6 +10,7 @@ from .views import (
     CompanyListView,
     JobApplicationsView,
     JobApplicationDetailView,
+    MarkAsReadView,
 )
 from jobs import views as jobs
 
@@ -26,7 +27,7 @@ urlpatterns = [
     path("<int:pk>/update/", CompanyUpdateView.as_view(), name="update"),
     path('<int:pk>/jobs/', jobs.IndexView.as_view(), name="jobs"),
     path('<int:pk>/create/', jobs.AddView.as_view(), name="jobs_create"),
-    path('<int:pk>/applications/', JobApplicationsView.as_view(), name='applications'),
+    path('<int:pk>/applications/', JobApplicationsView.as_view(), name='applications'),path('mark/<int:pk>/', MarkAsReadView.as_view(), name='mark'),
     path("<int:pk>/", CompanyDetailView.as_view(), name="detail"),
     path('<int:pk>/candidate/', JobApplicationDetailView.as_view(), name='candidate'),
 ]

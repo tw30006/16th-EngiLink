@@ -1,21 +1,25 @@
 {% extends 'frontend.html' %}
 {% block content %}
 <h1>應徵記錄</h1>
-    {% for job_resume in job_resume_list %}
-        <div class="bg-white p-4 shadow rounded-lg">
-                <strong>應徵公司：{{ job_resume.job.company.company_name }}<br>
-                <strong>職缺:{{ job_resume.job.title }}<br>
-                <strong>應徵時間:{{ job_resume.created_at|date:"Y.m.d H:i" }}<br>
-                <strong>使用履歷:{{ job_resume.resume.name }}<br>
-                {% if job_resume.status == 'applied' %}
-                    <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">撤回申請</button>
-                    </form>
-                {% else %}
-                    撤回時間: {{ job_resume.withdrawn_at |date:"Y.m.d H:i" }}
-                {% endif %}
-        </div>
-        <hr>
-    {% endfor %}
+{% for job_resume in job_resume_list %}
+    <div class="bg-white p-4 shadow rounded-lg">
+        {{ forloop.counter }}<strong>.應徵公司：</strong>{{ job_resume.job.company.company_name }}<br>
+        <strong>職缺：</strong>{{ job_resume.job.title }}<br>
+        <strong>應徵時間：</strong>{{ job_resume.created_at|date:"Y.m.d H:i" }}<br>
+        <strong>使用履歷：</strong>{{ job_resume.resume.name }}<br>
+        {% if job_resume.status == 'applied' %}
+            {% if job_resume.read_at %}
+                <p class="text-2xl">公司已讀時間：{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
+            {% else %}
+            <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">撤回申請</button>
+            </form>
+            {% endif %}
+        {% else %}
+            <p class="text-2xl">已撤回申請：{{ job_resume.withdrawn_at | date:"Y.m.d H:i" }}</p>
+        {% endif %}
+    </div>
+    <hr>
+{% endfor %}
 {% endblock %}

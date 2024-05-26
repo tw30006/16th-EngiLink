@@ -2,10 +2,12 @@ from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
 from django.contrib.auth import logout, login,get_backends
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views import View
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
@@ -154,3 +156,12 @@ class JobApplicationDetailView(DetailView):
         context['works'] = resume.works.all()
         context['projects'] = resume.projects.all()
         return context
+
+class MarkAsReadView(View):
+    def post(self, request, *args, **kwargs):
+        job_resume_id = self.kwargs.get('pk')
+        job_resume = get_object_or_404(Job_Resume, id=job_resume_id)
+        if request.user == job_resume.job.company.custom_user:
+            job_resume.read_at = timezone.now()  # 标记为已读，将 read_at 设置为当前时间
+            job_resume.save()
+        return redirect('companies:applications', pk=job_resume.job.company_id)

@@ -6,7 +6,7 @@
     {% for job_resume in job_resume_list %}
             {% if job_resume.status == 'withdrawn' %}
             <div class="bg-white p-4 shadow rounded-lg">
-                <strong class="text-xl">求職者已取消應徵:{{ job_resume.withdrawn_at |date:"Y.m.d H:i" }}</strong><br>
+                {{ forloop.counter }}<strong class="text-xl">.求職者已取消應徵:{{ job_resume.withdrawn_at |date:"Y.m.d H:i" }}</strong><br>
                 <strong>應徵者:</strong> {{ job_resume.resume.name }}<br>
                 <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
                 <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
@@ -15,14 +15,29 @@
                 {% else %}
                 <div class="bg-white p-4 shadow rounded-lg">
                     <li>
-                        <strong>應徵者:</strong> {{ job_resume.resume.name }}<br>
+                        {{ forloop.counter }}<strong>.應徵者:</strong> {{ job_resume.resume.name }}<br>
                         <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
                         <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
                         <br>
                         <a href="{% url 'companies:candidate' job_resume.pk %}"class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
+                    </li>
+                    {% endif %}
+                    <br>
+                    <li>
+                        {% if request.user == job_resume.job.company.custom_user %}
+                            {% if job_resume.status == 'applied' %}
+                                {% if not job_resume.read_at %}
+                                    <form action="{% url 'companies:mark' job_resume.pk %}" method="post" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="px-2 py-2 bg-green-500">標記為已讀</button>
+                                    </form>
+                                {% else %}
+                                    <p class="text-2xl">已讀時間{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
                         <hr>
                     </li>
                 </div>
-            {% endif %}
     {% endfor %}
 {% endblock %}
