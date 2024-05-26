@@ -29,7 +29,22 @@
                     {% for job in jobs %}
                         {% if job.company == company %}
                         <li class="ml-2">{{ job.title }}</li>
-                        <a href="{% url 'users:apply' job.id %}" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">應徵</a>
+                        <li>{{ job.collect }}</li>
+                        <div>
+                            <form action="{% url 'users:collect' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="job_id" value="{{ job.id }}">
+                                <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    {% if job.id in user_jobs %}
+                                        已收藏
+                                    {% else %}
+                                        收藏
+                                    {% endif %}
+                                </button>
+                            </form>
+                            <br>
+                            <a href="{% url 'users:apply' job.id %}" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">應徵</a>
+                        </div>
                         {% endif %}
                     {% endfor %}
                 </ul>

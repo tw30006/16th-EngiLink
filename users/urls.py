@@ -11,6 +11,7 @@ from .views import (
     ApplyForJobCreateView,
     ApplyForJobListView,
     WithdrawApplicationView,
+    CollectJobView,
 )
 from resumes import views as resumes
 
@@ -30,7 +31,8 @@ urlpatterns = [
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
     path('<int:job_id>/apply/', ApplyForJobCreateView.as_view(), name='apply'),
     path('<pk>/applications/', ApplyForJobListView.as_view(), name='applications'),
-    path('withdraw/<int:pk>/', WithdrawApplicationView.as_view(), name='withdraw'),
+    path('<int:pk>/withdraw/', WithdrawApplicationView.as_view(), name='withdraw'),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
+    path("collect/", CollectJobView.as_view(), name="collect"),
     path("jobs/", UserJobsView.as_view(), name="jobs"),
 ]

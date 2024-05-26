@@ -28,6 +28,7 @@ from mailchimp3 import MailChimp
 
 
 from jobs.models import Job,Job_Resume
+from jobs.models import Job,Job_Resume,User_Job
 from .forms import UserRegisterForm, UserUpdateForm
 
 class UserRegisterView(FormView):
@@ -143,6 +144,22 @@ class UserPasswordChangeView(PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
+    
+    
+class CollectJobView(LoginRequiredMixin, View):
+    def post(self, request):
+        job_id = request.POST.get("job_id")
+        job = get_object_or_404(Job, id=job_id)
+        user_job = User_Job.objects.filter(user=request.user, job=job)
+        if user_job.exists():
+            user_job.delete()
+        else:
+            user_job = User_Job.objects.create(job=job, user=request.user)
+        return redirect("users:home")
+    def get(self, request):
+        jobs = Job.objects.select_related('company').all()
+        user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
+        return render(request, "users/collect.html", {'jobs': jobs, 'user_jobs': user_jobs})
 
 @method_decorator(login_required, name='dispatch')
 class ApplyForJobCreateView(View):
