@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const messages = document.querySelectorAll('.notice-message');
     
     messages.forEach((element) => {
-        const message = element.getAttribute('data-message');
-        const messageTags = element.getAttribute('data-tags');
+        const { message, tags: messageTags } = element.dataset;
 
         if (messageTags.includes('success')) {
             iconType = 'success'

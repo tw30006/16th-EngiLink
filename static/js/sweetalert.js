@@ -7,7 +7,6 @@ document.addEventListener('alpine:init', () => {
         open: false,
     
         toggle() {
-            console.log(this);
             this.open = ! this.open
         },
     }))
