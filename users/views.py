@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login,authenticate
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
@@ -9,32 +9,39 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
-from django.core.mail import send_mail
 from django.conf import settings
 from companies.models import Company
 from jobs.models import Job
 from django.shortcuts import get_object_or_404, redirect, render
 from jobs.models import User_Job
 from django.views import View
+from mailchimp3 import MailChimp
+
 
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
     form_class = UserRegisterForm
-    success_url = "/users/"
+    success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
         user = form.save()
         messages.success(self.request, "註冊成功")
-        self.send_welcome_email(user.email)
+        self.add_user_to_mailchimp_list(user.email)
+        user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
+        if user:
+            login(self.request, user)
+        
         return super().form_valid(form)
 
-    def send_welcome_email(self, user_email):
-        subject = "Welcome to EngiLink!"
-        message = "Thank you for registering on our site."
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = [user_email]
-        send_mail(subject, message, from_email, recipient_list)
+    def add_user_to_mailchimp_list(self, user_email):
+        api_key = settings.MAILCHIMP_API_KEY
+        list_id = settings.MAILCHIMP_LIST_ID
+        client = MailChimp(mc_api=api_key)
+        client.lists.members.create(list_id, {
+            'email_address': user_email,
+            'status': 'subscribed',
+        })
 
 
 class UserHomeView(TemplateView):

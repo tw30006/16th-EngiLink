@@ -19,6 +19,7 @@ google-auth-oauthlib = "^1.2.0"
 pillow = "^10.3.0"
 weasyprint = "^62.1"
 rules = "^3.4"
+mailchimp3 = "^3.0.21"
 
 [build-system]
 requires = ["poetry-core"]
