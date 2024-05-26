@@ -17,9 +17,17 @@ from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
 from resumes.models import Resume 
 from companies.models import Company
+
 from jobs.models import Job, User_Job, Job_Resume
 from mailchimp3 import MailChimp
 from django.http import HttpResponseRedirect
+
+from django.shortcuts import get_object_or_404, redirect, render
+from jobs.models import User_Job
+from django.views import View
+
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
@@ -151,6 +159,11 @@ class CollectJobView(LoginRequiredMixin, View):
             user_job.delete()
         else:
             user_job = User_Job.objects.create(job=job, user=request.user)
+        
+        if 'HX-Request' in request.headers:
+            user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
+            button_html = render_to_string('shared/collect_btn.html', {'job': job, 'user_jobs': user_jobs})
+            return HttpResponse(button_html)
         return redirect("users:home")
     def get(self, request):
         jobs = Job.objects.select_related('company').all()

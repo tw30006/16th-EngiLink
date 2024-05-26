@@ -1,0 +1,7 @@
+<button id="collect-button-{{ job.id }}" type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    {% if job.id in user_jobs %}
+        已收藏
+    {% else %}
+        收藏
+    {% endif %}
+</button>
