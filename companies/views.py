@@ -117,3 +117,11 @@ class CompanyListView(ListView):
     model = Company
     template_name = 'companies/list.html'
     context_object_name = 'companies_list' 
+
+    def get_queryset(self):
+        queryset = Company.objects.all()
+        search_keyword = self.request.GET.get("q")
+        if search_keyword:
+            queryset = queryset.filter(company_name__icontains=search_keyword)
+        return queryset
+
