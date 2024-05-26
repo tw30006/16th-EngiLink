@@ -1,17 +1,23 @@
-<p>職位名稱：{{ job.title }}</p>
-<p>需求人數：{{ job.openings }}</p>
-<p>工作年資：{{ job.experience }}</p>
-<p>工作經驗：{{ job.salary }}</p>
-<p>工作地點：{{ job.address }}</p>
-<p>工作描述：{{ job.description }}</p>
-<div class="flex">
-    <form>
-        {% csrf_token %}
-        <button type="button" hx-post="{% url 'jobs:publish' job.id %}" hx-swap="innerHTML" hx-target="#publish-{{ job.id }}" class="{% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %}">
-            {{ job.is_published | yesno:"刊登中,已下架" }}
-        </button>
-    </form>
-    <button><a href="{% url 'jobs:show' job.id %}">編輯</a></button>
+<div class="p-6 bg-white rounded-lg shadow-md">
+    <h2 class="mb-4 text-2xl font-bold">{{ job.title }}</h2>
+    <p class="mb-2"><span class="font-semibold">需求人數：</span>{{ job.openings }}</p>
+    <p class="mb-2"><span class="font-semibold">工作年資：</span>{{ job.experience }}</p>
+    <p class="mb-2"><span class="font-semibold">工作薪資：</span>{{ job.salary }}</p>
+    <p class="mb-2"><span class="font-semibold">工作地點：</span>{{ job.address }}</p>
+    <p class="mb-4"><span class="font-semibold">工作描述：</span>{{ job.description }}</p>
+    <div class="flex items-center justify-between">
+        <form class="flex-1">
+            {% csrf_token %}
+            <button type="button"
+                    hx-post="{% url 'jobs:setpublish' job.id %}"
+                    hx-swap="innerHTML"
+                    hx-target="#publish-{{ job.id }}"
+                    class="w-full py-2 px-4 rounded-md {% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %} hover:bg-blue-600">
+                {{ job.is_published | yesno:"刊登中,已下架" }}
+            </button>
+        </form>
+        <div class="ml-4">
+            <a href="{% url 'jobs:show' job.id %}" class="px-4 py-2 text-gray-800 bg-gray-300 border-2 border-gray-300 rounded-md hover:bg-gray-400">編輯</a>
+        </div>
+    </div>
 </div>
-
-

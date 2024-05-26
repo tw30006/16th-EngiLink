@@ -1,14 +1,25 @@
 {% extends "backend.html" %}
 {% block content %}
-    <h1 class="bg-blue-500 py-2 px-2">職缺列表</h1>
-        <section class="flex">
-            {% for job in jobs %}
-                <div id="publish-{{ job.id }}">
-                    {% include "jobs/job.html"%}
-                </div>   
-            {% endfor %}
+    <div class="pt-18">
+        <div class="fixed z-10 w-full bg-white top-16">
+            <h1 class="px-2 py-2 bg-blue-500">職缺列表</h1>
+            <div class="flex justify-center mt-1 space-x-2">
+                <button class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+                    <a href="{% url 'companies:home' %}">會員系統</a>
+                </button>
+                <button class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+                    <a href="{% url 'companies:jobs_create' user.company.id %}">刊登職缺</a>
+                </button>
+            </div>
+        </div>
+        <section class="container flex flex-wrap justify-center px-4 py-4 mx-auto mt-20">
+            <div class="flex flex-wrap justify-start w-full max-w-screen-lg">
+                {% for job in jobs %}
+                    <div id="publish-{{ job.id }}" class="w-full p-4 sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+                        {% include "jobs/job.html"%}
+                    </div>   
+                {% endfor %}
+            </div>
         </section>
-        
-    <button><a href="{% url 'companies:home' %}">會員系統</a></button>
-    <button><a href="{% url 'companies:jobs_create' user.company.id %}">刊登職缺</a></button>
+    </div>
 {% endblock %}
