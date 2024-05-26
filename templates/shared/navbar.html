@@ -73,8 +73,12 @@
         <!-- 漢堡按鈕選單內容 -->
         <nav class="md:hidden" aria-label="Global" id="mobile-menu" :hidden='!openMenu' md:hidden>
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的職缺</a>
+                {% if request.user.user_type == 1 %}
+                <a href="{% url 'resumes:index' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
+                {% else %}
+                <a href="{% url 'users:login' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
+                {% endif %}
+                <a href="{% url 'users:collect' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的收藏</a>
                 <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">應徵紀錄</a>
                 <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">個人設定</a>
                 <form
