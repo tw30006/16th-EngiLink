@@ -1,11 +1,42 @@
 {% extends 'backend.html' %} 
 {% block content %}
-<h2>Update Profile</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
-    </form>
-<br>
-<a href="{% url 'companies:password_change' %}">Change Password</a>
+<div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
+    <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+        <h2>公司資訊</h2>
+    </div>
+    <div class="task-items-wrapper flex flex-col w-full">
+        <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+            <form method="post" class="w-full max-w-lg">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">帳號：</label>
+                    <input type="text" name="username" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.username.value }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">公司信箱：</label>
+                    <input type="text" name="email" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.email.value }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">公司名稱：</label>
+                    <input type="text" name="company_name" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.company_name.value }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">統一編號：</label>
+                    <input type="text" name="tin" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.tin.value }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">聯絡人：</label>
+                    <input type="text" name="user_name" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.user_name.value }}">
+                </div>
+                <div class="mb-4">
+                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">聯絡電話：</label>
+                    <input type="text" name="tel" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ form.tel.value }}">
+                </div>
+                <div class="flex justify-end px-1">
+                    <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">更新</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
