@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
-from django.contrib.auth import logout, login,get_backends
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -12,11 +11,9 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from django.views.generic import ListView
 from users.models import CustomUser
 from .models import Company
 from jobs.models import Job_Resume
-from resumes.models import Resume
 from .forms import CompanyRegisterForm, CompanyUpdateForm
 
 

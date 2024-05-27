@@ -1,8 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login,authenticate
-from django.contrib.auth import logout
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import redirect,get_object_or_404,render
@@ -20,9 +18,7 @@ from .models import CustomUser
 from django.conf import settings
 from resumes.models import Resume 
 from companies.models import Company
-from jobs.models import Job
-from django.shortcuts import get_object_or_404, redirect, render
-from jobs.models import User_Job
+from jobs.models import Job,User_Job
 from django.views import View
 from mailchimp3 import MailChimp
 
