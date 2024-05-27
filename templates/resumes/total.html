@@ -1,75 +1,103 @@
 {% extends 'frontend.html' %}
-
 {% block content %}
-    <div class="container mx-auto max-w-lg mt-8">
-        <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
-            <a href="{% url 'resumes:index' %}" class="text-white hover:text-blue-800">&#8592;返回</a>
-            {% for resume in total_data.resume_data %}
-            <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}">Download PDF</a>
-            {% endfor %}
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+</style>
+
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto py-10 px-5" x-data="draggable">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
+                <a href="{% url 'resumes:index' %}" class="text-white hover:text-blue-800">&#8592;返回</a>
+                {% for resume in total_data.resume_data %}
+                    <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}" class="text-white hover:text-blue-800">Download PDF</a>
+                {% endfor %}
+            </div>
+            <div class="p-4 sm:p-6">
+                <div class="flex items-center justify-between">
+                    {% for resume in total_data.resume_data %}
+                        <div>
+                            <h2 class="text-2xl font-semibold">{{ resume.name }}</h2>
+                            <p class="text-sm text-gray-600">Software Engineer</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Phone: {{ resume.phone_number }}</p>
+                            <p class="text-sm text-gray-600">Email: {{ resume.email }}</p>
+                            <p class="text-sm text-gray-600">LinkedIn: {{ resume.linkedin }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">Summary</h3>
+                    <p class="text-sm leading-relaxed">Results-oriented Senior Software Engineer with 20 years of experience designing, developing, and deploying complex software solutions. Proficient in a variety of programming languages and technologies. Proven track record of leading teams and delivering high-quality products.</p>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-2">Work Experience</h3>
+                    {% if total_data.work_data %}
+                        {% for work in total_data.work_data %}
+                            <div class="drag">
+                                <h4 class="text-md font-semibold">{{ work.company_name }}</h4>
+                                <p class="text-sm text-gray-600">{{ work.position }} | {{ work.start_date }} - {{ work.end_date }}</p>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li>Lead a team of developers in designing and implementing a scalable microservices architecture.</li>
+                                    <li>Developed and maintained critical components of the company's flagship product, resulting in increased reliability and performance.</li>
+                                    <li>Collaborated with product managers to define project requirements and timelines.</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    {% if total_data.project_data %}
+                        <h3 class="text-lg font-semibold mb-2">Projects</h3>
+                        {% for project in total_data.project_data %}
+                            <div class="drag">
+                                <h4 class="text-md font-semibold">{{ project.project_name }}</h4>
+                                <p class="text-sm text-gray-600">{{ project.responsibility }}</p>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li>Contributed to the development of a cutting-edge mobile application, used by millions of users worldwide.</li>
+                                    <li>Implemented continuous integration and deployment pipelines, improving team efficiency and product quality.</li>
+                                    <li>Mentored junior engineers and conducted code reviews to ensure adherence to best practices.</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    <div class="drag">
+                        <h3 class="text-lg font-semibold mb-2">Skills</h3>
+                        <ul class="list-disc list-inside text-sm">
+                            <li>Programming Languages: Java, Python, JavaScript</li>
+                            <li>Frameworks & Libraries: Spring Boot, React, Angular</li>
+                            <li>Database Systems: MySQL, PostgreSQL, MongoDB</li>
+                            <li>Cloud Technologies: AWS, Azure, Google Cloud Platform</li>
+                            <li>Agile Methodologies: Scrum, Kanban</li>
+                            <li>DevOps Tools: Docker, Kubernetes, Jenkins</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    {% if total_data.education_data %}
+                        <h3 class="text-lg font-semibold mb-2">Education</h3>
+                        {% for education in total_data.education_data %}
+                            <div class="drag">
+                                <h4 class="text-md font-semibold">{{ education.school_name }}</h4>
+                                <p class="text-sm text-gray-600">{{education.major}} | {{ education.start_date}}-{{ education.end_date}}</p>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li>Contributed to the development of a cutting-edge mobile application, used by millions of users worldwide.</li>
+                                    <li>Implemented continuous integration and deployment pipelines, improving team efficiency and product quality.</li>
+                                    <li>Mentored junior engineers and conducted code reviews to ensure adherence to best practices.</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <h1 class="text-2xl font-bold mb-6">履歷預覽</h1>
-
-        <h2 class="text-lg">個人資訊</h2>
-        <ul class="pl-5" id="personal-info">
-            {% for resume in total_data.resume_data %}
-                {% if resume.picture %}
-                    <p><img src="{{ resume.picture.url }}" alt="照片" class="w-40 h-32 mr-6"></p>
-                {% else %}
-                    <p class="text-gray-600">無照片顯示</p>
-                {% endif %}
-                <p class="mb-2">姓名：<strong class="text-blue">{{ resume.name }}</strong></p>
-                <p class="mb-2">性別：{{ resume.get_gender_display }}</p>
-                <p class="mb-2">生日：{{ resume.birthday }}</p>
-                <p class="mb-2">信箱：{{ resume.email }}</p>
-                <p class="mb-2">電話：{{ resume.phone_number }}</p>
-                <p class="mb-2">地址：{{ resume.address }}</p>
-                <p class="mb-2">技能：{{resume.skills}}</p>
-                <p class="mb-2">個人網站：{{resume.website}}</p>
-                <p class="mb-2">工作經驗：{{resume.experience}}</p>
-                <p class="mb-2">Linkedin：{{resume.linkedin}}</p>
-                <p class="mb-2">GitHub：{{resume.github}}</p>
-            {% endfor %}
-        </ul>
-        <hr>
-
-        <h2 class="text-lg">教育經驗</h2>
-        <ul class="pl-5" id="education-experience">
-            {% for education in total_data.education_data %}
-                <li data-id="{{ education.id }}">
-                    <p>{{ education.school_name }}-{{education.major}}</p>
-                    <p>{{ education.get_degree_display }}</p>
-                    <p>{{ education.start_date}}-{{ education.end_date}}</p>
-                </li>
-            {% endfor %}
-        </ul>
-        <hr>
-
-        <h2 class="text-lg">工作經驗</h2>
-        <ul class="pl-5" id="work-experience">
-            {% for work in total_data.work_data %}
-            <li data-id="{{ work.id }}">
-                <p>{{ work.company_name }}-{{work.position}}</p>    
-                <p>{{ work.start_date}}-{{ work.end_date}}</p>
-            </li>
-            {% endfor %}
-        </ul>
-        <hr>
-
-        <h2 class="text-lg">專案經驗</h2>
-        <ul class="pl-5" id="project-experience">
-            {% for project in total_data.project_data %}
-                <li data-id="{{ project.id }}">
-                    <p>{{ project.project_name }}</p>
-                    <p>{{ project.responsibility }}</p>
-                    <p>{{ project.technologies_used}}</p>
-                    <p>{{project.description}}</p>
-                </li>
-            {% endfor %}
-        </ul>
-        <hr>
     </div>
+</body>
 
 {% endblock %}
-
-

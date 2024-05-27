@@ -2,8 +2,8 @@ import { Sortable } from '@shopify/draggable';
 import Alpine from 'alpinejs';
 
 function dragElement(element){
-    const sortable = new Sortable(document.querySelectorAll('ul'), {
-        draggable: 'li',
+    const sortable = new Sortable(document.querySelectorAll('.mt-4'), {
+        draggable: '.drag',
     });
 
     sortable.on('drag:start', (evt) => {
@@ -64,7 +64,6 @@ console.log(Alpine)
 document.addEventListener('alpine:init', () => {
     Alpine.data('draggable', () => ({
         init(){
-            console.log("gogo")
             dragElement();
         }
     }))

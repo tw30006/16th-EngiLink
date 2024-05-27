@@ -1,7 +1,7 @@
 {% extends 'frontend.html' %}
 
 {% block content %}
-    <div class="container mx-auto max-w-lg mt-8">
+    <div class="container mx-auto max-w-lg mt-8" x-data="draggable">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}" class="text-white hover:text-blue-800">&#8592;返回</a>
             {% for resume in total_data.resume_data %}

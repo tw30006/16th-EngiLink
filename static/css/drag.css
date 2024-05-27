@@ -1,5 +1,6 @@
 .draggable--is-dragging {
-    border: solid gray;
+    border-bottom: solid #0D4295;
+    transition: transform 150ms ease;
 }
 
 .draggable--is-over {
