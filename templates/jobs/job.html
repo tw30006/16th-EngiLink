@@ -9,7 +9,7 @@
         <form class="flex-1">
             {% csrf_token %}
             <button type="button"
-                    hx-post="{% url 'jobs:setpublish' job.id %}"
+                    hx-post="{% url 'jobs:publish' job.id %}"
                     hx-swap="innerHTML"
                     hx-target="#publish-{{ job.id }}"
                     class="w-full py-2 px-4 rounded-md {% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %} hover:bg-blue-600">
