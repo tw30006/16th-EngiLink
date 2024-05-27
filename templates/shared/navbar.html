@@ -56,9 +56,9 @@
                         {% endif %}
                         <a href="{% url 'users:collect' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-1">我的收藏</a>
                         {% if request.user.user_type == 1 %}
-                            <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
+                            <a href="{% url 'users:applications' user.id %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
                         {% else %}
-                            <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
+                            <a href="{% url 'users:login' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
                         {% endif %}
                         <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">個人設定</a>
                         <form
