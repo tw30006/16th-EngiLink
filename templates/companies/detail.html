@@ -1,28 +1,38 @@
 {% extends 'backend.html' %}
 {% block content %}
-<h2>Company Profile</h2>
-    <p>帳號: {{ user.username }}</p>
-    <p>公司信箱: {{ user.email }}</p>
-    <p>公司名稱: {{ user.company.company_name }}</p>
-    <p>統一編號: {{ user.company.tin }}</p>
-    <p>聯絡人: {{ user.company.user_name }}</p>
-    <p>聯絡電話: {{ user.company.tel }}</p>
-    <p>地址: {{ user.company.address }}</p>
-    <p>簡介: {{ user.company.description }}</p>
-    <p>類型: {{ user.company.type }}</p>
-    <p>橫幅: 
+<div class="container p-6 mx-auto bg-white rounded-lg shadow-md">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">公司資訊</h2>
+        <a class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700" href="{% url 'companies:update' user.id%}">編輯</a>
+    </div>
+    <div class="flex mb-4 leading-relaxed">
+        <div class="flex-1">
+            <p><span class="font-semibold">帳號:</span> {{ user.username }}</p>
+            <p><span class="font-semibold">公司信箱:</span> {{ user.email }}</p>
+            <p><span class="font-semibold">公司名稱:</span> {{ user.company.company_name }}</p>
+            <p><span class="font-semibold">統一編號:</span> {{ user.company.tin }}</p>
+            <p><span class="font-semibold">聯絡人:</span> {{ user.company.user_name }}</p>
+            <p><span class="font-semibold">聯絡電話:</span> {{ user.company.tel }}</p>
+            <p><span class="font-semibold">地址:</span> {{ user.company.address }}</p>
+            <p><span class="font-semibold">簡介:</span> {{ user.company.description }}</p>
+            <p><span class="font-semibold">類型:</span> {{ user.company.type }}</p>
+        </div>
+        <div class="ml-8">
+            <p class="font-semibold">Logo:</p>
+            {% if user.company.logo %}
+                <img class="w-32 h-32 rounded-md" src="{{ user.company.logo.url }}" alt="Company Logo">
+            {% else %}
+                <span class="text-gray-500">No logo available</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mb-4">
+        <p class="font-semibold">橫幅:</p>
         {% if user.company.banner %}
-            <img src="{{ user.company.banner.url }}" alt="Company Banner">
+            <img class="w-full h-auto rounded-md" src="{{ user.company.banner.url }}" alt="Company Banner">
         {% else %}
-            <span>No banner available</span>
+            <span class="text-gray-500">No banner available</span>
         {% endif %}
-    </p>
-    <p>Logo: 
-        {% if user.company.logo %}
-            <img src="{{ user.company.logo.url }}" alt="Company Logo">
-        {% else %}
-            <span>No logo available</span>
-        {% endif %}
-    </p>
-<a href="{% url 'companies:update' user.id%}">編輯</a>
+    </div>
+</div>
 {% endblock %}
