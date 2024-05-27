@@ -34,11 +34,11 @@
                     <h3 class="text-lg font-semibold mb-2">Summary</h3>
                     <p class="text-sm leading-relaxed">Results-oriented Senior Software Engineer with 20 years of experience designing, developing, and deploying complex software solutions. Proficient in a variety of programming languages and technologies. Proven track record of leading teams and delivering high-quality products.</p>
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-lg font-semibold mb-2">Work Experience</h3>
+                <div class="mt-4 drag-container">
                     {% if total_data.work_data %}
+                    <h3 class="text-lg font-semibold mb-2">Work Experience</h3>
                         {% for work in total_data.work_data %}
-                            <div class="drag">
+                            <div class="drag" data-id="work-{{ work.id }}">
                                 <h4 class="text-md font-semibold">{{ work.company_name }}</h4>
                                 <p class="text-sm text-gray-600">{{ work.position }} | {{ work.start_date }} - {{ work.end_date }}</p>
                                 <ul class="list-disc list-inside text-sm">
@@ -50,11 +50,11 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 drag-container">
                     {% if total_data.project_data %}
                         <h3 class="text-lg font-semibold mb-2">Projects</h3>
                         {% for project in total_data.project_data %}
-                            <div class="drag">
+                            <div class="drag" data-id="project-{{ project.id }}">
                                 <h4 class="text-md font-semibold">{{ project.project_name }}</h4>
                                 <p class="text-sm text-gray-600">{{ project.responsibility }}</p>
                                 <ul class="list-disc list-inside text-sm">
@@ -67,7 +67,7 @@
                     {% endif %}
                 </div>
                 <div class="mt-4">
-                    <div class="drag">
+                    <div>
                         <h3 class="text-lg font-semibold mb-2">Skills</h3>
                         <ul class="list-disc list-inside text-sm">
                             <li>Programming Languages: Java, Python, JavaScript</li>
@@ -79,11 +79,11 @@
                         </ul>
                     </div>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 drag-container">
                     {% if total_data.education_data %}
-                        <h3 class="text-lg font-semibold mb-2">Education</h3>
+                        <h3 class="text-lg font-semibold mb-2">Educations</h3>
                         {% for education in total_data.education_data %}
-                            <div class="drag">
+                            <div class="drag" data-id="education-{{ education.id }}">
                                 <h4 class="text-md font-semibold">{{ education.school_name }}</h4>
                                 <p class="text-sm text-gray-600">{{education.major}} | {{ education.start_date}}-{{ education.end_date}}</p>
                                 <ul class="list-disc list-inside text-sm">

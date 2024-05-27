@@ -1,6 +1,6 @@
 from django.db import models
 from resumes.models import Resume
-
+from positions.fields import PositionField
 
 class Project(models.Model):
     SKILL_CHOICES = [
@@ -25,7 +25,7 @@ class Project(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
-    posit = models.PositiveIntegerField(default=0)
+    posit = PositionField()
 
     objects = models.Manager()
 

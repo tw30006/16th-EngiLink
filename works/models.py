@@ -1,7 +1,7 @@
 from django.db import models
 from resumes.models import Resume
 from django.utils import timezone
-
+from positions.fields import PositionField
 
 class Work(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE,related_name='works')
@@ -12,7 +12,7 @@ class Work(models.Model):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    posit = models.PositiveIntegerField(default=0)
+    posit = PositionField()
     objects = models.Manager()
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.db import models
 from resumes.models import Resume
 from django.utils import timezone
-
+from positions.fields import PositionField
 
 class EducationManager(models.Manager):
     def get_queryset(self):
@@ -27,7 +27,7 @@ class Education(models.Model):
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    posit = models.PositiveIntegerField(default=0)
+    posit = PositionField()
 
     objects = models.Manager()
     edu_objects = EducationManager()

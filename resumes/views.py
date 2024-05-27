@@ -96,9 +96,9 @@ class TotalListView(ListView):
     def get_queryset(self):
         resume_id = self.kwargs['resume_id']
         resume_data = Resume.objects.filter(resume_id=resume_id)
-        education_data = Education.objects.filter(resume_id=resume_id)
-        work_data = Work.objects.filter(resume_id=resume_id)
-        project_data = Project.objects.filter(resume_id=resume_id)
+        education_data = Education.objects.filter(resume_id=resume_id).order_by('posit')
+        work_data = Work.objects.filter(resume_id=resume_id).order_by('posit')
+        project_data = Project.objects.filter(resume_id=resume_id).order_by('posit')
 
         total_data = {
             "education_data": education_data,
@@ -154,47 +154,25 @@ def GenerateResumePdf(request, resume_id):
 
 def update_positions(request):
     if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            positions = data.get("positions", [])
+        data = json.loads(request.body)
+        positions = data.get("positions", [])
 
-            for item in positions:
-                obj_id = item.get("id")
-                new_position = item.get("position")
+        for item in positions:
+            obj_type = item.get("type")
+            obj_id = int(item.get("id"))
+            new_position = int(item.get("position"))
 
-                try:
-                    obj_id = int(obj_id)
-                    new_position = int(new_position)
-                except ValueError:
-                    return JsonResponse(
-                        {"status": "fail", "error": "Invalid ID or position"}
-                    )
-
-                if obj_id and new_position is not None:
-
-                    try:
-                        education = Education.objects.get(id=obj_id)
-                        education.posit = new_position
-                        education.save()
-                    except Education.DoesNotExist:
-                        pass
-
-                    try:
-                        work = Work.objects.get(id=obj_id)
-                        work.posit = new_position
-                        work.save()
-                    except Work.DoesNotExist:
-                        pass
-
-                    try:
-                        project = Project.objects.get(id=obj_id)
-                        project.posit = new_position
-                        project.save()
-                    except Project.DoesNotExist:
-                        pass
-
-            return JsonResponse({"status": "success"})
-
-        except json.JSONDecodeError:
-            return JsonResponse({"status": "fail", "error": "Invalid JSON"})
+            if obj_type == "education":
+                Model = Education
+            elif obj_type == "work":
+                Model = Work
+            elif obj_type == "project":
+                Model = Project
+            else:
+                continue
+            
+            obj = Model.objects.get(id=obj_id)
+            obj.posit = new_position
+            obj.save()
+        return JsonResponse({"status": "success"})
     return JsonResponse({"status": "fail", "error": "Invalid request method"})
