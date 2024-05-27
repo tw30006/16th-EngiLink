@@ -71,16 +71,12 @@ class EditView(UpdateView):
         self.success_url = f"/companies/{pk}/jobs/"
         return super().form_valid(form)
 
-
 class JobDeleteView(DeleteView):
     model = Job
-    success_url = "companies/<pk>/jobs/"
-
-    def form_valid(self, form):
-        pk = self.kwargs.get("pk")
-        self.success_url = f"/companies/{pk}/jobs/"
-        return super().form_valid(form)
-
+    
+    def get_success_url(self):
+        pk = self.object.company.pk
+        return reverse('companies:jobs', kwargs={'pk': pk})
 
 class PublishView(DetailView):
     model=Job
