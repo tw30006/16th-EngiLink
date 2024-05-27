@@ -1,16 +1,23 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login,authenticate
+from django.contrib.auth import logout
+from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import redirect,get_object_or_404,render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from django.urls import reverse_lazy
-from .forms import UserRegisterForm, UserUpdateForm
+from django.views.generic.list import ListView
 from .models import CustomUser
 from django.conf import settings
+from resumes.models import Resume 
 from companies.models import Company
 from jobs.models import Job
 from django.shortcuts import get_object_or_404, redirect, render
@@ -20,10 +27,7 @@ from mailchimp3 import MailChimp
 
 
 from jobs.models import Job,Job_Resume
-from django.shortcuts import redirect,get_object_or_404,render
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic.list import ListView
+from .forms import UserRegisterForm, UserUpdateForm
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
