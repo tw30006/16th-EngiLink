@@ -1,7 +1,7 @@
 {% extends 'backend.html' %} 
 {% block content %}
     <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
-        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+        <div class='header-bar flex justify-center items-center bg-violet-700 text-white p-4 rounded-t-md w-full'>
             <h2>公司登入</h2>
         </div>
         <div class="task-items-wrapper flex flex-col w-full">
@@ -17,14 +17,14 @@
                         <input type="password" name="password" required id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">登入</button>
+                        <button type="submit" class="button border border-violet-700 bg-white text-violet-700 px-4 py-2 hover:bg-violet-700 hover:text-white rounded">登入</button>
                     </div>
                 </form>
             </div>
         </div>
         <br>
         <br>
-        <small><a href="{% url 'companies:register' %}" class="text-blue-600 hover:underline">前往註冊</a></small>
+        <small><a href="{% url 'companies:register' %}" class="text-violet-700 hover:underline">前往註冊</a></small>
     </div>
 {% endblock %}
 

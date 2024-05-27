@@ -22,10 +22,6 @@ from jobs.models import Job, User_Job, Job_Resume
 from mailchimp3 import MailChimp
 from django.http import HttpResponseRedirect
 
-from django.shortcuts import get_object_or_404, redirect, render
-from jobs.models import User_Job
-from django.views import View
-
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
