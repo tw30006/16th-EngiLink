@@ -1,7 +1,7 @@
 import { Sortable } from '@shopify/draggable';
+import Alpine from 'alpinejs';
 
-document.addEventListener('DOMContentLoaded', () => {
-
+function dragElement(element){
     const sortable = new Sortable(document.querySelectorAll('ul'), {
         draggable: 'li',
     });
@@ -10,19 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
         evt.data.source.classList.add('draggable--is-dragging');
     });
 
-    sortable.on('drag:stop', (evt) => {
-        evt.data.source.classList.remove('draggable--is-dragging');
-    });
-
-    sortable.on('sortable:sort', (evt) => {
-        evt.data.dragEvent.source.classList.add('draggable--is-over');
-    });
-
     sortable.on('sortable:sorted', (evt) => {
         evt.data.dragEvent.source.classList.remove('draggable--is-over');
         sendPositionUpdate(evt.data.dragEvent.source.parentElement);
     });
-});
+}
+
 
 function sendPositionUpdate(list) {
     const items = Array.from(list.children);
@@ -65,3 +58,15 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+console.log(Alpine)
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('draggable', () => ({
+        init(){
+            console.log("gogo")
+            dragElement();
+        }
+    }))
+})
+
