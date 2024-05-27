@@ -21,9 +21,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 import json
 
 
-
-class ResumeArea(PermissionRequiredMixin,TemplateView):
-    template_name = 'resumes/area.html'
+class ResumeArea(PermissionRequiredMixin, TemplateView):
+    template_name = "resumes/area.html"
     permission_required = "user_can_show"
 
     def get_context_data(self, **kwargs):
@@ -36,9 +35,8 @@ class ResumeArea(PermissionRequiredMixin,TemplateView):
 
 class ResumeListView(ListView):
     model = Resume
-    template_name = 'resumes/index.html'
-    context_object_name = 'resumes' 
-
+    template_name = "resumes/index.html"
+    context_object_name = "resumes"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,14 +45,13 @@ class ResumeListView(ListView):
         return context
 
 
-class ResumeCreateView(PermissionRequiredMixin,LoginRequiredMixin, CreateView):
+class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Resume
     form_class = ResumeForm
-    template_name = 'resumes/create.html'
-    success_url = reverse_lazy('resumes:index')
+    template_name = "resumes/create.html"
+    success_url = reverse_lazy("resumes:index")
     permission_required = "user_can_show"
 
-    
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["request"] = self.request
@@ -71,7 +68,6 @@ class ResumeUpdateView(UpdateView):
     form_class = ResumeForm
     template_name = "resumes/update.html"
     success_url = reverse_lazy("resumes:index")
-
 
     def form_valid(self, form):
         resume = form.save(commit=False)
@@ -90,15 +86,15 @@ class ResumeDeleteView(DeleteView):
 
 
 class TotalListView(ListView):
-    template_name = 'resumes/total.html'
-    context_object_name = 'total_data'
+    template_name = "resumes/total.html"
+    context_object_name = "total_data"
 
     def get_queryset(self):
-        resume_id = self.kwargs['resume_id']
+        resume_id = self.kwargs["resume_id"]
         resume_data = Resume.objects.filter(resume_id=resume_id)
-        education_data = Education.objects.filter(resume_id=resume_id).order_by('posit')
-        work_data = Work.objects.filter(resume_id=resume_id).order_by('posit')
-        project_data = Project.objects.filter(resume_id=resume_id).order_by('posit')
+        education_data = Education.objects.filter(resume_id=resume_id).order_by("posit")
+        work_data = Work.objects.filter(resume_id=resume_id).order_by("posit")
+        project_data = Project.objects.filter(resume_id=resume_id).order_by("posit")
 
         total_data = {
             "education_data": education_data,
@@ -170,7 +166,7 @@ def update_positions(request):
                 Model = Project
             else:
                 continue
-            
+
             obj = Model.objects.get(id=obj_id)
             obj.posit = new_position
             obj.save()
