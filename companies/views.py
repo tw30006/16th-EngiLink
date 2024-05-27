@@ -10,6 +10,10 @@ from django.urls import reverse_lazy
 from .forms import CompanyRegisterForm, CompanyUpdateForm
 from users.models import CustomUser
 from .models import Company
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from jobs.models import Job_Resume
+from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
 
 
 def get_user_backend(user):
@@ -125,3 +129,10 @@ class CompanyListView(ListView):
             queryset = queryset.filter(company_name__icontains=search_keyword)
         return queryset
 
+    
+class JobApplicationsView(ListView):
+    model = Job_Resume
+    template_name = 'companies/apply.html'
+    def get_queryset(self):
+        company = get_object_or_404(Company, custom_user=self.request.user)
+        return Job_Resume.objects.filter(job__company=company)

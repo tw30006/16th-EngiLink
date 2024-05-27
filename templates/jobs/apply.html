@@ -1,0 +1,18 @@
+{% extends "backend.html" %}
+{% block content %}
+<h1>使用者：{{request.user}}</h1>
+<h1>投遞工作 {{ job.title }}</h1>
+<br>
+<form method="post" action="{% url 'users:apply' job.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="job_id" value="{{ job.id }}">
+    <label for="resume">履歷選擇:</label>
+    <select name="resume_id" id="resume">
+        {% for resume in resumes %}
+            <option value="{{ resume.resume_id }}">{{ resume.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">提交</button>
+</form>
+{% endblock %}

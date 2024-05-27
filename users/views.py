@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, login,authenticate
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
@@ -18,6 +19,11 @@ from django.views import View
 from mailchimp3 import MailChimp
 
 
+from jobs.models import Job,Job_Resume
+from django.shortcuts import redirect,get_object_or_404,render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic.list import ListView
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
@@ -50,17 +56,16 @@ class UserHomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         companies = Company.objects.all()
-        jobs = Job.objects.select_related("company").all()
-        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
-        search_keyword = self.request.GET.get("q")
-                
+        resumes = Resume.objects.filter(user=self.request.user)
+        jobs = Job.objects.select_related('company').all()
+        search_keyword = self.request.GET.get('q')
         if search_keyword:
             companies = Company.objects.filter(company_name__icontains=search_keyword)
         else:
             companies = Company.objects.all()
-        context["companies"] = companies
-        context["jobs"] = jobs
-        context["user_jobs"] = user_jobs
+        context['companies'] = companies
+        context['jobs'] = jobs
+        context['resumes'] = resumes
         return context
 
 class UserJobsView(TemplateView):
@@ -134,18 +139,23 @@ class UserPasswordChangeView(PasswordChangeView):
         logout(self.request)
         return response
 
-class CollectJobView(LoginRequiredMixin, View):
-    def post(self, request):
-        job_id = request.POST.get("job_id")
+@method_decorator(login_required, name='dispatch')
+class ApplyForJobCreateView(View):
+    def get(self, request, *args, **kwargs):
+        job_id = self.kwargs.get('job_id')
+        print(job_id)
         job = get_object_or_404(Job, id=job_id)
-        user_job = User_Job.objects.filter(user=request.user, job=job)
-        if user_job.exists():
-            user_job.delete()
-        else:
-            user_job = User_Job.objects.create(job=job, user=request.user)
-        return redirect("users:home")
+        resumes = Resume.objects.filter(user=request.user)
+        return render(request, 'jobs/apply.html', {'job': job, 'resumes': resumes})
+    
+    def post(self, request, *args, **kwargs):
+        job_id = request.POST.get('job_id')
+        resume_id = request.POST.get('resume_id')               
+        Job_Resume.objects.create(job_id=job_id, resume_id=resume_id)
+        return redirect('users:home')
 
-    def get(self, request):
-        jobs = Job.objects.select_related('company').all()
-        user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
-        return render(request, "users/collect.html", {'jobs': jobs, 'user_jobs': user_jobs})
+class ApplyForJobListView(ListView):
+    model = Job_Resume
+    template_name = 'users/apply.html'
+    def get_queryset(self):
+        return Job_Resume.objects.filter(resume__user=self.request.user)

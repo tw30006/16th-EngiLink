@@ -1,0 +1,13 @@
+{% extends 'frontend.html' %}
+{% block content %}
+<h1>應徵記錄</h1>
+    {% for job_resume in job_resume_list %}
+        <div class="bg-white p-4 shadow rounded-lg">
+                <strong>應徵公司：{{ job_resume.job.company.company_name }}</a><br>
+                <strong>職缺:{{ job_resume.job.title }}</a><br>
+                <strong>應徵時間:{{ job_resume.created_at|date:"Y.m.d H:i" }}</a><br>
+                <strong>使用履歷:{{ job_resume.resume.name }}</a><br>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

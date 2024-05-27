@@ -1,0 +1,16 @@
+{% extends 'backend.html' %}
+{% block content %}
+<h1>收到應徵</h1>
+<ul>
+    {% for job_resume in job_resume_list %}
+        <div class="bg-white p-4 shadow rounded-lg">
+            <li>
+                <strong>應徵者:</strong> {{ job_resume.resume.name }}<br>
+                <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
+                <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
+                <br>
+                <a href=""class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
+            </li>
+        </div>
+    {% endfor %}
+{% endblock %}
