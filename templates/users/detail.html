@@ -1,7 +1,17 @@
 {% extends 'frontend.html' %}
 {% block content %}
-<h2>User Profile</h2>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-<a href="{% url 'users:update' user.id%}">Edit Profile</a>
+<div class="container max-w-md p-6 mx-auto mt-10 bg-white rounded-lg shadow-md">
+    <div class="mb-6 text-center">
+        <h2 class="text-2xl font-bold">使用者資料</h2>
+    </div>
+    <div class="mb-4">
+        <p><span class="font-semibold">使用者名稱:</span> {{ user.username }}</p>
+    </div>
+    <div class="mb-4">
+        <p><span class="font-semibold">Email:</span> {{ user.email }}</p>
+    </div>
+    <div class="flex justify-end">
+        <a class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700" href="{% url 'users:update' user.id %}">編輯個人資料</a>
+    </div>
+</div>
 {% endblock %}
