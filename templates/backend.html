@@ -10,8 +10,10 @@
 </head>
 <body>
     {% include "shared/navbar.html" %}
-    {% block content %} 
-    {% endblock %}
+    <main class="pt-16">
+        {% block content %}
+        {% endblock %}
+    </main> 
     {% if messages %} 
     {% include "shared/notice.html" %} 
     {% endif %}
