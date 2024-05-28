@@ -122,6 +122,19 @@ class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return CustomUser.objects.filter(user_type=2, id=self.request.user.id)
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        company = getattr(self.request.user, "company", None)
+        if company:
+            initial['company_name'] = company.company_name
+            initial['tin'] = company.tin
+            initial['user_name'] = company.user_name
+            initial['tel'] = company.tel
+            initial['address'] = company.address
+            initial['description'] = company.description
+            initial['type'] = company.type
+        return initial
 
 class CompanyPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
     template_name="companies/password_change_form.html"
