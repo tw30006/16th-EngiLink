@@ -6,15 +6,13 @@
     </div>
     <form method="post" class="space-y-4">
         {% csrf_token %}
-        
-        <!-- Custom rendering of form fields with TailwindCSS -->
         <div class="mb-4">
-            <label for="id_username" class="block text-sm font-medium text-gray-700">用戶名</label>
+            <label for="id_username" class="block text-sm font-medium text-gray-700">用戶名<span class="text-red-500">*</span></label>
             <input type="text" name="username" id="id_username" value="{{ form.username.value }}" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <p class="mt-2 text-sm text-gray-500">必填。150 個字符或更少。僅限字母、數字和 @/./+/-/_ 符號</p>
+            <p class="mt-2 text-sm text-gray-500">僅限字母、數字和 @/./+/-/_ 符號</p>
         </div>
         <div class="mb-4">
-            <label for="id_email" class="block text-sm font-medium text-gray-700">電子郵件</label>
+            <label for="id_email" class="block text-sm font-medium text-gray-700">電子郵件<span class="text-red-500">*</span></label>
             <input type="email" name="email" id="id_email" value="{{ form.email.value }}" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <p class="mt-2 text-sm text-gray-500">請輸入有效的電子郵件地址</p>
         </div>
