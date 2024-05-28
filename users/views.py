@@ -59,6 +59,7 @@ class UserHomeView(PermissionRequiredMixin,TemplateView):
         resumes = Resume.objects.filter(user=self.request.user)
         jobs = Job.objects.select_related('company').all()
         search_keyword = self.request.GET.get('q')
+        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
         if search_keyword:
             companies = Company.objects.filter(company_name__icontains=search_keyword)
         else:
@@ -66,6 +67,7 @@ class UserHomeView(PermissionRequiredMixin,TemplateView):
         context['companies'] = companies
         context['jobs'] = jobs
         context['resumes'] = resumes
+        context['user_jobs'] = user_jobs
         return context
 
 class UserJobsView(TemplateView):

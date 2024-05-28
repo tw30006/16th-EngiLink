@@ -35,16 +35,10 @@
                                     </div>
                                     <br>
                                     <div class="absolute bottom-4 right-4 flex space-x-2">
-                                        <form action="{% url 'users:collect' %}" method="post" class="inline">
+                                        <form class="inline" action="{% url 'users:collect' %}" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
                                             {% csrf_token %}
                                             <input type="hidden" name="job_id" value="{{ job.id }}">
-                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                {% if job.id in user_jobs %}
-                                                    已收藏
-                                                {% else %}
-                                                    收藏
-                                                {% endif %}
-                                            </button>
+                                            {% include 'shared/collect_btn.html' %}
                                         </form>
                                         <a href="{% url 'users:apply' job.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">應徵</a>
                                     </div>
@@ -63,4 +57,3 @@
     <p>Please <a href="{% url 'users:login' %}">login</a> or <a href="{% url 'users:register' %}">register</a>.</p>
 {% endif %}
 {% endblock %}
-
