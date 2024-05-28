@@ -12,7 +12,7 @@ class Work(models.Model):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    posit = PositionField()
+    posit = PositionField(collection='resume')
     objects = models.Manager()
 
     def __str__(self):
