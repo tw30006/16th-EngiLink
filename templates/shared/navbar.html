@@ -38,8 +38,10 @@
             </div>
             <div class="hidden md:flex">
                 <div>
+                    {% if request.user.user_type == 2 %}
                     <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">刊登職缺
                     </button>
+                    {% endif %}
                 </div>
                 <div>
                     <button class="text-blue-800" @click="openMenu = !openMenu">
