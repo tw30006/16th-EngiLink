@@ -9,7 +9,6 @@ from django.views import View
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
-from users.models import CustomUser
 from .models import Company
 from jobs.models import Job_Resume,Job
 from .forms import CompanyRegisterForm, CompanyUpdateForm 
@@ -49,7 +48,7 @@ class CompanyRegisterView(FormView):
             company = None
 
         if user.user_type == 2 and company is None:
-            return reverse_lazy('companies:update', kwargs={'pk': user.pk})
+            return reverse_lazy('users:create', kwargs={'pk': user.pk})
         else:
             return reverse_lazy('companies:home')
 
@@ -72,7 +71,7 @@ class CompanyLoginView(LoginView):
             company = None
 
         if user.user_type == 2 and company is None:
-            return reverse_lazy('companies:update', kwargs={'pk': user.pk})
+            return reverse_lazy('users:create', kwargs={'pk': user.pk})
         else:
             return reverse_lazy('companies:home')
 
@@ -111,30 +110,24 @@ class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     success_url = "/companies/"
     login_url = "/companies/"
     permission_required = "company_can_show"
-
-    def form_valid(self, form):
-        messages.success(self.request, "更新成功")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "更新失敗")
-        return super().form_invalid(form)
-
-    def get_queryset(self):
-        return CustomUser.objects.filter(user_type=2, id=self.request.user.id)
     
-    def get_initial(self):
-        initial = super().get_initial()
-        company = getattr(self.request.user, "company", None)
-        if company:
-            initial['company_name'] = company.company_name
-            initial['tin'] = company.tin
-            initial['user_name'] = company.user_name
-            initial['tel'] = company.tel
-            initial['address'] = company.address
-            initial['description'] = company.description
-            initial['type'] = company.type
-        return initial
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Company.objects.filter(custom_user=user,custom_user__user_type=2)
+        print(queryset)
+        return queryset
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object
+        context['user'] = self.object.custom_user
+        return context
 
 class CompanyPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
     template_name="companies/password_change_form.html"

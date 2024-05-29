@@ -79,9 +79,19 @@ class CompanyUpdateForm(UserChangeForm):
         fields = ["username", "email", "company_name", "tin", "user_name", "tel", "address", "description", "type", "banner", "logo"]
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
         super(CompanyUpdateForm, self).__init__(*args, **kwargs)
         del self.fields["password"]
-
+        company = kwargs["instance"]
+        instance = kwargs.get('instance')
+        user = None
+        if isinstance(instance, Company):
+            user = instance.custom_user
+        else:
+            user = kwargs.pop('user', None)  
+        if user:
+            self.fields["username"].initial = user.username
+            self.fields["email"].initial = user.email
         self.fields["username"].label = "帳號"
         self.fields["email"].label = "公司信箱"
         self.fields["company_name"].label = "公司名稱"
@@ -110,7 +120,7 @@ class CompanyUpdateForm(UserChangeForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        if user.user_type == 2:
+        if hasattr(user, 'user_type') and user.user_type == 2:
             company, created = Company.objects.update_or_create(
                 custom_user=user,
                 defaults={
