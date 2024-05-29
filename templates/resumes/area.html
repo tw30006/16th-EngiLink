@@ -4,7 +4,6 @@
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md w-full w-300px">
             <div>
                 <h1 class="text-2xl">Hello,{{request.user|title}}</h1>
-                <a href="{% url 'resumes:create'%}" class="text-white text-sm mt-10">&#43;創建履歷</a>
             </div>
             {% if request.user.is_authenticated %}
             <form action="{% url 'users:logout'%}" method="post">
@@ -15,7 +14,7 @@
             <a href="" class="text-white">登入</a>
             {% endif %}
         </div>
-
+        
         <div class="task-items-wrapper flex flex-col  w-full">
             <h2 class="text-lg font-semibold mb-4 mt-4 ml-4">我的履歷:</h2>
             {% for resume in resumes %}
@@ -27,6 +26,9 @@
             <h3 class="text-lg">目前無創建履歷</h3>
             {% endfor %}
         </div>
+        <br>
+        <br>
+        <a href="{% url 'resumes:create'%}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">&#43;創建履歷</a>
         <h3 class="text-lg mt-10"> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
     </div>
 {% endblock %}
