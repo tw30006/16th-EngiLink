@@ -1,27 +1,33 @@
-{% extends 'frontend.html' %}
-{% block content %}
-<h2>個人資訊</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>個人資訊</h2>
     <ul>
-        {% for resume in total_data.resume_data %}
-            {% if resume.picture %}
-            <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
-            {% else %}
-            <p>無照片顯示</p>
-            {% endif %}
-            <p>姓名：{{ resume.name }}</p>
-            <span>性別：{{ resume.get_gender_display }}</span>
-            &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span>生日：{{ resume.birthday }}</span>
-            <p>信箱：{{ resume.email }}</p>
-            <span>電話：{{ resume.phone_number }}</span>
-            &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span>地址：{{ resume.address }}</span>    
-            <p>技能：{{resume.skills}}</p>
-            <p>個人網站：{{resume.website}}</p>
-            <p>工作經驗：{{resume.experience}}</p>
-            <p>Linkedin：{{resume.linkedin}}</p>
-            <p>GitHub：{{resume.github}}</p>  
-        {% endfor %}
+    {% for resume in total_data.resume_data %}
+        {% if resume.picture %}
+        <img src="{{ resume.picture.url }}" alt="photo" style="width: 150px;">
+        {% else %}
+        <p>無照片顯示</p>
+        {% endif %}
+        <p>姓名：{{ resume.name }}</p>
+        <span>性別：{{ resume.get_gender_display }}</span>
+        &nbsp; &nbsp; &nbsp; &nbsp; 
+        <span>生日：{{ resume.birthday }}</span>
+        <p>信箱：{{ resume.email }}</p>
+        <span>電話：{{ resume.phone_number }}</span>
+        &nbsp; &nbsp; &nbsp; &nbsp; 
+        <span>地址：{{ resume.address }}</span>    
+        <p>技能：{{resume.skills}}</p>
+        <p>個人網站：{{resume.website}}</p>
+        <p>工作經驗：{{resume.experience}}</p>
+        <p>Linkedin：{{resume.linkedin}}</p>
+        <p>GitHub：{{resume.github}}</p>  
+    {% endfor %}
     </ul>
     <hr>
 
@@ -34,7 +40,6 @@
         {% endfor %}
     </ul>
     <hr>
-
     <h2>工作經驗</h2>
     <ul>
         {% for work in total_data.work_data %}
@@ -43,7 +48,6 @@
         {% endfor %}
     </ul>
     <hr>
-
     <h2>專案經驗</h2>
     <ul>
         {% for project in total_data.project_data %}
@@ -54,4 +58,5 @@
         {% endfor %}
     </ul>
     <hr>
-{% endblock %}
+</body>
+</html>

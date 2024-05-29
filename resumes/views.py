@@ -15,11 +15,10 @@ from .models import Resume
 from educations.models import Education
 from works.models import Work
 from projects.models import Project
-from weasyprint import HTML, CSS
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 import json
-
+from weasyprint import HTML
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
     template_name = "resumes/area.html"
@@ -123,7 +122,7 @@ class TotalListView(ListView):
         return context
 
 
-def GenerateResumePdf(request, resume_id):
+def generate_resume_pdf(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
@@ -138,13 +137,11 @@ def GenerateResumePdf(request, resume_id):
         "pdf_template.html", {"user": user, "total_data": total_data}
     )
 
-    html = HTML(string=html_string, base_url=request.build_absolute_uri("/"))
-    result = html.write_pdf(stylesheets=[CSS(string="@page { size: A4; margin: 1cm }")])
+    pdf = HTML(string=html_string).write_pdf()
 
-    response = HttpResponse(result, content_type="application/pdf")
-    response["Content-Disposition"] = (
-        f'attachment; filename="resume_{user.username}.pdf"'
-    )
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="resume_{user.username}.pdf"'
+
     return response
 
 

@@ -17,13 +17,13 @@ rich = "^13.7.1"
 django-allauth = {extras = ["socialaccount"], version = "^0.62.1"}
 google-auth-oauthlib = "^1.2.0"
 pillow = "^10.3.0"
-weasyprint = "^62.1"
 rules = "^3.4"
 mailchimp3 = "^3.0.21"
 gunicorn = "^22.0.0"
 whitenoise = "^6.6.0"
 dj-database-url = "^2.1.0"
 django-positions = "^0.6.0"
+weasyprint = "^62.1"
 
 [build-system]
 requires = ["poetry-core"]
