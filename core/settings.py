@@ -49,7 +49,15 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "rules",
     'django.contrib.humanize',
+    "crispy_forms",
+    "crispy_tailwind",
 ]
+
+
+# crispy tailwind css
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
+
 
 AUTH_USER_MODEL = "users.CustomUser"
 

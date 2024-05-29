@@ -6,3 +6,8 @@
     width: unset;
     height: unset;
 }
+
+.input.is-invalid {
+    border-color: red;
+}
+

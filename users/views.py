@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import logout, login,authenticate
+from django.contrib.auth import logout, login, authenticate
+from .forms import CustomLoginForm
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from django.utils import timezone
@@ -24,6 +25,7 @@ from django.http import HttpResponseRedirect
 
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+
 
 class UserRegisterView(FormView):
     template_name = "users/register.html"
@@ -86,7 +88,8 @@ class UserJobsView(TemplateView):
 
 class UserLoginView(LoginView):
     template_name = "users/login.html"
-
+    form_class = CustomLoginForm
+    
     def form_valid(self, form):
         messages.success(self.request, "登入成功")
         return super().form_valid(form)
