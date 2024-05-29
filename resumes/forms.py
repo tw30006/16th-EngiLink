@@ -69,7 +69,24 @@ class ResumeForm(forms.ModelForm):
         if not re.match(r"^[a-zA-Z\u4e00-\u9fa5\sａ-ｚＡ-Ｚ]+$", name):
             raise ValidationError("姓名不能有符號!")
         return name
-
+    
+    def clean_birthday(self):
+        birthday = self.cleaned_data.get("birthday")
+        if birthday:
+            if birthday > date.today():
+                raise ValidationError("請確認輸入的日期!")
+            age = (
+                date.today().year
+                - birthday.year
+                - (
+                    (date.today().month, date.today().day)
+                    < (birthday.month, birthday.day)
+                )
+            )
+            if age < 16:
+                raise ValidationError("請確認輸入的日期!")
+        return birthday
+    
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get("phone_number")
         if len(phone_number) != 10 or not phone_number.startswith("09"):
