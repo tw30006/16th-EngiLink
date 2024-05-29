@@ -11,13 +11,14 @@ from django.views import View
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
 from resumes.models import Resume 
 from companies.models import Company
+from companies.forms import CompanyUpdateForm
 
 from jobs.models import Job, User_Job, Job_Resume
 from mailchimp3 import MailChimp
@@ -149,7 +150,26 @@ class UserPasswordChangeView(PermissionRequiredMixin,PasswordChangeView):
         response = super().form_valid(form)
         logout(self.request)
         return response
-    
+
+class UserAddView(LoginRequiredMixin,UpdateView):
+    template_name = "users/create.html"
+    model = Company
+    form_class = CompanyUpdateForm
+    success_url = "/companies/"
+    login_url = "/companies/"
+
+    def form_valid(self, form):
+        messages.success(self.request, "更新成功")
+        return super().form_valid(form)
+
+
+    def form_invalid(self, form):
+        messages.error(self.request, "更新失敗")
+        return super().form_invalid(form)
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(id=self.request.user.id)
+
     
 class CollectJobView(LoginRequiredMixin, View):
     def post(self, request):

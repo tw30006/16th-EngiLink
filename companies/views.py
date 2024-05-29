@@ -114,7 +114,6 @@ class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         user = self.request.user
         queryset = Company.objects.filter(custom_user=user,custom_user__user_type=2)
-        print(queryset)
         return queryset
     
     def get_form_kwargs(self):
