@@ -20,12 +20,6 @@ class EmailValidator(forms.EmailField):
 
         if not email_re.match(value):
             raise ValidationError("請確認輸入的信箱!")
-
-class CustomClearableFileInput(forms.ClearableFileInput):
-    def format_value(self, value):
-        if not value:
-            return None
-        return super().format_value(value)
     
 class ResumeForm(forms.ModelForm):
 
