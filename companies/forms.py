@@ -2,9 +2,42 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from users.models import CustomUser
 from .models import Company
+from django.utils.translation import gettext_lazy as _
 
 
 class CompanyRegisterForm(UserCreationForm):
+    
+    username = forms.CharField(
+        label="用戶名",
+        help_text="必填。150字或更少。僅限字母、數字和 @/./+/-/_ 符號。",
+        error_messages={
+            'unique': "此用戶名已存在。",
+        }
+    )
+    email = forms.EmailField(
+        label="電子郵件",
+        error_messages={
+            'unique': "此電子郵件已存在。",
+        }
+    )
+    password1 = forms.CharField(
+        label="密碼",
+        widget=forms.PasswordInput(),
+        help_text=(
+            "您的密碼不能與您的其他個人資料過於相似。"
+            "您的密碼必須至少包含 8 個字符。"
+            "您的密碼不能是常用密碼。"
+            "您的密碼不能全為數字。"
+        )
+    )
+    password2 = forms.CharField(
+        label="確認密碼",
+        widget=forms.PasswordInput(),
+        help_text="請再次輸入密碼以確認。",
+        error_messages={
+            'password_mismatch': _("兩次輸入的密碼不同。")
+        }
+    )
     class Meta:
         model = CustomUser
         fields = ("username", "email", "password1", "password2")
@@ -19,7 +52,16 @@ class CompanyRegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
+    
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                _("兩次輸入的密碼不同。"),
+                code='password_mismatch',
+            )
+        return password2
 
 class CompanyUpdateForm(UserChangeForm):
     company_name = forms.CharField(max_length=100)

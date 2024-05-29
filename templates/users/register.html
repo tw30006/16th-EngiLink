@@ -1,4 +1,5 @@
 {% extends 'frontend.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
         <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
@@ -8,22 +9,7 @@
             <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
                 <form method="post" action="{% url 'users:register' %}" class="w-full max-w-lg">
                     {% csrf_token %}
-                    <div class="mb-4">
-                        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">用戶名：</label>
-                        <input type="text" name="username" required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="僅限字母、數字和 @/./+/-/_ 的符號">
-                    </div>
-                    <div class="mb-4">
-                        <label for="id_email" class="block text-gray-700 text-sm font-bold mb-2">電子郵件：</label>
-                        <input type="email" name="email" required id="id_email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="username@example.com">
-                    </div>
-                    <div class="mb-4">
-                        <label for="id_password1" class="block text-gray-700 text-sm font-bold mb-2">密碼：</label>
-                        <input type="password" name="password1" required id="id_password1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="至少8碼、不能全數字">
-                    </div>
-                    <div class="mb-6">
-                        <label for="id_password2" class="block text-gray-700 text-sm font-bold mb-2">確認密碼：</label>
-                        <input type="password" name="password2" required id="id_password2" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="至少8碼、不能全數字">
-                    </div>
+                    {{ form|crispy }}
                     <div class="flex justify-end">
                         <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">提交</button>
                     </div>

@@ -50,14 +50,15 @@ INSTALLED_APPS = [
     "rules",
     'django.contrib.humanize',
     "crispy_forms",
-    "crispy_tailwind",
+    "crispy_bootstrap4",
+    'bootstrap4',
 ]
 
 
-# crispy tailwind css
-CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
+# crispy css
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 AUTH_USER_MODEL = "users.CustomUser"
 
