@@ -1,25 +1,50 @@
 {% extends 'frontend.html' %}
 {% block content %}
-<h1>應徵記錄</h1>
-{% for job_resume in job_resume_list %}
-    <div class="bg-white p-4 shadow rounded-lg">
-        {{ forloop.counter }}<strong>.應徵公司：</strong>{{ job_resume.job.company.company_name }}<br>
-        <strong>職缺：</strong>{{ job_resume.job.title }}<br>
-        <strong>應徵時間：</strong>{{ job_resume.created_at|date:"Y.m.d H:i" }}<br>
-        <strong>使用履歷：</strong>{{ job_resume.resume.name }}<br>
-        {% if job_resume.status == 'applied' %}
-            {% if job_resume.read_at %}
-                <p class="text-2xl">公司已讀時間：{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
-            {% else %}
-            <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">撤回申請</button>
-            </form>
-            {% endif %}
-        {% else %}
-            <p class="text-2xl">已撤回申請：{{ job_resume.withdrawn_at | date:"Y.m.d H:i" }}</p>
-        {% endif %}
-    </div>
-    <hr>
-{% endfor %}
+    <h1 class="text-3xl font-bold mb-8">{{ request.user }}的應徵記錄</h1>
+    {% for job_resume in job_resume_list %}
+        <div class="bg-gray-100 p-6 shadow rounded-lg mb-8 mx-auto max-w-7xl">
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-8">
+                    <p class="text-xl mb-2"><strong>應徵公司：</strong>{{ job_resume.job.company.company_name }}</p>
+                    <p class="text-xl mb-2"><strong>職缺：</strong>{{ job_resume.job.title }}</p>
+                    <p class="text-xl mb-2"><strong>應徵時間：</strong>{{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
+                    <p class="text-xl mb-2"><strong>使用履歷：</strong>{{ job_resume.resume.name }}</p>
+
+                    {% if job_resume.status == 'applied' %}
+                        {% if job_resume.read_at %}
+                            <p class="text-xl mb-4"><strong>公司已讀時間：</strong>{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
+                        {% else %}
+                            <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">撤回申請</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-span-4 flex flex-col justify-between">
+                    {% if job_resume.interview_date %}
+                        <div class="mb-4 border-2 border-red-500 p-4">
+                            <p class="text-xl mb-2">{{ job_resume.job.company.company_name }}對您發出面試邀請</p>
+                            <p class="text-xl mb-2">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</p>
+                            {% if job_resume.accepted ==  'accept' %}
+                                <br>
+                                <p class="text-xl mb-2">您已接受面試</p>
+                            {% elif job_resume.accepted == 'reject' %}
+                                <br>
+                                <p class="text-xl mb-2">您已婉拒此次面試。</p>
+                            {% else %}
+                                <form action="{% url 'users:interview' job_resume.id %}" method="post" class="flex gap-4 justify-end">
+                                    {% csrf_token %}
+                                    <button type="submit" name="response" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">接受</button>
+                                    <button type="submit" name="response" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">拒絕</button>
+                                </form>
+                            {% endif %}        
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
+
+

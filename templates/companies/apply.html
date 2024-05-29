@@ -1,43 +1,75 @@
 {% extends 'backend.html' %}
 {% block content %}
-<h1>收到應徵</h1>
 <br>
-<ul>
-    {% for job_resume in job_resume_list %}
-            {% if job_resume.status == 'withdrawn' %}
-            <div class="bg-white p-4 shadow rounded-lg">
-                {{ forloop.counter }}<strong class="text-xl">.求職者已取消應徵:{{ job_resume.withdrawn_at |date:"Y.m.d H:i" }}</strong><br>
-                <strong>應徵者:</strong> {{ job_resume.resume.name }}<br>
-                <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
-                <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
-                <hr>
-            </div>
-                {% else %}
-                <div class="bg-white p-4 shadow rounded-lg">
-                    <li>
-                        {{ forloop.counter }}<strong>.應徵者:</strong> {{ job_resume.resume.name }}<br>
-                        <strong>職缺:</strong> <a href="{% url 'companies:jobs' user.company.id %}">{{ job_resume.job.title }}</a><br>
-                        <strong>應徵時間:</strong> {{ job_resume.created_at |date:"Y.m.d H:i" }}<br>
-                        <br>
-                        <a href="{% url 'companies:candidate' job_resume.pk %}"class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
-                    </li>
-                    {% endif %}
-                    <br>
-                    <li>
-                        {% if request.user == job_resume.job.company.custom_user %}
-                            {% if job_resume.status == 'applied' %}
-                                {% if not job_resume.read_at %}
-                                    <form action="{% url 'companies:mark' job_resume.pk %}" method="post" class="inline">
-                                        {% csrf_token %}
-                                        <button type="submit" class="px-2 py-2 bg-green-500">標記為已讀</button>
-                                    </form>
+{% for job, resumes in job_resume_dict.items %}
+    <div class="bg-white p-6 shadow-lg rounded-lg mb-6 mx-auto max-w-7xl">
+        <h2 class="text-3xl font-semibold mb-4">{{ job.company.company_name }} {{ job.title }}</h2>
+        <ul class="space-y-4">
+            {% for job_resume in resumes %}
+                <li class="p-4 bg-gray-100 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p><strong>應徵者:</strong> {{ job_resume.resume.name }}</p>
+                            <p><strong>應徵時間:</strong> {{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
+                            {% if job_resume.status == 'withdrawn' %}
+                                <p class="text-red-500"><strong>已取消應徵:</strong> {{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="text-right">
+                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
+                        </div>
+                    </div>
+                    {% if request.user == job_resume.job.company.custom_user %}
+                        {% if job_resume.status == 'applied' %}
+                            {% if not job_resume.read_at %}
+                                <form action="{% url 'companies:mark' job_resume.pk %}" method="post" class="mt-4">
+                                    {% csrf_token %}
+                                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg">發送面試</button>
+                                </form>
+                            {% else %}
+                                {% if job_resume.interview_date %}
+                                    <p class="mt-4 text-xl text-gray-600">面試時間: {{ job_resume.interview_date|date:"Y.m.d H:i" }}</p>
                                 {% else %}
-                                    <p class="text-2xl">已讀時間{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
+                                    <form action="{% url 'companies:interview' job_resume.pk %}" method="post" class="mt-4">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="job_resume_id" value="{{ job_resume.id }}">
+                                        <label for="interview_date">面試日期:</label>
+                                        <input type="datetime-local" name="interview_date" class="block w-full mt-2 p-2 border rounded-lg" required>
+                                        <label for="interview_invitation" class="mt-2">面試信:</label>
+                                        <textarea name="interview_invitation" rows="8" class="block w-full mt-2 p-2 border rounded-lg" required>
+                                            親愛的 {{ job_resume.resume.name }}，
+
+                                            感謝您應徵 {{ job_resume.job.title }} 一職。經過初步篩選，我們很高興通知您進入了面試環節。
+
+                                            面試詳情如下：
+                                            日期：<填寫面試日期>
+                                            地點：<填寫面試地點>
+                                            聯絡人：<填寫聯絡人姓名及聯絡方式>
+
+                                            請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
+
+                                            期待與您的面談！
+
+                                            此致
+                                            {{ company.company_name }}
+                                        </textarea>
+                                        <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">發送面試邀請</button>
+                                    </form>
                                 {% endif %}
                             {% endif %}
                         {% endif %}
-                        <hr>
-                    </li>
-                </div>
-    {% endfor %}
+                        {% if job_resume.accepted ==  'accept' %}
+                            <p class="mt-4 text-xl text-blue-600">求職者同意參與此次面試</p>
+                        {% elif job_resume.accepted == 'reject' %}
+                            <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
+                        {% else %}
+                            <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
 {% endblock %}
+

@@ -65,7 +65,9 @@ class Job_Resume(models.Model):
     status = models.CharField(max_length=20, default='applied') 
     withdrawn_at = models.DateTimeField(null=True, blank=True) 
     read_at = models.DateTimeField(null=True, blank=True)
-
+    interview_date = models.DateTimeField(null=True, blank=True)
+    interview_invitation = models.TextField(null=True, blank=True)
+    accepted = models.CharField(max_length=20, default=None, null=True)
 
 class User_Job(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)

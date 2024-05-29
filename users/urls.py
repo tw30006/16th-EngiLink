@@ -12,6 +12,7 @@ from .views import (
     ApplyForJobListView,
     WithdrawApplicationView,
     CollectJobView,
+    InterviewResponseView,
 )
 from resumes import views as resumes
 
@@ -35,4 +36,6 @@ urlpatterns = [
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
     path("collect/", CollectJobView.as_view(), name="collect"),
     path("jobs/", UserJobsView.as_view(), name="jobs"),
+    path('interview/<int:pk>/', InterviewResponseView.as_view(), name='interview'),
 ]
+

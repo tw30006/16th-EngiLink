@@ -11,9 +11,10 @@ from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
 from users.models import CustomUser
 from .models import Company
-from jobs.models import Job_Resume
+from jobs.models import Job_Resume,Job
 from .forms import CompanyRegisterForm, CompanyUpdateForm 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.template import Template, Context
 import rules
 
 
@@ -56,7 +57,6 @@ class CompanyRegisterView(FormView):
 class CompanyHomeView(PermissionRequiredMixin,TemplateView):
     template_name = 'companies/home.html'
     permission_required = "company_can_show"
-
 
 
 class CompanyLoginView(LoginView):
@@ -168,9 +168,39 @@ class CompanyListView(ListView):
 class JobApplicationsView(ListView):
     model = Job_Resume
     template_name = 'companies/apply.html'
+
     def get_queryset(self):
         company = get_object_or_404(Company, custom_user=self.request.user)
         return Job_Resume.objects.filter(job__company=company)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        company = get_object_or_404(Company, custom_user=self.request.user)
+        company_jobs = Job.objects.filter(company=company)
+        job_resume_dict = {}
+        for job in company_jobs:
+            job_resume_dict[job] = Job_Resume.objects.filter(job=job)
+        context['job_resume_dict'] = job_resume_dict
+        context['company'] = self.request.user.company
+        return context
+    
+    def form_valid(self, form):
+        job_resume_id = self.request.POST.get('job_resume_id')
+        job_resume = get_object_or_404(Job_Resume, pk=job_resume_id)
+
+        interview_date = form.cleaned_data['interview_date']
+        interview_invitation = form.cleaned_data['interview_invitation']
+
+        invitation_template = Template(interview_invitation)
+        context = Context({
+            'job_resume': job_resume,
+            'interview_date': interview_date,
+            'company': self.request.user.company
+        })
+        job_resume.interview_invitation = invitation_template.render(context)
+        job_resume.interview_date = interview_date
+        job_resume.save()
+        return super().form_valid(form)
 
 class JobApplicationDetailView(DetailView):
     model = Job_Resume
@@ -195,3 +225,11 @@ class MarkAsReadView(View):
             job_resume.read_at = timezone.now()
             job_resume.save()
         return redirect('companies:applications', pk=job_resume.job.company_id)
+
+class InterviewResultCreateView(View):
+    def post(self, request, job_resume_id, *args, **kwargs):
+        interview_date = request.POST.get('interview_date')
+        job_resume = Job_Resume.objects.get(pk=job_resume_id)
+        job_resume.interview_date = interview_date
+        job_resume.save()
+        return redirect('companies:home')

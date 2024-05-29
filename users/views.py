@@ -198,3 +198,19 @@ class WithdrawApplicationView(View):
         job_resume.withdrawn_at = timezone.now()
         job_resume.save()
         return redirect('users:home')
+
+@method_decorator(login_required, name='dispatch')
+class InterviewResponseView(View):
+    def post(self, request, *args, **kwargs):
+        job_resume_id = self.kwargs.get('pk')
+        response = request.POST.get('response')
+        job_resume = get_object_or_404(Job_Resume, pk=job_resume_id, resume__user=request.user)
+        
+        if response == 'accept':
+            job_resume.accepted = 'accept'
+        elif response == 'reject':
+            job_resume.accepted = 'reject'
+        
+        job_resume.save()
+        
+        return redirect('users:home')
