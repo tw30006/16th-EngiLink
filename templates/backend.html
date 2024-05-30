@@ -9,16 +9,16 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <title>EngiLink</title>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
     {% include "shared/navbar.html" %}
-    <main class="pt-16">
+    <main class="flex-grow pt-16">
         {% block content %}
         {% endblock %}
-    </main> 
+    </main>
     {% if messages %} 
     {% include "shared/notice.html" %} 
     {% endif %}
-    <footer class="bg-gray-100 py-2 text-center fixed bottom-0 w-full">
+    <footer class="bg-gray-100 py-2 text-center mt-auto w-full">
         <div class="container mx-auto px-4">
             <p class="text-gray-500">&copy; 2024 EngiLink. ALL Right Reserved.</p>
         </div>
