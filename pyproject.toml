@@ -26,8 +26,7 @@ django-positions = "^0.6.0"
 weasyprint = "^62.1"
 fonttools = "^4.52.4"
 django-crispy-forms = "^2.1"
-crispy-bootstrap4 = "^2024.1"
-django-bootstrap4 = "^24.3"
+crispy-tailwind = "^1.0.3"
 
 [build-system]
 requires = ["poetry-core"]
