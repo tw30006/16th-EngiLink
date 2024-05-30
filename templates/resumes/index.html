@@ -1,5 +1,5 @@
 {% extends 'frontend.html' %}
-
+{% load static %}
 {% block content %}
     <div class="container mx-auto max-w-lg mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
@@ -14,9 +14,9 @@
             <section>
                 <div class="flex items-start space-y-6">
                     {% if resume.picture %}
-                    <img src="{{ resume.picture.url }}" alt="photo" class="w-40 h-32 mr-6">
+                        <img src="{{ resume.picture.url }}" alt="photo" class="w-40 h-32 mr-6">
                     {% else %}
-                    <p class="text-gray-600">無照片顯示</p>
+                        <img src="{% static 'img/fakepic.png' %}" alt="無照片顯示" class="w-32 h-32 mr-6">
                     {% endif %}
                     <div>
                         <p class="mb-4">姓名：<strong><a href="{% url 'resumes:edit' pk=resume.pk %}" class="text-blue-600 hover:underline">{{ resume.name }}</a></strong></p>
