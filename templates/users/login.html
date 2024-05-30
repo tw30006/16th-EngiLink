@@ -11,6 +11,7 @@
                 <form method="post" class="w-full max-w-lg">
                     {% csrf_token %}
                     {{ form|crispy }}
+                    <br>
                     <div class="mb-4">
                         <div class="flex justify-end">
                             <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">登入</button>
