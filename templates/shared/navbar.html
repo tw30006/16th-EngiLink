@@ -15,7 +15,7 @@
                 <ul class="hidden md:flex md:items-center">
                     <li class="px-1">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'companies:company_list' %}" class="text-sm duration-500 hover:text-blue-600 ">找公司</a>
+                        <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找公司</a>
                         {% else %}
                         <a href="{% url 'companies:jobs' user.company.id %}">
                             <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
@@ -26,7 +26,7 @@
                     </li>
                     <li class="px-1">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
+                        <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找工作</a>
                         {% else %}
                         <a href="{% url 'companies:applications' user.company.id %}">
                             <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
@@ -37,7 +37,7 @@
                     </li>
                     <li class="px-1">
                         {% if request.user.user_type == 1 %}
-                            <a href="{% url 'resumes:index' %}" class="text-sm duration-500 hover:text-blue-600">履歷工具</a>
+                            <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">履歷工具</a>
                         {% else %}
                             <form
                             action="{% url 'users:logout' %}" method="post">
@@ -130,10 +130,10 @@
                 <div>
                     <ul class="hidden md:flex md:items-center">
                         <li class="px-1">
-                            <a href="{% url 'companies:company_list' %}" class="text-sm duration-500 hover:text-blue-600">找公司</a>
+                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找公司</a>
                         </li>
                         <li class="px-1">
-                            <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
+                            <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找工作</a>
                         </li>
                     </ul>
                 </div>
