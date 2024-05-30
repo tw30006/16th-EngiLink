@@ -67,8 +67,8 @@ class EditView(UpdateView):
     context_object_name = "job"
 
     def form_valid(self, form):
-        pk = self.kwargs.get("pk")
-        self.success_url = f"/companies/{pk}/jobs/"
+        company_id = form.instance.company.id
+        self.success_url = reverse('companies:jobs', kwargs={'pk': company_id})
         return super().form_valid(form)
 
 class JobDeleteView(DeleteView):
