@@ -13,6 +13,10 @@
         {% endfor %}
     </select>
     <br>
-    <button type="submit" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">提交</button>
+    {% if resumes|length != 0 %}
+        <button type="submit" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">提交</button>
+    {% elif resumes|length == 0 %}
+        <a href="{% url 'resumes:index' %}" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 text-center inline-block">創建履歷</a>
+    {% endif %}
 </form>
 {% endblock %}
