@@ -65,8 +65,14 @@ class UserHomeView(PermissionRequiredMixin,TemplateView):
         user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
         if search_keyword:
             companies = Company.objects.filter(company_name__icontains=search_keyword)
+            jobs = Job.objects.filter(title__icontains=search_keyword).select_related('company')
+            company_ids_from_jobs = jobs.values_list('company_id', flat=True)
+            companies_from_jobs = Company.objects.filter(id__in=company_ids_from_jobs)
+            companies = companies | companies_from_jobs
+            companies = companies.distinct()
         else:
             companies = Company.objects.all()
+            jobs = Job.objects.select_related('company').all()
         context['companies'] = companies
         context['jobs'] = jobs
         context['resumes'] = resumes
