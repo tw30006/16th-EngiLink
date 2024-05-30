@@ -1,8 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from django.conf import settings
-import dj_database_url
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -16,7 +15,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-
+ADMIN_URL = os.getenv("ADMIN_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
