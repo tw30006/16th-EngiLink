@@ -64,7 +64,7 @@
                     <div class="flowchart-node {% if job_resume.accepted %}active{% endif %}">
                         <p>面試回覆</p>
                         {% if job_resume.accepted == 'accept' %}
-                        <span class="date">同意面試</span>
+                        <span class="date">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</span>
                         {% elif job_resume.accepted == 'reject' %}
                         <span class="date">婉拒面試</span>
                         {% else %}
