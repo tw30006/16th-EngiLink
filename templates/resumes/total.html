@@ -22,8 +22,6 @@
                         <div>
                             {% if resume.picture %}
                             <p><img src="{{ resume.picture.url }}" alt="照片" class="w-40 h-32 mr-6"></p>
-                        {% else %}
-                            <img src="{% static 'img/fakepic.png' %}" alt="無照片顯示" class="w-32 h-32 mr-6">
                         {% endif %}
                             <br>
                             <h2 class="text-2xl font-semibold">{{ resume.name }}</h2>
