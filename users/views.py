@@ -195,7 +195,6 @@ class CollectJobView(LoginRequiredMixin, View):
 class ApplyForJobCreateView(View):
     def get(self, request, *args, **kwargs):
         job_id = self.kwargs.get('job_id')
-        print(job_id)
         job = get_object_or_404(Job, id=job_id)
         resumes = Resume.objects.filter(user=request.user)
         return render(request, 'jobs/apply.html', {'job': job, 'resumes': resumes})

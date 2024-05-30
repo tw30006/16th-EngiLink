@@ -1,3 +1,5 @@
+
+
 {% extends 'frontend.html' %}
 {% block content %}
     <h1 class="text-3xl font-bold mb-8">{{ request.user }}的應徵記錄</h1>
@@ -7,44 +9,71 @@
                 <div class="col-span-8">
                     <p class="text-xl mb-2"><strong>應徵公司：</strong>{{ job_resume.job.company.company_name }}</p>
                     <p class="text-xl mb-2"><strong>職缺：</strong>{{ job_resume.job.title }}</p>
-                    <p class="text-xl mb-2"><strong>應徵時間：</strong>{{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
                     <p class="text-xl mb-2"><strong>使用履歷：</strong>{{ job_resume.resume.name }}</p>
 
                     {% if job_resume.status == 'applied' %}
-                        {% if job_resume.read_at %}
-                            <p class="text-xl mb-4"><strong>公司已讀時間：</strong>{{ job_resume.read_at | date:"Y.m.d H:i" }}</p>
-                        {% else %}
+                        {% if job_resume.read_at is none %}
                             <form action="{% url 'users:withdraw' job_resume.pk %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">撤回申請</button>
                             </form>
                         {% endif %}
+                    {% else %}
+                        <p class="text-xl mb-2"><strong>已撤回申請：</strong>{{ job_resume.withdrawn_at | date:"Y.m.d H:i" }}</p>
                     {% endif %}
                 </div>
                 <div class="col-span-4 flex flex-col justify-between">
-                    {% if job_resume.interview_date %}
+                    {% if job_resume.interview_date and job_resume.accepted is none %}
                         <div class="mb-4 border-2 border-red-500 p-4">
-                            <p class="text-xl mb-2">{{ job_resume.job.company.company_name }}對您發出面試邀請</p>
-                            <p class="text-xl mb-2">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</p>
-                            {% if job_resume.accepted ==  'accept' %}
+                                <p class="text-xl mb-2">{{ job_resume.job.company.company_name }}對您發出面試邀請</p>
+                                <p class="text-xl mb-2">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</p>
                                 <br>
-                                <p class="text-xl mb-2">您已接受面試</p>
-                            {% elif job_resume.accepted == 'reject' %}
-                                <br>
-                                <p class="text-xl mb-2">您已婉拒此次面試。</p>
-                            {% else %}
                                 <form action="{% url 'users:interview' job_resume.id %}" method="post" class="flex gap-4 justify-end">
                                     {% csrf_token %}
                                     <button type="submit" name="response" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">接受</button>
                                     <button type="submit" name="response" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">拒絕</button>
                                 </form>
-                            {% endif %}        
                         </div>
                     {% endif %}
                 </div>
             </div>
+            <br>
+            {% if job_resume.withdrawn_at is none %}
+            <div class="flowchart-container mx-auto max-w-7xl mt-6">
+                <div class="flowchart">
+                    <div class="flowchart-node {% if job_resume.status == 'applied' %}active{% endif %}">
+                        <p>遞出履歷</p>
+                        <span class="date">{{ job_resume.created_at|date:"Y.m.d H:i" }}</span>
+                    </div>
+                    <div class="flowchart-node {% if job_resume.read_at %}active{% endif %}">
+                        <p>公司方已讀</p>
+                        {% if job_resume.read_at %}
+                        <span class="date">{{ job_resume.read_at|date:"Y.m.d H:i" }}</span>
+                        {% else %}
+                        <span class="date">尚未閱讀</span>
+                        {% endif %}
+                    </div>
+                    <div class="flowchart-node {% if job_resume.interview_date %}active{% endif %}">
+                        <p>面試邀約</p>
+                        {% if job_resume.interview_date %}
+                        <span class="date">{{ job_resume.interview_date|date:"Y.m.d H:i" }}</span>
+                        {% else %}
+                        <span class="date">尚未邀約</span>
+                        {% endif %}
+                    </div>
+                    <div class="flowchart-node {% if job_resume.accepted %}active{% endif %}">
+                        <p>面試回覆</p>
+                        {% if job_resume.accepted == 'accept' %}
+                        <span class="date">同意面試</span>
+                        {% elif job_resume.accepted == 'reject' %}
+                        <span class="date">婉拒面試</span>
+                        {% else %}
+                        <span class="date">尚未回覆</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}
-
-
