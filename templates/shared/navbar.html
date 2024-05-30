@@ -14,16 +14,36 @@
             <div>
                 <ul class="hidden md:flex md:items-center">
                     <li class="px-1">
+                        {% if request.user.user_type == 1 %}
                         <a href="{% url 'companies:company_list' %}" class="text-sm duration-500 hover:text-blue-600 ">找公司</a>
-                    </li>
-                    <li class="px-1">
-                        <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
-                    </li>
-                    <li class="px-1">
-                        {% if not request.user.is_authenticated or request.user.user_type != 1 %}
-                            <a href="{% url 'users:login' %}" class="text-sm duration-500 hover:text-blue-600">履歷工具</a>
                         {% else %}
+                        <a href="{% url 'companies:jobs' user.company.id %}">
+                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
+                                刊登職缺
+                            </button>
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="px-1">
+                        {% if request.user.user_type == 1 %}
+                        <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
+                        {% else %}
+                        <a href="{% url 'companies:applications' user.company.id %}">
+                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
+                                查看應徵
+                            </button>
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="px-1">
+                        {% if request.user.user_type == 1 %}
                             <a href="{% url 'resumes:index' %}" class="text-sm duration-500 hover:text-blue-600">履歷工具</a>
+                        {% else %}
+                            <form
+                            action="{% url 'users:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2" tabindex="-1" id="user-menu-item-2">登出</button>
+                            </form>
                         {% endif %}
                     </li>
                 </ul>
@@ -38,18 +58,13 @@
             </div>
             <div class="hidden md:flex">
                 <div>
-                    {% if request.user.user_type == 2 %}
-                    <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">刊登職缺
-                    </button>
-                    {% endif %}
-                </div>
-                <div>
                     {% if request.user.user_type == 1 %}
                         <a href="{% url 'users:detail' user.pk %}"><img src="{% static 'img/navbar.png' %}" alt="無照片顯示" class="w-8 h-8 mr-6"></a>
                     {% endif %}
                 </div>
                 &nbsp;&nbsp;
                 <div>
+                    {% if request.user.user_type == 1 %}
                     <button class="text-blue-800" @click="openMenu = !openMenu">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
@@ -75,6 +90,7 @@
                             <button href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">登出</button>
                         </form>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -83,11 +99,17 @@
             <div class="px-2 pt-2 pb-3 space-y-1">
                 {% if request.user.user_type == 1 %}
                 <a href="{% url 'resumes:index' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
-                {% else %}
-                <a href="{% url 'users:login' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
+                {% elif request.user.user_type == 2 %}
+                <a href="{% url 'companies:jobs' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
                 {% endif %}
+                {% if request.user.user_type == 1 %}
                 <a href="{% url 'users:collect' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的收藏</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">應徵紀錄</a>
+                {% endif %}
+                {% if request.user.user_type == 1 %}
+                <a href="{% url 'users:applications' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">應徵紀錄</a>
+                {% elif request.user.user_type == 2 %}
+                <a href="{% url 'companies:applications' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
+                {% endif %}
                 <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">個人設定</a>
                 <form
                     action="{% url 'users:logout' %}" method="post">
@@ -112,9 +134,6 @@
                         </li>
                         <li class="px-1">
                             <a href="{% url 'jobs:job_list' %}" class="text-sm duration-500 hover:text-blue-600">找工作</a>
-                        </li>
-                        <li class="px-1">
-                            <a href="{% url 'users:login' %}" class="text-sm duration-500 hover:text-blue-600 ">履歷工具</a>
                         </li>
                     </ul>
                 </div>
