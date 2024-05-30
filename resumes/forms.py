@@ -1,6 +1,6 @@
 from django import forms
 from .models import Resume
-from datetime import date
+from datetime import date, datetime
 import re
 from django.core.exceptions import ValidationError
 
@@ -73,6 +73,8 @@ class ResumeForm(forms.ModelForm):
     def clean_birthday(self):
         birthday = self.cleaned_data.get("birthday")
         if birthday:
+            birthday = birthday.date() if isinstance(birthday, datetime) else birthday
+            
             if birthday > date.today():
                 raise ValidationError("請確認輸入的日期!")
             age = (
