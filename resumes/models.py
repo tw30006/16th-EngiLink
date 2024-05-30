@@ -82,6 +82,6 @@ class Resume(models.Model):
             img.save(thumb_io, format=img_format)
             thumb_io.seek(0)
             file_extension = "png" if img.mode == "RGBA" else "jpg"
-            new_file_name = f"{self.picture.name.split('.')[0]}_thumb.{file_extension}"  # 修改後面的.jpg or png
+            new_file_name = f"{self.picture.name.split('.')[0]}_thumb.{file_extension}" 
             self.picture.save(new_file_name, ContentFile(thumb_io.read()), save=False)
         super().save(*args, **kwargs)
