@@ -44,7 +44,7 @@ class Resume(models.Model):
     resume_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    birthday = models.DateTimeField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     address = models.CharField(max_length=200, null=True, blank=True)

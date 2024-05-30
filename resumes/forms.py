@@ -28,7 +28,7 @@ class ResumeForm(forms.ModelForm):
     skills = forms.MultipleChoiceField(
         choices=Resume.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple
     )
-    birthday =  forms.DateTimeField(widget=DateOnlyDateTimeInput(attrs={'type': 'date'}),required=False)
+    birthday =  forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}),required=False)
 
     picture = forms.ImageField(required=False)
 
