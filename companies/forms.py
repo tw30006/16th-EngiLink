@@ -82,9 +82,7 @@ class CompanyUpdateForm(UserChangeForm):
         self.request = kwargs.pop("request", None)
         super(CompanyUpdateForm, self).__init__(*args, **kwargs)
         del self.fields["password"]
-        company = kwargs["instance"]
         instance = kwargs.get('instance')
-        user = None
         if isinstance(instance, Company):
             user = instance.custom_user
         else:
