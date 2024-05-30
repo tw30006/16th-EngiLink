@@ -9,7 +9,7 @@ class Work(models.Model):
     position = models.CharField(max_length=100)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    is_current = models.BooleanField(default=False)
+    is_current = models.BooleanField(choices=[(True, '是'), (False, '否')],default=False) 
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
     posit = PositionField(collection='resume')

@@ -5,8 +5,8 @@ from datetime import date
 class EducationForm(forms.ModelForm):
     default_date = date(1990, 1, 15)
     date_widget = forms.SelectDateWidget(years=range(1960, 2025))
-    start_date = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'month'}),required=False)
-    end_date = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'month'}),required=False)
+    start_date = forms.DateTimeField(input_formats=["%Y-%m"], widget=forms.DateInput(attrs={'type': 'month'}), required=False)
+    end_date = forms.DateTimeField(input_formats=["%Y-%m"], widget=forms.DateInput(attrs={'type': 'month'}), required=False)
     field_labels = {
         "school_name": "校名",
         "major": "專業",

@@ -11,8 +11,8 @@
             <ul>
                 {% for work in works %}
                     <strong><a href="{% url 'resumes:work-edit' pk=work.pk %}">{{ work.company_name }} - {{ work.position }}</a></strong>
-                    <p>在職期間 {{ work.start_date }}--{{ work.end_date }}</p>
-                    <p>仍在職：{{work.is_current}}</p>
+                    <p>在職期間：{{ work.start_date |date:"Y年m月" }}--{{ work.end_date |date:"Y年m月" }}</p>
+                    <p>仍在職：{{ work.get_is_current_display }}</p>
                     <hr>
                 {% endfor %}
             </ul>

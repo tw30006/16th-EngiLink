@@ -13,7 +13,7 @@
                     {% for education in educations %}
                         <strong><a href="{% url 'resumes:edu-edit' pk=education.pk %}">{{ education.school_name }} - {{ education.major }}</a></strong>
                         <p>學位：{{ education.get_degree_display }}</p>
-                        <p>入學期間 {{ education.start_date }}--{{ education.end_date }}</p>
+                        <p>入學期間： {{ education.start_date |date:"Y年m月" }}--{{ education.end_date |date:"Y年m月" }}</p>
                         <hr>
                     {% endfor %}
                 </ul>
