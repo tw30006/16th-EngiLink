@@ -1,15 +1,14 @@
 from django import forms
 from .models import Education
 from datetime import date
+from resumes.forms import DateOnlyDateTimeInput
 
 
 class EducationForm(forms.ModelForm):
     default_date = date(1990, 1, 15)
     date_widget = forms.SelectDateWidget(years=range(1960, 2025))
-    start_date = forms.DateField(
-        widget=date_widget, initial=default_date, required=False
-    )
-    end_date = forms.DateField(widget=date_widget, initial=default_date, required=False)
+    start_date = forms.DateTimeField(widget=DateOnlyDateTimeInput(attrs={'type': 'date'}),required=False)
+    end_date = forms.DateTimeField(widget=DateOnlyDateTimeInput(attrs={'type': 'date'}),required=False)
     field_labels = {
         "school_name": "校名",
         "major": "專業",
