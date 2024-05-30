@@ -9,7 +9,7 @@ class CompanyRegisterForm(UserCreationForm):
     
     username = forms.CharField(
         label="用戶名",
-        help_text="必填。150字或更少。僅限字母、數字和 @/./+/-/_ 符號。",
+        help_text="20字或更少。僅限字母、數字和 @/./+/-/_ 符號。",
         error_messages={
             'unique': "此用戶名已存在。",
         }
@@ -24,10 +24,10 @@ class CompanyRegisterForm(UserCreationForm):
         label="密碼",
         widget=forms.PasswordInput(),
         help_text=(
-            "您的密碼不能與您的其他個人資料過於相似。"
-            "您的密碼必須至少包含 8 個字符。"
-            "您的密碼不能是常用密碼。"
-            "您的密碼不能全為數字。"
+            "您的密碼不能與您的其他個人資料過於相似。<br>"
+            "您的密碼必須至少包含 8 個字。<br>"
+            "您的密碼不能是常用密碼。<br>"
+            "您的密碼不能全為數字。<br>"
         )
     )
     password2 = forms.CharField(
