@@ -236,7 +236,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = int(os.getenv("SITE_ID", 1))
-LOGIN_REDIRECT_URL = "/users/"
+LOGIN_REDIRECT_URL = "/dashboard/"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
 
