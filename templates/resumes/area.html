@@ -5,6 +5,7 @@
             <div>
                 <h1 class="text-2xl">Hello,{{request.user|title}}</h1>
             </div>
+            <a href="{% url 'resumes:create'%}" class="px-4 py-2 border-4 rounded-lg ml-2">&#43;創建履歷</a>
         </div>
         
         <div class="task-items-wrapper flex flex-col  w-full">
@@ -20,7 +21,6 @@
         </div>
         <br>
         <br>
-        <a href="{% url 'resumes:create'%}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">&#43;創建履歷</a>
         <h3 class="text-lg mt-10"> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
     </div>
 {% endblock %}
