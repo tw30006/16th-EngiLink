@@ -60,6 +60,7 @@ class ResumeForm(forms.ModelForm):
             self.initial["name"] = full_name
             self.initial["email"] = request.user.email
 
+        
     def clean_skills(self):
         return ", ".join(self.cleaned_data["skills"])
 

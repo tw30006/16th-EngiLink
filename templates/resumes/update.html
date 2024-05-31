@@ -1,4 +1,5 @@
 {% extends 'frontend.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container mx-auto max-w-lg mt-8">
     <div class="flex justify-center">
@@ -11,7 +12,7 @@
                 <div>
                     <form method="post" id="myForm" action="{% url 'resumes:edit' pk=resume.pk %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form }}
+                        {{ form|crispy }}
                         <div id="preview-container" class="hidden mt-4"> 
                             <img id="preview" src="#" alt="Image Preview" class="w-72 h-72 border border-black" />
                         </div>
