@@ -31,7 +31,7 @@ from django.template.loader import render_to_string
 class UserRegisterView(FormView):
     template_name = "users/register.html"
     form_class = UserRegisterForm
-    success_url = reverse_lazy("users:login")
+    success_url = reverse_lazy("users:home")
 
     def form_valid(self, form):
         user = form.save()
