@@ -1,6 +1,7 @@
 {% extends "frontend.html" %}
 {% load static %}
 {% block content %}
+{% if not user.is_authenticated %}
     <div class="flex justify-center items-center h-screen">
         <div class="flex flex-col justify-center items-center">
             <img src="{% static 'img/logo.png' %}" class="w-40 mb-4 mr-2">
@@ -18,4 +19,13 @@
             <img src="{% static 'img/engilink.png' %}" class="w-full lg:max-w-lg">
         </div>
     </div>
+{% elif request.user.user_type == 2 %}
+    <script type="text/javascript">
+        window.location.href = "{% url 'companies:home' %}";
+    </script>
+{% else %}
+    <script type="text/javascript">
+        window.location.href = "{% url 'users:home' %}";
+    </script>
+{% endif %}
 {% endblock %}
