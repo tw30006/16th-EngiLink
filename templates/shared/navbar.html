@@ -80,6 +80,7 @@
                     <a href="{% url 'companies:company_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找公司</a>
                     <a href="{% url 'jobs:job_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找工作</a>
                     <a href="{% url 'resumes:index' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
+                    <a href="{% url 'users:applications' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">應徵紀錄</a>
                     <a href="{% url 'users:collect' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的收藏</a>
                     <form
                     action="{% url 'users:logout' %}" method="post">
