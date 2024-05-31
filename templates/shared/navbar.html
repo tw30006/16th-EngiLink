@@ -2,7 +2,7 @@
 <div x-data="{ openMenu : false }">
     {% if user.is_authenticated %}
     <header class="fixed top-0 z-20 w-full bg-white shadow-lg">
-        <div class="flex items-center justify-between h-16 px-2 mx-auto md:flex md:justify-between md:items-center max-w-7xl sm:px-4">
+        <div class="flex items-center justify-between h-16  mx-auto md:flex md:justify-between md:items-center">
             <div class="items-center flex-shrink-0">
                 {% if request.user.user_type == 2 %}
                     <a href="{% url 'companies:home' %}">
@@ -13,37 +13,53 @@
             </div>
             <div>
                 <ul class="hidden md:flex md:items-center">
-                    <li class="px-1">
+                    <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找公司</a>
+                        <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-lg text-blue-800">找公司</a>
                         {% else %}
                         <a href="{% url 'companies:jobs' user.company.id %}">
-                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
+                            <button class="px-2 py-1 text-lg text-blue-800">
                                 刊登職缺
                             </button>
                         </a>
                         {% endif %}
                     </li>
-                    <li class="px-1">
+                    <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找工作</a>
+                        <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-blue-800">找工作</a>
                         {% else %}
                         <a href="{% url 'companies:applications' user.company.id %}">
-                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">
+                            <button class="px-2 py-1 text-lg text-blue-800">
                                 查看應徵
                             </button>
                         </a>
                         {% endif %}
                     </li>
-                    <li class="px-1">
+                    {% if request.user.user_type == 1 %}
+                    <li class="px-2">
+                        <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-lg text-blue-800">履歷工具</a>
+                    </li>
+                    {% endif %}
+                    <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                            <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">履歷工具</a>
-                        {% else %}
-                            <form
-                            action="{% url 'users:logout' %}" method="post">
-                            {% csrf_token %}
-                            <button class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2" tabindex="-1" id="user-menu-item-2">登出</button>
-                            </form>
+                        <a href="{% url 'users:collect' %}" class="px-2 py-1 text-lg text-blue-800">我的收藏</a>
+                        {% endif %}
+                    </li>
+                    <li class="px-2">
+                        {% if request.user.user_type == 1 %}
+                        <a href="{%  url 'users:applications' user.id %}" class="px-2 py-1 text-lg text-blue-800">應徵紀錄</a>
+                        {% endif %}
+                    </li>
+                    <li class="px-2">
+                        <form
+                        action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="px-2 py-1 text-lg text-blue-800" tabindex="-1" id="user-menu-item-2">登出</button>
+                        </form>
+                    </li>
+                    <li class="px-2">
+                        {% if request.user.user_type == 1 %}
+                            <a href="{% url 'users:detail' user.pk %}"><img src="{% static 'img/navbar.png' %}" alt="無照片顯示" class="w-8 h-8 mr-6"></a>
                         {% endif %}
                     </li>
                 </ul>
@@ -56,71 +72,35 @@
                     </svg>
                     </button>
             </div>
-            <div class="hidden md:flex">
-                <div>
-                    {% if request.user.user_type == 1 %}
-                        <a href="{% url 'users:detail' user.pk %}"><img src="{% static 'img/navbar.png' %}" alt="無照片顯示" class="w-8 h-8 mr-6"></a>
-                    {% endif %}
-                </div>
-                &nbsp;&nbsp;
-                <div>
-                    {% if request.user.user_type == 1 %}
-                    <button class="text-blue-800" @click="openMenu = !openMenu">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
-                        </svg> 
-                    </button>
-                    <!-- 選單內容 -->
-                    <div class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" :hidden='!openMenu' md:hidden>
-                        {% if request.user.user_type == 1 %}
-                            <a href="{% url 'resumes:index' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-0">我的履歷</a>
-                        {% else %}
-                            <a href="{% url 'users:login' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-0">我的履歷</a>
-                        {% endif %}
-                        <a href="{% url 'users:collect' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-1">我的收藏</a>
-                        {% if request.user.user_type == 1 %}
-                            <a href="{% url 'users:applications' user.id %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
-                        {% else %}
-                            <a href="{% url 'users:login' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
-                        {% endif %}
-                        <form
-                            action="{% url 'users:logout' %}" method="post">
-                            {% csrf_token %}
-                            <button href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">登出</button>
-                        </form>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
         </div>
         <!-- 漢堡按鈕選單內容 -->
         <nav class="md:hidden" aria-label="Global" id="mobile-menu" :hidden='!openMenu' md:hidden>
             <div class="px-2 pt-2 pb-3 space-y-1">
                 {% if request.user.user_type == 1 %}
-                <a href="{% url 'resumes:index' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
-                {% elif request.user.user_type == 2 %}
-                <a href="{% url 'companies:jobs' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
-                {% endif %}
-                {% if request.user.user_type == 1 %}
-                <a href="{% url 'users:collect' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的收藏</a>
-                {% endif %}
-                {% if request.user.user_type == 1 %}
-                <a href="{% url 'users:applications' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">應徵紀錄</a>
-                {% elif request.user.user_type == 2 %}
-                <a href="{% url 'companies:applications' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
-                {% endif %}
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">個人設定</a>
-                <form
+                    <a href="{% url 'companies:company_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找公司</a>
+                    <a href="{% url 'jobs:job_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找工作</a>
+                    <a href="{% url 'resumes:index' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">我的履歷</a>
+                    <a href="{% url 'users:collect' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">我的收藏</a>
+                    <form
                     action="{% url 'users:logout' %}" method="post">
                     {% csrf_token %}
                     <button class="block w-full px-3 py-2 text-base font-medium text-left text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">登出</button>
-                </form>
+                    </form>
+                {% elif request.user.user_type == 2 %}
+                    <a href="{% url 'companies:jobs' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
+                    <a href="{% url 'companies:applications' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
+                    <form
+                        action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="block w-full px-3 py-2 text-base font-medium text-left text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">登出</button>
+                    </form>
+                {% endif %}
             </div>
         </nav>
     </header>
     {% else %}
         <header class="fixed top-0 w-full bg-white shadow-lg">
-            <div class="flex items-center justify-between h-16 px-2 mx-auto md:flex md:justify-between md:items-center max-w-7xl sm:px-4">
+            <div class="flex items-center justify-between h-16  mx-auto md:flex md:justify-between md:items-center">
                 <!-- logo -->
                 <div class="items-center flex-shrink-0">
                     <a href="{% url 'home'%}"><img src="{% static 'img/logo.png' %}" class="inline h-10"></a>
@@ -129,10 +109,16 @@
                 <div>
                     <ul class="hidden md:flex md:items-center">
                         <li class="px-1">
-                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找公司</a>
+                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-lg text-blue-800">找公司</a>
                         </li>
                         <li class="px-1">
-                            <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-sm text-blue-800 border border-blue-800 rounded-lg hover:bg-blue-200 me-2">找工作</a>
+                            <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-blue-800">找工作</a>
+                        </li>
+                        <li class="px-1">
+                            <a href="{% url 'users:login' %}" class="px-2 py-1 text-lg text-blue-800">求職者登入</a>
+                        </li>
+                        <li class="px-1">
+                            <a href="{% url 'companies:login' %}" class="px-2 py-1 text-lg text-blue-800">公司方登入</a>
                         </li>
                     </ul>
                 </div>
@@ -140,16 +126,18 @@
                     <button type="button" class="inline-flex items-center justify-center p-2 text-blue-800 rounded-md hover:bg-blue-200 hover:text-white md:hidden" aria-controls="mobile-menu" aria-expanded="false" @click="openMenu = !openMenu">
                         <span class="sr-only">Open menu</span>
                         <svg class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
-                      </button>
+                    </button>
                 </div>
             </div>
             <!-- 漢堡按鈕選單內容 -->
             <nav class="lg:hidden" aria-label="Global" id="mobile-menu" :hidden='!openMenu' md:hidden>
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找公司</a>
+                <a href="{% url 'companies:company_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">找公司</a>
                 <a href="{% url 'jobs:job_list' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">找工作</a>
+                <a href="{% url 'users:login' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">求職者登入</a>
+                <a href="{% url 'companies:login' %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">公司方登入</a>
             </div>
             </nav>
         </header>
