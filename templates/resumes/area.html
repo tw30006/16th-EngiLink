@@ -5,14 +5,6 @@
             <div>
                 <h1 class="text-2xl">Hello,{{request.user|title}}</h1>
             </div>
-            {% if request.user.is_authenticated %}
-            <form action="{% url 'users:logout'%}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="button">登出</button>
-            </form>
-            {% else %}
-            <a href="" class="text-white">登入</a>
-            {% endif %}
         </div>
         
         <div class="task-items-wrapper flex flex-col  w-full">
