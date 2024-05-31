@@ -62,7 +62,7 @@ class UserUpdateForm(UserChangeForm):
 
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(
-        label='帳號',
+        label='用戶名',
         max_length=20,
         widget=forms.TextInput(attrs={
             'autofocus': True,
@@ -76,6 +76,6 @@ class CustomLoginForm(AuthenticationForm):
     
     error_messages = {
         'invalid_login': _(
-            "請輸入正確的帳號和密碼。注意，帳號和密碼都區分大小寫。")
+            "請輸入正確的帳號和密碼。注意！帳號和密碼都區分大小寫。")
     }
     
