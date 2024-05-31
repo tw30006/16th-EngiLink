@@ -1,4 +1,5 @@
 {% extends 'backend.html' %}
+{% load static %}
 {% block content %}
 <div class="container p-6 mx-auto bg-white rounded-lg shadow-md">
     <div class="flex items-center justify-between mb-4">
@@ -22,7 +23,7 @@
             {% if user.company.logo %}
                 <img class="w-32 h-32 rounded-md" src="{{ user.company.logo.url }}" alt="Company Logo">
             {% else %}
-                <span class="text-gray-500">No logo available</span>
+                <img src="{% static 'img/company.jpg' %}" alt="Company Logo" class="w-32 h-32 rounded-md">
             {% endif %}
         </div>
     </div>
@@ -31,7 +32,7 @@
         {% if user.company.banner %}
             <img class="w-full h-auto rounded-md" src="{{ user.company.banner.url }}" alt="Company Banner">
         {% else %}
-            <span class="text-gray-500">No banner available</span>
+            <img src="{% static 'img/company.jpg' %}" alt="Company Banner" class="w-full h-auto rounded-md">
         {% endif %}
     </div>
 </div>

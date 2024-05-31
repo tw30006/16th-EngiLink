@@ -1,4 +1,5 @@
 {% extends 'backend.html' %}
+{% load static %}
 {% block content %}
     <br>
     <br>
@@ -20,7 +21,7 @@
                             </div>
                         {% else %}
                             <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
-                                <img src="/static/images/default_banner.jpg" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
                             </div>
                         {% endif %}
                     </div>
@@ -29,7 +30,7 @@
                             {% if company.logo %}
                                 <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
                             {% else %}
-                                <img src="/static/images/default_logo.jpg" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
                             {% endif %}
                             <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
                         </div>
