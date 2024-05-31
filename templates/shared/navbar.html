@@ -15,9 +15,10 @@
                 <ul class="hidden md:flex md:items-center">
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-lg text-blue-800">找公司</a>
+                            <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-lg text-blue-800">找公司</a>
                         {% else %}
-                        <a href="{% url 'companies:jobs' user.company.id %}">
+                        
+                        <a href="{% url 'companies:jobs' user.id %}">
                             <button class="px-2 py-1 text-lg text-blue-800">
                                 刊登職缺
                             </button>
@@ -28,7 +29,7 @@
                         {% if request.user.user_type == 1 %}
                         <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-blue-800">找工作</a>
                         {% else %}
-                        <a href="{% url 'companies:applications' user.company.id %}">
+                        <a href="{% url 'companies:applications' user.id %}">
                             <button class="px-2 py-1 text-lg text-blue-800">
                                 查看應徵
                             </button>
@@ -88,8 +89,8 @@
                     <button class="block w-full px-3 py-2 text-base font-medium text-left text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">登出</button>
                     </form>
                 {% elif request.user.user_type == 2 %}
-                    <a href="{% url 'companies:jobs' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
-                    <a href="{% url 'companies:applications' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
+                    <a href="{% url 'companies:jobs' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
+                    <a href="{% url 'companies:applications' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
                     <form
                         action="{% url 'users:logout' %}" method="post">
                         {% csrf_token %}
