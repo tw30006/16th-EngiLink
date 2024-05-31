@@ -1,5 +1,7 @@
-{% comment %} {% extends 'frontend.html' %} {% endcomment %}
+{% extends 'frontend.html' %}
+{% comment %} {% endcomment %}
 {% block content %}
+{% load static %}
 {% if user_jobs %}
     <h2>你收藏的職缺</h2>
     <ul>
@@ -11,6 +13,14 @@
         {% endfor %}
     </ul>
 {% else %}
-    <p>你還沒有收藏任何職缺。</p>
+<br>
+<div class="container-interview mx-auto  p-8 ">
+    <p class="text-3xl font-semibold text-gray-700 text-center">我的收藏</p>
+    <div class="flex flex-col justify-center items-center h-full space-y-6">
+        <img src="{% static 'img/interview.png' %}" alt="" class="w-72 h-72 object-contain mb-4">
+        <p class="text-xl font-semibold text-gray-700">{{request.user}}，去收藏心儀的職缺吧!&nbsp;&nbsp;&nbsp;<a href="{% url 'jobs:job_list'  %}" class="bg-blue-800 text-white px-8 py-4 rounded-full mt-8 hover:bg-blue-200 hover:text-black" >前往收藏</a></p>
+    </div>
+</div> 
+<br>
 {% endif %}
 {% endblock %}
