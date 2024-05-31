@@ -83,7 +83,6 @@
                         {% else %}
                             <a href="{% url 'users:login' %}" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">應徵紀錄</a>
                         {% endif %}
-                        <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="user-menu-item-2">個人設定</a>
                         <form
                             action="{% url 'users:logout' %}" method="post">
                             {% csrf_token %}
