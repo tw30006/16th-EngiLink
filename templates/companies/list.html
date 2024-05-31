@@ -13,7 +13,7 @@
     <div class="container px-4 py-8 mx-auto">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {% for company in companies_list %}
-                <div class="flex flex-col justify-between h-full overflow-hidden transition-shadow duration-300 bg-white rounded-lg shadow-md hover:shadow-xl">
+                <a href="{% url 'companies:company_info' company.id %}"><div class="flex flex-col justify-between h-full overflow-hidden bg-white rounded-lg shadow-md">
                     <div class="relative p-2">
                         {% if company.banner %}
                             <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5 z-0">
@@ -53,7 +53,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div></a>
             {% endfor %}
         </div>
     </div>

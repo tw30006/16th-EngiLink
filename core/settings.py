@@ -168,24 +168,25 @@ if os.environ.get('DJANGO_ENV') == 'production':
     }
 else:
     LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, 'logs/development.log'),
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "rich.logging.RichHandler",
+                "show_time": False,
+            },
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": "logs/development.log",  # Choose a file name and path
             },
         },
-        'root': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'DEBUG',
-                'propagate': True,
+        "loggers": {
+            "django.db.backends": {
+                "handlers": ["console", "file"],
+                "level": "DEBUG",
+                "propagate": False,
             },
         },
     }

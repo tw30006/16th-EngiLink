@@ -11,7 +11,7 @@ from django.views import View
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView, UpdateView, CreateView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .forms import UserRegisterForm, UserUpdateForm
@@ -91,7 +91,7 @@ class UserJobsView(TemplateView):
             jobs = Job.objects.select_related("company").all()
         context['jobs'] = jobs       
         return context
-
+    
 
 class UserLoginView(LoginView):
     template_name = "users/login.html"
@@ -253,3 +253,5 @@ class InterviewResponseView(View):
         job_resume.save()
         
         return redirect('users:home')
+    
+    

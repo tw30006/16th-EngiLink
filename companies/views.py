@@ -160,6 +160,19 @@ class CompanyListView(ListView):
             queryset = queryset.filter(company_name__icontains=search_keyword)
         return queryset
 
+class CompanyInfoView(DetailView):
+    model = Company
+    template_name = "companies/info.html"
+    context_object_name = "company"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["location"] = self.object.address[:3]
+        context["address"] = self.object.address[3:]
+        context["job_count"] = self.object.jobs.count()
+        context["jobs"] = self.object.jobs.all()
+        return context
+    
     
 class JobApplicationsView(ListView):
     model = Job_Resume

@@ -8,6 +8,7 @@ from .views import (
     CompanyRegisterView, 
     CompanyPasswordChangeView,
     CompanyListView,
+    CompanyInfoView, 
     JobApplicationsView,
     JobApplicationDetailView,
     MarkAsReadView,
@@ -20,6 +21,7 @@ app_name = "companies"
 urlpatterns = [
     path("", CompanyHomeView.as_view(), name="home"),
     path('list/', CompanyListView.as_view(), name='company_list'),
+    path('info/<int:pk>/', CompanyInfoView.as_view(), name='company_info'),
     path("register/", CompanyRegisterView.as_view(), name="register"),
     path("login/", CompanyLoginView.as_view(), name="login"),
     path("logout/", CompanyLogoutView.as_view(), name="logout"),
