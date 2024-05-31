@@ -5,3 +5,4 @@ import "./alpine.js";
 import "./notice.js";
 import "./preview.js";
 import "./home.js";
+import "./font.js";
