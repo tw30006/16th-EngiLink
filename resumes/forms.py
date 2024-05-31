@@ -67,7 +67,7 @@ class ResumeForm(forms.ModelForm):
         name = self.cleaned_data.get("name")
 
         if not re.match(r"^[a-zA-Z\u4e00-\u9fa5\sａ-ｚＡ-Ｚ]+$", name):
-            raise ValidationError("姓名不能有符號!")
+            raise ValidationError("姓名不能有符號或數字!")
         return name
     
     def clean_birthday(self):
