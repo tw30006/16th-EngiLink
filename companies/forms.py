@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from users.models import CustomUser
 from .models import Company
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 class CompanyRegisterForm(UserCreationForm):
@@ -68,9 +69,9 @@ class CompanyUpdateForm(UserChangeForm):
     tin = forms.CharField(max_length=8)
     user_name = forms.CharField(max_length=100)
     tel = forms.CharField(max_length=11)
-    address = forms.CharField(max_length=250)
-    description = forms.CharField(widget=forms.Textarea)
-    type = forms.CharField(max_length=50)
+    address = forms.CharField(max_length=250, required=False)
+    description = forms.CharField(widget=forms.Textarea, required=False)
+    type = forms.CharField(max_length=50, required=False)
     banner = forms.ImageField(required=False)
     logo = forms.ImageField(required=False)
 
@@ -138,3 +139,8 @@ class CompanyUpdateForm(UserChangeForm):
         if commit:
             user.save()
         return user
+    def clean_tel(self):
+        tel = self.cleaned_data.get("tel")
+        if len(tel) != 10 or not tel.startswith("09"):
+            raise ValidationError("輸入格式錯誤, 電話必須是10碼並以09開頭!")
+        return tel

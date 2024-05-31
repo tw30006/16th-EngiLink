@@ -9,11 +9,11 @@
                 <form method="post" class="w-full max-w-lg">
                     {% csrf_token %}
                     <div class="mb-4">
-                        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">用戶名：</label>
+                        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">用戶名<span class="asteriskField text-red-600">*</span></label>
                         <input type="text" name="username" autofocus required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
-                        <label for="id_password" class="block text-gray-700 text-sm font-bold mb-2">密碼：</label>
+                        <label for="id_password" class="block text-gray-700 text-sm font-bold mb-2">密碼<span class="asteriskField text-red-600">*</span></label>
                         <input type="password" name="password" required id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="flex justify-end">
