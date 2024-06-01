@@ -61,7 +61,6 @@ class CompanyHomeView(PermissionRequiredMixin,TemplateView):
 class CompanyLoginView(LoginView):
     template_name = 'companies/login.html'
     
-
     def get_default_redirect_url(self):
         user = self.request.user
 
@@ -72,6 +71,11 @@ class CompanyLoginView(LoginView):
 
         if user.user_type == 2 and company is None:
             return reverse_lazy('users:create', kwargs={'pk': user.pk})
+        
+        elif user.user_type == 1:
+            logout(self.request)
+            return reverse_lazy('users:login')
+        
         else:
             return reverse_lazy('companies:home')
 

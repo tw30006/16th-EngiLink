@@ -98,8 +98,19 @@ class UserLoginView(LoginView):
     form_class = CustomLoginForm
     
     def form_valid(self, form):
-        messages.success(self.request, "登入成功")
-        return super().form_valid(form)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.user_type == 1:
+                messages.success(self.request, "登入成功")
+                return super().form_valid(form)  
+            elif user.user_type == 2:
+                return HttpResponseRedirect(reverse_lazy('companies:login'))
+        else:
+            messages.error(self.request, "無效的用戶名或密碼")
+            return super().form_invalid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, "登入失敗")
