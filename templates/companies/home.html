@@ -1,20 +1,9 @@
 {% extends 'backend.html' %}
 {% block content %}
-{% if user.is_authenticated %}
-    <h1>Welcome, {{request.user}}!</h1>
-    <a href="{% url 'companies:detail' user.company.id %}">View Profile</a>
-    <br>
-    <form action="{% url 'companies:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-    <br>
-    <a href="{% url 'companies:jobs' user.company.id %}">職缺刊登</a>
-    <br>
-    <br>
-    <a href="{% url 'companies:applications' user.company.id %}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看應徵</a>
-{% else %}
-    <h1>Welcome to Our Site!</h1>
-    <p>Please <a href="{% url 'companies:login' %}">login</a> or <a href="{% url 'companies:register' %}">register</a>.</p>
-{% endif %} 
+<div class="container mx-auto py-8">
+    {% if user.is_authenticated %}
+    <div class="text-center">
+        <h1 class="text-3xl font-bold mb-4">歡迎，{{request.user}}！</h1>
+    {% endif %} 
+</div>
 {% endblock %}
