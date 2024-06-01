@@ -57,14 +57,16 @@
                                         <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">發送面試邀請</button>
                                     </form>
                                 {% endif %}
+                                    {% if job_resume.accepted ==  'accept' %}
+                                        <p class="mt-4 text-xl text-blue-600">求職者同意參與此次面試</p>
+                                    {% elif job_resume.accepted == 'reject' %}
+                                        <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
+                                    {% elif not job_resume.interview_date %}
+                                    {% else %}
+                                        <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
+                                    {% endif %}
                             {% endif %}
-                            {% if job_resume.accepted ==  'accept' %}
-                                <p class="mt-4 text-xl text-blue-600">求職者同意參與此次面試</p>
-                            {% elif job_resume.accepted == 'reject' %}
-                                <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
-                            {% else %}
-                                <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
-                            {% endif %}
+
                         {% endif %}
                     {% endif %}
                 </li>
