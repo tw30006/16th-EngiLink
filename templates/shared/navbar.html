@@ -18,11 +18,11 @@
                             <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-lg text-blue-800">找公司</a>
                         {% else %}
                             {% if user.company and user.company.id %}
-                        <a href="{% url 'companies:jobs' user.company.id %}">
-                            <button class="px-2 py-1 text-lg text-blue-800">
-                                刊登職缺
-                            </button>
-                        </a>
+                                <a href="{% url 'companies:jobs' user.company.id %}">
+                                    <button class="px-2 py-1 text-lg text-blue-800">
+                                        刊登職缺
+                                    </button>
+                                </a>
                             {% else %}
                                 <button class="px-2 py-1 text-lg text-gray-500" disabled>
                                     刊登職缺
@@ -45,7 +45,11 @@
                         {% if request.user.user_type == 1 %}
                         <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-lg text-blue-800">履歷工具</a>
                         {% else %}
-                        <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-blue-800">查看公司資料</a>
+                            {% if user.company and user.company.id %}
+                                <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-blue-800">查看公司資料</a>
+                            {% else %}
+                                <a href="#"  class="px-2 py-1 text-lg text-blue-800">查看公司資料</a>
+                            {% endif %}    
                         {% endif %}
                     </li>
                     
