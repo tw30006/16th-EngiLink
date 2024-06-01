@@ -70,7 +70,7 @@ class Resume(models.Model):
         self.save()
 
     def get_skills(self):
-        return self.skills.split(", ")
+        return self.skills
 
     def save(self, *args, **kwargs):
         if self.picture:

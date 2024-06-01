@@ -3,7 +3,7 @@ from .models import Resume
 from datetime import date, datetime
 import re
 from django.core.exceptions import ValidationError
-
+from markdownx.fields import MarkdownxFormField
 
 class EmailValidator(forms.EmailField):
     def __init__(self, *args, **kwargs):
@@ -25,9 +25,11 @@ class ResumeForm(forms.ModelForm):
 
     email = EmailValidator()
 
-    skills = forms.MultipleChoiceField(
-        choices=Resume.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple
-    )
+    # skills = forms.MultipleChoiceField(
+    #     choices=Resume.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple
+    # )
+    skills = MarkdownxFormField()
+    
     birthday =  forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}),required=False)
 
     picture = forms.ImageField(required=False)
@@ -62,7 +64,7 @@ class ResumeForm(forms.ModelForm):
 
         
     def clean_skills(self):
-        return ", ".join(self.cleaned_data["skills"])
+        return self.cleaned_data.get("skills")
 
     def clean_name(self):
         name = self.cleaned_data.get("name")

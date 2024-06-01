@@ -7,16 +7,19 @@
             <div class="header-bar flex justify-start items-center bg-blue-600 text-white p-4 rounded-t-md">
                 <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
             </div>
-            <div class="card-body p-4 shadow-md mt-4" >
+            <div class="card-body p-4 shadow-md mt-4">
                 <h3 class="text-lg font-semibold mb-4">編輯個人信息</h3>
                 <div>
-                    <form method="post" id="myForm" action="{% url 'resumes:edit' pk=resume.pk %}" enctype="multipart/form-data">
+                    <form method="post" id="myForm" action="{% url 'resumes:edit' pk=resume.pk %}" enctype="multipart/form-data" class="flex flex-wrap">
                         {% csrf_token %}
-                        {{ form|crispy }}
-                        <div id="preview-container" class="hidden mt-4"> 
+                        <div class="w-full md:w-2/3">
+                            {{ form|crispy }}
+                        </div>
+                            {{ form.media }}
+                        <div id="preview-container" class="hidden mt-4">
                             <img id="preview" src="#" alt="Image Preview" class="w-72 h-72 border border-black" />
                         </div>
-                        <div class="flex justify-end mt-4 space-x-2">
+                        <div class="flex justify-end mt-4 space-x-2 w-full">
                             <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">提交</button>
                             <button type="submit" form="deleteForm" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
                         </div>
