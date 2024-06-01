@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseForbidden
 import rules
-
+from jobs.models import User_Job
 
 class IndexView(PermissionRequiredMixin,ListView):
     template_name = "jobs/index.html"
@@ -111,4 +111,7 @@ class JobListView(ListView):
             }
             job_list.append(job_info)
         context['jobs'] = job_list
+        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
+        context['user_jobs'] = list(user_jobs)
         return context
+    

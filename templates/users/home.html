@@ -43,12 +43,10 @@
                                 <i class="w-4 h-4 text-gray-500 fa-solid fa-sack-dollar"></i>
                                 <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
                             </div>
-                            <form action="{% url 'users:collect' %}" method="post" class="flex-shrink-0">
+                            <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
                                 {% csrf_token %}
-                                <input type="hidden" name="job_id" value="{{ job.id }}">
-                                <button type="submit" class="flex items-center justify-center w-8 h-8 text-white bg-gray-300 rounded-full hover:bg-pink-300">
-                                    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
-                                </button>
+                                <input type="hidden" name="job_id" value="{{ job.id }}"> 
+                                {% include 'shared/collect_btn.html' %}
                             </form>
                         </div>
                     </div>
