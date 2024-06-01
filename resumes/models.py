@@ -25,20 +25,7 @@ class Resume(models.Model):
         ("3年以上", "三年以上"),
         ("5年以上", "五年以上"),
     ]
-    SKILL_CHOICES = [
-        (skill, skill)
-        for skill in [
-            "Python",
-            "JavaScript",
-            "Java",
-            "C++",
-            "HTML/CSS",
-            "PHP",
-            "Ruby",
-            "Swift",
-            "其他",
-        ]
-    ]
+    
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     resume_id = models.AutoField(primary_key=True)

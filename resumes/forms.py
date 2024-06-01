@@ -5,6 +5,7 @@ import re
 from django.core.exceptions import ValidationError
 from markdownx.fields import MarkdownxFormField
 
+
 class EmailValidator(forms.EmailField):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,17 +21,17 @@ class EmailValidator(forms.EmailField):
 
         if not email_re.match(value):
             raise ValidationError("請確認輸入的信箱!")
-    
+
+
 class ResumeForm(forms.ModelForm):
 
     email = EmailValidator()
 
-    # skills = forms.MultipleChoiceField(
-    #     choices=Resume.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple
-    # )
     skills = MarkdownxFormField()
-    
-    birthday =  forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}),required=False)
+
+    birthday = forms.DateTimeField(
+        widget=forms.DateInput(attrs={"type": "date"}), required=False
+    )
 
     picture = forms.ImageField(required=False)
 
@@ -62,7 +63,6 @@ class ResumeForm(forms.ModelForm):
             self.initial["name"] = full_name
             self.initial["email"] = request.user.email
 
-        
     def clean_skills(self):
         return self.cleaned_data.get("skills")
 
@@ -72,12 +72,12 @@ class ResumeForm(forms.ModelForm):
         if not re.match(r"^[a-zA-Z\u4e00-\u9fa5\sａ-ｚＡ-Ｚ]+$", name):
             raise ValidationError("姓名不能有符號或數字!")
         return name
-    
+
     def clean_birthday(self):
         birthday = self.cleaned_data.get("birthday")
         if birthday:
             birthday = birthday.date() if isinstance(birthday, datetime) else birthday
-            
+
             if birthday > date.today():
                 raise ValidationError("請確認輸入的日期!")
             age = (
@@ -91,7 +91,7 @@ class ResumeForm(forms.ModelForm):
             if age < 16:
                 raise ValidationError("請確認輸入的日期!")
         return birthday
-    
+
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get("phone_number")
         if len(phone_number) != 10 or not phone_number.startswith("09"):
@@ -109,5 +109,5 @@ class ResumeForm(forms.ModelForm):
             raise ValidationError("請輸入正確格式!")
         if re.match(r"^[a-zA-Z0-9-]+$", address):
             raise ValidationError("請輸入正確格式!")
-        
+
         return address
