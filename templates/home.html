@@ -19,13 +19,13 @@
             <img src="{% static 'img/engilink.png' %}" class="w-full lg:max-w-lg">
         </div>
     </div>
-{% elif request.user.user_type == 2 %}
-    <script type="text/javascript">
-        window.location.href = "{% url 'companies:home' %}";
-    </script>
 {% else %}
-    <script type="text/javascript">
-        window.location.href = "{% url 'users:home' %}";
-    </script>
+    <input type="hidden" id="userType" value="{{ request.user.user_type }}">
+    {% if request.user.user_type == 2 %}
+        <input type="hidden" id="companyHomeUrl" value="{% url 'companies:home'  %}">
+    {% else %}
+        <input type="hidden" id="userHomeUrl" value="{% url 'users:home' %}">
+    {% endif %}
+    <script src="{% static 'js/home.js' %}"></script>
 {% endif %}
 {% endblock %}
