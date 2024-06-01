@@ -5,9 +5,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
 config.mutateApproach = "sync";
-library.add(faLocationDot, faSackDollar,faBars,faFire,faHeart,faBriefcase);
+library.add(faLocationDot, faSackDollar,faBars,faFire,faHeart,faBriefcase,faThumbsUp);
 
 dom.watch();
 
