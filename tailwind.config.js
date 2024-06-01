@@ -7,7 +7,11 @@ module.exports = {
     "./**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      scrollMargin: {
+        '16': '4rem',
+      },
+    },
   },
   plugins: [],
 }
