@@ -77,14 +77,7 @@
         </div>
     {% endfor %}
 {% elif job_resume_list|length == 0 %}
-    <br>
-    <div class="container-interview mx-auto  p-8 ">
-        <p class="text-3xl font-semibold text-gray-700 text-center">我的應徵</p>
-        <div class="flex flex-col justify-center items-center h-full space-y-6">
-            <img src="{% static 'img/interview.png' %}" alt="" class="w-72 h-72 object-contain mb-4">
-            <p class="text-xl font-semibold text-gray-700">{{request.user}}，去應徵心儀的工作吧!&nbsp;&nbsp;&nbsp;<a href="{% url 'jobs:job_list'  %}" class="bg-blue-800 text-white px-8 py-4 rounded-full mt-8 hover:bg-blue-200 hover:text-black" >前往應徵</a></p>
-        </div>
-    </div> 
-    <br>
+    {% url 'jobs:job_list' as job_list_url %}
+    {% include 'empty.html' with title="我的應徵" message="，去應徵心儀的工作吧!" link=job_list_url text="前往應徵" %}
 {% endif %}
 {% endblock %}
