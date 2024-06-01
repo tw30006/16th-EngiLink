@@ -85,7 +85,7 @@ class ResumeDeleteView(DeleteView):
 
 
 class TotalListView(ListView):
-    template_name = "resumes/total.html"
+    template_name = "resumes/style1.html"
     context_object_name = "total_data"
 
     def get_queryset(self):

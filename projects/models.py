@@ -1,6 +1,7 @@
 from django.db import models
 from resumes.models import Resume
 from positions.fields import PositionField
+import ast
 
 class Project(models.Model):
     SKILL_CHOICES = [
@@ -30,4 +31,7 @@ class Project(models.Model):
     objects = models.Manager()
 
     def get_technologies(self):
-        return self.technologies_used.split(", ")
+        try:
+            return ast.literal_eval(self.technologies_used)
+        except:
+            return []
