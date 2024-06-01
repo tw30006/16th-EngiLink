@@ -4,3 +4,4 @@ import "./drag.js";
 import "./alpine.js";
 import "./notice.js";
 import "./preview.js";
+import "./home.js";
