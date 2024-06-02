@@ -6,7 +6,7 @@
         {% for resume in total_data.resume_data %}
         {% if resume.picture %}
         <div class="flex items-center justify-center mb-8">
-            <img src="{{ resume.picture.url }}" class="rounded-full w-32 border-2">
+            <img src="{{ resume.picture.url }}" class="rounded-full w-32 border-2 h-32">
         </div>
         {% endif %}
         <h2 class="text-white text-xl">簡介</h2>
@@ -26,14 +26,10 @@
             <hr class="mb-5 w-1/6 bg-white h-0.5"></hr>
             {% for education in total_data.education_data %}
                 <div class="my-3 drag" data-id="education-{{ education.id }}">
-                    <p class="text-gray-400 text-base">{{ education.school_name }}</p>
+                    <p class="text-gray-400 text-xl">{{ education.school_name }}</p>
                     <p class="text-gray-400 text-base">{{education.major}} - <span text-gray-400 text-base>{{ education.get_degree_display }}</span></p>
                     <p class="text-gray-400 text-sm">{{ education.start_date}} - <span class="text-gray-400 text-sm">{{ education.end_date}}</span></p>
                 </div>
-            <div>
-                <p class="text-gray-400 text-xl">四角學院</p>
-                <p class="text-gray-400 text-base">就學時間- <span class="text-gray-400 text-base">畢業時間</span></p>
-            </div>
             {% endfor %}
             {% endif %}
         </section>
@@ -56,15 +52,14 @@
             <hr class="mb-5 w-1/6 bg-gray-700 h-1">
             {% for project in total_data.project_data %}
             <div class="mb-5 drag" data-id="project-{{ project.id }}>
-                <p class="text-gray-700 text-base">專案名稱：<span class="text-gray-700">{{ project.project_name }}
-                </span></p>
-                <p class="text-gray-700 text-base">負責項目：<span class="text-gray-700">{{ project.responsibility }}
+                <p class="text-gray-700 text-lg font-bold">{{ project.project_name }}</p>
+                <p class="text-gray-700 text-base">項目：<span class="text-gray-700">{{ project.responsibility }}
                 </span></p>
                 {% for technology in project.get_technologies %}
-                <p class="text-gray-700 text-base">使用技術：<span class="text-gray-700">{{ technology }}
+                <p class="text-gray-700 text-base">技術：<span class="text-gray-700">{{ technology }}
                 </span></p>
                 {% endfor %}
-                <p class="text-gray-700 text-base">專案說明：<span class="text-gray-700">{{project.description}}
+                <p class="text-gray-700 text-base leading-relaxed">說明：<span class="text-gray-700">{{project.description}}
                 </span></p>
             </div>
             {% endfor %}
@@ -75,22 +70,12 @@
             <h2 class="text-gray-700 text-xl">工作經驗</h2>
             <hr class="mb-5 w-1/6 bg-gray-700 h-1">
             {% for work in total_data.work_data %}
-            <div class="drag" data-id="work-{{ work.id }}">
-                <h3 class="text-gray-700 text-lg">全端工程師</h3>
+            <div class="drag mt-2" data-id="work-{{ work.id }}">
+                <h3 class="text-gray-700 text-lg">{{work.position}}</h3>
                 <ul class="list-disc ml-5 text-gray-500">
-                    <li>公司名稱</li>
-                    <li>入職時間-離職時間</li>
-                </ul>
-                <h3 class="text-gray-700 text-lg mt-3">後端工程師</h3>
-                <ul class="list-disc ml-5 text-gray-500">
-                    <li>公司名稱</li>
-                    <li>入職時間-離職時間</li>
-                </ul>
-                <h3 class="text-gray-700 text-lg mt-3">前端工程師</h3>
-                <ul class="list-disc ml-5 text-gray-500">
-                    <li>公司名稱</li>
-                    <li>入職時間-離職時間</li>
-                    <li>前端工程師的工作職責集中在開發和維護網站或應用程式的用戶介面（UI）方面，確保用戶與應用的互動順暢、直觀和高效。</li>
+                    <li>{{ work.company_name }}</li>
+                    <li>{{ work.start_date}} - {{ work.end_date}}</li>
+                    <li class="leading-relaxed">開發和維護後端邏輯、Mysql數據庫管理、集成第三方服務和API、用戶身份驗證和安全、性能優化。</li>
                 </ul>
             </div>
             {% endfor %}
@@ -98,8 +83,8 @@
         </section>
     </div>
 </div>
-<div class="flex justify-center">
-    <button class="text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800 mx-16">返回</button>
-    <button class="text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800 mx-16">下載PDF</button>
+<div class="flex justify-evenly mb-5">
+    <button class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">返回</button>
+    <button class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">下載PDF</button>
 </div>
 {% endblock %}
