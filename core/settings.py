@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from django.conf import settings
 from dotenv import load_dotenv
 
 
@@ -18,7 +19,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ADMIN_URL = os.getenv("ADMIN_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
 
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
@@ -70,7 +71,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -129,44 +130,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if os.environ.get('DJANGO_ENV') == 'production':
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-            },
-        },
-        'root': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        },
-    }
-else:
+if settings.DEBUG:
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -179,7 +148,7 @@ else:
             "file": {
                 "level": "DEBUG",
                 "class": "logging.FileHandler",
-                "filename": "logs/development.log",  # Choose a file name and path
+                "filename": "logs/development.log",
             },
         },
         "loggers": {
@@ -197,25 +166,21 @@ SWEETIFY_DEFAULT_ARGUMENTS = {
     "cancelButtonText": "Cancel",
 }
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-AMAZON_CREDENTIAL = {
-    "ACCESS_KEY_ID": os.getenv("ACCESS_KEY_ID"),
-    "SECRET_ACCESS_KEY": os.getenv("SECRET_ACCESS_KEY"),
-    "STORAGE_BUCKET_NAME": "engilink",
-}
-AWS_ACCESS_KEY_ID = AMAZON_CREDENTIAL["ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = AMAZON_CREDENTIAL["SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = AMAZON_CREDENTIAL["STORAGE_BUCKET_NAME"]
-AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = os.getenv("ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME = os.getenv("S3_REGION_NAME")
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -243,3 +208,6 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 MAILCHIMP_API_KEY = os.getenv('MAILCHIMP_API_KEY')
 MAILCHIMP_LIST_ID = os.getenv('MAILCHIMP_LIST_ID')
+
+
+CSRF_TRUSTED_ORIGINS = ['https://engilink.org']
