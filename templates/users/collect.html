@@ -1,24 +1,45 @@
 {% extends 'frontend.html' %}
-{% comment %} {% endcomment %}
+{% load static %}
 {% block content %}
-{% if user_jobs %}
-<br>
-<div class="container mx-auto">
-    <h2 class="text-2xl font-semibold mb-6">{{request.user}}收藏的職缺</h2>
-    <ul class="space-y-6">
-        {% for job in jobs %}
-            {% if job.id in user_jobs %}
-            <li class="bg-white p-6 shadow-lg rounded-lg">
-                <p class="text-xl font-semibold mb-2">職缺: {{ job.title }}</p>
-                <p class="text-lg mb-2">公司名稱: {{ job.company.company_name }}</p>
-            </li>
+<div class="container p-4 mx-auto">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="p-4 bg-white rounded-lg shadow-md">
+            {% if user_jobs %}
+                <h2 class="mb-4 text-xl font-semibold">你收藏的職缺</h2>
+                <ul>
+                    {% for job in jobs %}
+                        {% if job.id in user_jobs %}
+                            <li class="mb-2">
+                                <div class="font-bold">{{ job.title }}</div>
+                                <div class="text-gray-600">{{ job.company.company_name }}</div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {% url 'jobs:job_list' as job_list_url %}
+                {% include 'empty.html' with title="我收藏的工作" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
             {% endif %}
-        {% endfor %}
-    </ul>
+        </div>
+        <div class="p-4 bg-white rounded-lg shadow-md">
+            {% if user_companies %}
+                <h2 class="mb-4 text-xl font-semibold">你收藏的公司</h2>
+                <ul>
+                    {% for company in companies %}
+                        {% if company.id in user_companies %}
+                            <li class="mb-2">
+                                <div class="font-bold">{{ company.company_name }}</div>
+                                <div class="text-gray-600">{{ company.address }}</div>
+                                <div class="text-gray-600">{{ company.description }}</div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {% url 'companies:company_list' as company_list_url %}
+                {% include 'empty.html' with title="我收藏的公司" message="，去收藏心儀的公司吧!" link=company_list_url text="前往收藏" %}
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% else %}
-    {% url 'jobs:job_list' as job_list_url %}
-    {% include 'shared/empty.html' with title="我的收藏" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
-{% endif %}
 {% endblock %}
-
