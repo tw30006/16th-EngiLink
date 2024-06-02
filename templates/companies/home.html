@@ -1,31 +1,7 @@
 {% extends 'backend.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-    {% if user.company and user.company.id %}
-        <a href="{% url 'companies:detail' user.company.id %}">View Profile</a>
-    {% else %}
-        <span class="text-gray-500">View Profile</span>
-    {% endif %}
-    <br>
-    <form action="{% url 'companies:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-    <br>
-    {% if user.company and user.company.id %}
-        <a href="{% url 'companies:jobs' user.company.id %}">職缺刊登</a>
-    {% else %}
-        <span class="text-gray-500">職缺刊登</span>
-    {% endif %}
-    <br>
-    <br>
-    {% if user.company and user.company.id %}
-        <a href="{% url 'companies:applications' user.company.id %}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看應徵</a>
-    {% else %}
-    <span class="text-gray-500">查看應徵</span>
-    {% endif %}
-{% else %}
-    <h1>Welcome to Our Site!</h1>
-    <p>Please <a href="{% url 'companies:login' %}">login</a> or <a href="{% url 'companies:register' %}">register</a>.</p>
+    <p>歡迎，{{request.user}}!</p>
+    <p>為您的職缺推薦最佳人選！</p>
 {% endif %} 
 {% endblock %}
