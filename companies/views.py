@@ -104,6 +104,7 @@ class CompanyDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = self.object.custom_user
+        context['description'] = self.object.description
         return context
 
 class CompanyUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):

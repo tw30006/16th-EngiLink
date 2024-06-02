@@ -1,15 +1,22 @@
 import EasyMDE from 'simplemde';
-import marked from 'marked';
+import { marked } from 'marked';
 
 function initializeEasyMDE() {
-    const textarea = document.querySelector('textarea[name="skills"]');
-    if (textarea) {
-        const easyMDE = new EasyMDE({
+    const textareas = document.querySelectorAll('textarea.easymde');
+    textareas.forEach(function(textarea) {
+        new EasyMDE({
             element: textarea,
             toolbar: [
-                "bold", "italic", "heading", "|",
-                "quote", "unordered-list", "ordered-list", "|",
-                "preview", "|",
+                "bold", 
+                "italic", 
+                "heading", 
+                "|", 
+                "quote", 
+                "unordered-list", 
+                "ordered-list", 
+                "|", 
+                "preview", 
+                "|", 
                 {
                     name: "guide",
                     action: function customFunction(editor) {
@@ -26,10 +33,23 @@ function initializeEasyMDE() {
                 return marked(plainText);
             }
         });
-    } 
+    });
+}
+
+function renderMarkdownPreview(elementId) {
+    const descriptionElement = document.getElementById(elementId);
+    if (descriptionElement) {
+        let description = descriptionElement.getAttribute('data-description');
+        if (description) {
+            description = description.replace(/\\u000D\\u000A/g, '\n');
+            descriptionElement.innerHTML = marked(description);
+            console.log(descriptionElement.innerHTML);
+        }
+    }
 }
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
     initializeEasyMDE();
+    renderMarkdownPreview('description-preview');
 });
