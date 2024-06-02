@@ -20,3 +20,8 @@ class Company(models.Model):
 
     def __str__(self):
         return self.company_name
+
+class User_Company(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    collect = models.BooleanField(default=False)
