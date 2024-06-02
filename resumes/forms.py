@@ -27,7 +27,7 @@ class ResumeForm(forms.ModelForm):
 
     email = EmailValidator()
 
-    skills = MarkdownxFormField()
+    skills = forms.CharField(widget=forms.Textarea, label='Skills')
 
     birthday = forms.DateTimeField(
         widget=forms.DateInput(attrs={"type": "date"}), required=False

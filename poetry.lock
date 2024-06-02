@@ -532,22 +532,6 @@ files = [
 django = ">=4.2"
 
 [[package]]
-name = "django-markdownx"
-version = "4.0.7"
-description = "A comprehensive Markdown editor built for Django."
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-markdownx-4.0.7.tar.gz", hash = "sha256:38aa331c2ca0bee218b77f462361b5393e4727962bc6021939c09048363cb6ea"},
-    {file = "django_markdownx-4.0.7-py2.py3-none-any.whl", hash = "sha256:c1975ae3053481d4c111abd38997a5b5bb89235a1e3215f995d835942925fe7b"},
-]
-
-[package.dependencies]
-Django = "*"
-Markdown = "*"
-Pillow = "*"
-
-[[package]]
 name = "django-positions"
 version = "0.6.0"
 description = "A Django field for custom model ordering"
@@ -772,21 +756,6 @@ files = [
 
 [package.dependencies]
 requests = ">=2.7.0"
-
-[[package]]
-name = "markdown"
-version = "3.6"
-description = "Python implementation of John Gruber's Markdown."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "Markdown-3.6-py3-none-any.whl", hash = "sha256:48f276f4d8cfb8ce6527c8f79e2ee29708508bf4d40aa410fbc3b4ee832c850f"},
-    {file = "Markdown-3.6.tar.gz", hash = "sha256:ed4f41f6daecbeeb96e576ce414c41d2d876daa9a16cb35fa8ed8c2ddfad0224"},
-]
-
-[package.extras]
-docs = ["mdx-gh-links (>=0.2)", "mkdocs (>=1.5)", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-nature (>=0.6)", "mkdocs-section-index", "mkdocstrings[python]"]
-testing = ["coverage", "pyyaml"]
 
 [[package]]
 name = "markdown-it-py"
@@ -1405,4 +1374,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "b17d76f7e9fd51e2ab07fa145d2bece258b0ab9d8cf286d7c2b0a54a414e52f1"
+content-hash = "c0bd6edb47f68c7a5c7174477a4f27285c1baa1ce8cf1ff591bf6334571080a9"

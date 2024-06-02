@@ -14,8 +14,9 @@
                         {% csrf_token %}
                         <div class="w-full md:w-2/3">
                             {{ form|crispy }}
+                            <textarea name="skills" x-ref="skills"></textarea>
                         </div>
-                            {{ form.media }}
+                            
                         <div id="preview-container" class="hidden mt-4">
                             <img id="preview" src="#" alt="Image Preview" class="w-72 h-72 border border-black" />
                         </div>

@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css --watch\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js --watch\"",
-    "build": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js\""
+    "build": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js\"",
+    "copy-css": "mkdir -p ./static/css && cp ./node_modules/simplemde/dist/simplemde.min.css ./static/css/"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +21,11 @@
     "autoprefixer": "^10.4.19",
     "bootstrap4": "^0.0.1-security",
     "concurrently": "^8.2.2",
+    "easymde": "^2.18.0",
     "htmx.org": "^1.9.12",
+    "marked": "^12.0.2",
     "postcss": "^8.4.38",
+    "simplemde": "^1.11.2",
     "sweetalert2": "^11.10.8",
     "tailwindcss": "^3.4.3"
   },
