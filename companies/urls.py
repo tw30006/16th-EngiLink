@@ -13,6 +13,7 @@ from .views import (
     JobApplicationDetailView,
     MarkAsReadView,
     InterviewResultCreateView,
+    FavoriteCompanyView
 )
 from jobs import views as jobs
 
@@ -34,4 +35,5 @@ urlpatterns = [
     path("<int:pk>/", CompanyDetailView.as_view(), name="detail"),
     path('<int:job_resume_id>/interview/', InterviewResultCreateView.as_view(), name='interview'),
     path('<int:pk>/candidate/', JobApplicationDetailView.as_view(), name='candidate'),
+    path('companies/<int:company_id>/favorite/', FavoriteCompanyView.as_view(), name='favorite_company'),
 ]
