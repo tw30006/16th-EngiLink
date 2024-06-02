@@ -1,26 +1,29 @@
 {% extends 'frontend.html' %}
 {% block content %}
-    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg  pt-16">
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md w-full w-300px">
             <div>
-                <h1 class="text-2xl">Hello,{{request.user|title}}</h1>
+                <h1 class="text-2xl">Hello,{{ request.user|title }}</h1>
             </div>
-            <a href="{% url 'resumes:create'%}" class="px-4 py-2 border-4 rounded-lg ml-2">&#43;創建履歷</a>
+            <a href="{% url 'resumes:create' %}" class="px-4 py-2 border-4 rounded-lg ml-2">&#43;創建履歷</a>
         </div>
         
-        <div class="task-items-wrapper flex flex-col  w-full">
+        <div class="task-items-wrapper flex flex-col w-full">
             <h2 class="text-lg font-semibold mb-4 mt-4 ml-4">我的履歷:</h2>
-            {% for resume in resumes %}
-                <div class="task-wrapper flex justify-between items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
-                    <a href="{% url 'resumes:show' pk=resume.pk %}" class="text-blue-600">{{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
-                    <a href="{% url 'resumes:total'  resume_id=resume.pk  %}" class="text-blue-600">預覽</a>
-                </div>
-            {% empty %}
-            <h3 class="text-lg">目前無創建履歷</h3>
-            {% endfor %}
+            {% if resumes %}
+                {% for resume in resumes %}
+                    <div class="task-wrapper flex justify-between items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+                        <a href="{% url 'resumes:show' pk=resume.pk %}" class="text-blue-600">{{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
+                        <a href="{% url 'resumes:total' resume_id=resume.pk %}" class="text-blue-600">預覽</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3 class="text-lg mt-4 ml-4">目前無創建履歷</h3>
+            {% endif %}
         </div>
-        <br>
-        <br>
-        <h3 class="text-lg mt-10"> <p>您目前已創建 <i>{{ count }}</i> 份履歷</p></h3>
+        
+        {% if resumes %}
+            <h3 class="text-lg mt-4 ml-4">您目前已創建 <span class="font-bold">{{ resumes|length }}</span> 份履歷</h3>
+        {% endif %}
     </div>
 {% endblock %}
