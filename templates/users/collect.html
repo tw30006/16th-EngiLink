@@ -2,15 +2,20 @@
 {% comment %} {% endcomment %}
 {% block content %}
 {% if user_jobs %}
-    <h2>你收藏的職缺</h2>
-    <ul>
+<br>
+<div class="container mx-auto">
+    <h2 class="text-2xl font-semibold mb-6">{{request.user}}收藏的職缺</h2>
+    <ul class="space-y-6">
         {% for job in jobs %}
-        {%if job.id in user_jobs%}
-            <li>職缺: {{ job.title }}</li>
-            <li>公司名稱: {{ job.company.company_name }}</li>
-        {% endif%}    
+            {% if job.id in user_jobs %}
+            <li class="bg-white p-6 shadow-lg rounded-lg">
+                <p class="text-xl font-semibold mb-2">職缺: {{ job.title }}</p>
+                <p class="text-lg mb-2">公司名稱: {{ job.company.company_name }}</p>
+            </li>
+            {% endif %}
         {% endfor %}
     </ul>
+</div>
 {% else %}
     {% url 'jobs:job_list' as job_list_url %}
     {% include 'empty.html' with title="我的收藏" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
