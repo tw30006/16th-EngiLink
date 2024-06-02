@@ -3,7 +3,7 @@ from .models import Resume
 from datetime import date, datetime
 import re
 from django.core.exceptions import ValidationError
-from markdownx.fields import MarkdownxFormField
+
 
 
 class EmailValidator(forms.EmailField):

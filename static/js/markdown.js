@@ -1,5 +1,5 @@
 import EasyMDE from 'simplemde';
-import { marked } from 'marked';
+import marked from 'marked';
 
 function initializeEasyMDE() {
     const textarea = document.querySelector('textarea[name="skills"]');
