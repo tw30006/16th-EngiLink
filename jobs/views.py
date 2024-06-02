@@ -93,7 +93,7 @@ class JobListView(ListView):
     model = Job
     template_name = 'jobs/list.html'
     context_object_name = 'jobs'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         job_list = []
@@ -111,7 +111,12 @@ class JobListView(ListView):
             }
             job_list.append(job_info)
         context['jobs'] = job_list
-        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
-        context['user_jobs'] = list(user_jobs)
+        if self.request.user.is_authenticated:
+            user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
+            context['user_jobs'] = list(user_jobs)
         return context
-    
+
+class JobDetailView(DetailView):
+    model = Job
+    template_name = 'jobs/detail.html'
+    context_object_name = 'job'

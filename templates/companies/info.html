@@ -1,10 +1,15 @@
 {% extends "backend.html" %}
 {% load humanize %}
+{% load static %}
 {% block content %}
 <div class="container mx-auto p-4 bg-gray-100 min-h-screen w-screen">
     <div class="bg-white p-6 rounded-lg shadow-lg">
         <div class="flex items-center mb-6">
-            <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-16 h-16 rounded-full mr-4">
+            {% if company.logo %}
+                <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-16 h-16 rounded-full mr-4">
+            {% else %}
+                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-16 h-16 rounded-full mr-4">
+            {% endif %}
             <h1 class="text-2xl font-semibold">{{ company.company_name }}</h1>
         </div>
         <div class="mb-4">
@@ -30,37 +35,46 @@
     <div class="mt-8">
         <h2 id="job-list" class="scroll-mt-16 text-xl font-semibold mb-4">職缺列表</h2>
         <div class="space-y-6">
-            {% for job in jobs %}
-                <div class="flex flex-col items-start justify-between p-4 bg-white rounded-lg shadow-lg md:flex-row md:items-center">
-                    <div class="w-64 mb-4 md:w-1/3 md:mb-0 md:mr-4">
-                        <img src="{{ job.company.banner.url }}" alt="公司圖片" class="object-cover w-full h-full rounded">
-                    </div>
-                    <div class="flex flex-col items-start justify-between w-full space-y-4 md:w-2/3 md:flex-row md:items-center md:space-y-0">
-                        <div class="flex flex-col flex-grow space-y-4 md:mr-4">
-                            <h2 class="text-2xl font-bold pl-4">{{ job.title }}</h2>
-                            <div class="flex items-center space-x-2 pl-4">
-                                <img src="{{ job.company.logo.url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
-                                <p class="text-lg">{{ job.company.company_name }}</p>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <i class="fa-solid fa-location-dot w-4 h-4 text-gray-500"></i> 
-                                <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
-                                <i class="fa-solid fa-sack-dollar w-4 h-4 text-gray-500"></i>
-                                <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-row items-center justify-end w-full mt-4 space-x-4 md:flex-col md:items-start md:w-auto md:space-x-0 md:space-y-4 md:mt-0 md:flex-shrink-0">
-                            {% if request.user.user_type == 1 %}
-                            <div class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"><a href="{% url 'users:apply' job.id %}">立即應徵</a></div>
-                            <a href="{% url 'users:collect' %}"><div class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</div></a>
+            {% if jobs %}
+                {% for job in jobs %}
+                    <div class="flex flex-col items-start justify-between p-4 bg-white rounded-lg shadow-lg md:flex-row md:items-center">
+                        <div class="w-64 mb-4 md:w-1/3 md:mb-0 md:mr-4">
+                            {% if job.company.banner.url %}
+                                <img src="{{ job.company.banner.url }}" alt="公司圖片" class="object-cover w-full h-full rounded">
                             {% else %}
-                            <a href="{% url 'users:login' %}"><div class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</div></a>
-                            <a href="{% url 'users:login' %}"><div class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</div></a>
+                                <img src="{% static 'img/default-banner.jpg' %}" alt="默认公司图片" class="object-cover w-full h-full rounded">
                             {% endif %}
                         </div>
+                        <div class="flex flex-col items-start justify-between w-full space-y-4 md:w-2/3 md:flex-row md:items-center md:space-y-0">
+                            <div class="flex flex-col flex-grow space-y-4 md:mr-4">
+                                <h2 class="text-2xl font-bold pl-4">{{ job.title }}</h2>
+                                <div class="flex items-center space-x-2 pl-4">
+                                    <img src="{{ job.company.logo.url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
+                                    <p class="text-lg">{{ job.company.company_name }}</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-location-dot w-4 h-4 text-gray-500"></i> 
+                                    <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
+                                    <i class="fa-solid fa-sack-dollar w-4 h-4 text-gray-500"></i>
+                                    <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row items-center justify-end w-full mt-4 space-x-4 md:flex-col md:items-start md:w-auto md:space-x-0 md:space-y-4 md:mt-0 md:flex-shrink-0">
+                                {% if request.user.user_type == 1 %}
+                                    <a href="{% url 'users:apply' job.id %}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</a>
+                                    <a href="{% url 'users:collect' %}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</a>
+                                {% else %}
+                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</a>
+                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <br>
+                <p class="text-xl text-center">該公司尚未有合適職缺。</p>
+            {% endif %}
         </div>
     </div>
 </div>

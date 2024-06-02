@@ -1,0 +1,34 @@
+{% extends "backend.html" %}
+{% load static %}
+{% block content %}
+<div class="max-w-2xl mx-auto py-8">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="flex items-center mb-4">
+            <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="object-cover w-6 h-6 rounded">
+            <h1 class="text-2xl font-bold ml-4">{{job.title}}</h1>
+        </div>
+        <div class="flex items-center mb-2">
+            <i class="fas fa-map-marker-alt text-gray-500"></i>
+            <span class="text-gray-700">{{ job.address }}</span>
+        </div>
+        <div class="flex items-center mb-2">
+            <i class="fas fa-dollar-sign text-gray-500"></i>
+            <span class="text-gray-700">月薪 NT${{ job.salary }} 元</span>
+        </div>
+        <div class="mb-4">
+            {% if request.user.user_type == 1 %}
+            <h2 class="text-xl font-bold mb-2">工作內容：</h2>
+            <p>{{job.description}}</p>
+            {% else %}
+            {% endif %}
+        </div>
+        <div class="flex justify-center">
+            {% if request.user.user_type == 1 %}
+            <a href="{% url 'users:apply' job.id %}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">立即應徵</a>
+            {% else %}
+            <p class="text-gray-700">想了解該筆職缺資訊嗎？立刻<a href="{% url 'users:login' %}" class="text-blue-500 hover:underline">登入</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
