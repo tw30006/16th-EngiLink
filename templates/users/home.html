@@ -93,10 +93,9 @@
                                 <i class="w-4 h-4 text-gray-500 fa-solid fa-briefcase"></i>
                                 <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
                             </div>
-                            <form action="{% url 'users:collect' %}" method="post" class="flex-shrink-0">
+                            <form action="{% url 'companies:favorite_company' company.id %}" method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="company_id" value="{{ company.id }}">
-                                <button type="submit" class="flex items-center justify-center w-8 h-8 text-white bg-gray-300 rounded-full hover:bg-pink-300">
+                                <button type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in favorite_company_ids %} bg-red-500 {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-pink-300">
                                     <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
                                 </button>
                             </form>
