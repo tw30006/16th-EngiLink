@@ -43,7 +43,6 @@ function renderMarkdownPreview(elementId) {
         if (description) {
             description = description.replace(/\\u000D\\u000A/g, '\n');
             descriptionElement.outerHTML = marked(description);
-            console.log(descriptionElement.outerHTML);
         }
     }
 }
