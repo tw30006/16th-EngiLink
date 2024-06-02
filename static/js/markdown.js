@@ -42,8 +42,8 @@ function renderMarkdownPreview(elementId) {
         let description = descriptionElement.getAttribute('data-description');
         if (description) {
             description = description.replace(/\\u000D\\u000A/g, '\n');
-            descriptionElement.innerHTML = marked(description);
-            console.log(descriptionElement.innerHTML);
+            descriptionElement.outerHTML = marked(description);
+            console.log(descriptionElement.outerHTML);
         }
     }
 }

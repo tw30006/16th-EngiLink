@@ -59,3 +59,7 @@
     font-weight: bold;
     margin: 1.67em 0;
 }
+
+.editor-preview p {
+    margin: 0;
+}

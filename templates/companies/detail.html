@@ -15,8 +15,8 @@
             <p><span class="font-semibold">聯絡人:</span> {{ user.company.user_name }}</p>
             <p><span class="font-semibold">聯絡電話:</span> {{ user.company.tel }}</p>
             <p><span class="font-semibold">地址:</span> {{ user.company.address }}</p>
-            <p><span class="font-semibold">簡介:</span> {{ user.company.description }}</p>
-            <p id="description-preview" class="editor-preview" data-description="{{ user.company.description|escapejs }}"><span></span></p>
+            <p><span class="font-semibold">簡介:</span></p>
+            <div id="description-preview" class="editor-preview" data-description="{{ user.company.description|escapejs }}"></div>
             <p><span class="font-semibold">類型:</span> {{ user.company.type }}</p>
         </div>
         <div class="ml-8">
