@@ -1,18 +1,34 @@
-## 成員
-- andyhuangdev `https://github.com/andyhuangdev`
-- b89k57w62 `https://github.com/b89k57w62`
-- ula0218 `https://github.com/ula0218`
-- tw30006 `https://github.com/tw30006`
-- yuling515 `https://github.com/yuling515`
+# EngiLink
+### 點擊進入網站 ☟
+**https://engilink.org/**
 
-## 安裝步驟
-1. 安裝 `node` 和 `npm`
-2. 通過 `pipx install poetry` 安裝 Python 和套件管理器 `poetry`
-3. 執行 `brew install weasyprint` 安裝 WeasyPrint
-4. 執行 `poetry shell` 以進入或激活虛擬環境
-5. 執行 `make install` 安裝必要的套件
-6. 執行 `npm run dev` 啟動前端伺服器
-7. 如果需要，執行 `make migrate` 來應用數據庫遷移
-8. 將 `.env.example` 文件改名為 `.env` 並向開發人員索取 KEY
-9. 執行 `make server` 啟動伺服器
-10. 訪問 `http://localhost:8000` 查看應用程序
+---
+
+## 專案特點
+本專案的目標是讓求職者能夠輕鬆地創建優秀的履歷，並且為公司的人才招聘團隊提供一個便捷的方法來找到合適的人才。
+
+1. **履歷創建與管理**：為求職者提供一個使用簡便的界面，使他們能夠輕鬆地創建、編輯和管理他們的履歷。
+
+2. **公司媒合**：讓公司能夠查看求職者的履歷，並根據特定的技能、經驗和背景尋找合適的人才。
+
+## 技術使用
+
+- **前端**：Tailwindcss, JavaScript, HTMX, Alpine.js
+- **後端**：Python, Django
+- **資料庫**：MySQL
+- **版本控制**：Git
+- **圖片上傳**：AWS S3
+- **電郵**：MailChimp
+- **部署**：Heroku
+
+## EngiLink Team
+- 黃軒佑  
+  https://github.com/andyhuangdev
+- 吳昊聲  
+  https://github.com/b89k57w62
+- 王麗菱  
+  https://github.com/ula0218
+- 林郁軒  
+  https://github.com/tw30006
+- 林昱伶  
+  https://github.com/yuling515
