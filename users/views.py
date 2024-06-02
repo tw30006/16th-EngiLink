@@ -17,7 +17,7 @@ from django.views.generic.list import ListView
 from .forms import UserRegisterForm, UserUpdateForm
 from .models import CustomUser
 from resumes.models import Resume 
-from companies.models import Company
+from companies.models import Company, User_Company
 from companies.forms import CompanyUpdateForm
 
 from jobs.models import Job, User_Job, Job_Resume
@@ -52,17 +52,20 @@ class UserRegisterView(FormView):
             'status': 'subscribed',
         })
 
-class UserHomeView(PermissionRequiredMixin,TemplateView):
+class UserHomeView(PermissionRequiredMixin, TemplateView):
     template_name = 'users/home.html'
     permission_required = "user_can_show"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user = self.request.user
         companies = Company.objects.all()
-        resumes = Resume.objects.filter(user=self.request.user)
+        resumes = Resume.objects.filter(user=user)
         jobs = Job.objects.select_related('company').all()
         search_keyword = self.request.GET.get('q')
-        user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
+        user_jobs = User_Job.objects.filter(user=user).values_list('job_id', flat=True)
+        favorite_company_ids = list(User_Company.objects.filter(user=user, collect=True).values_list('company_id', flat=True)) if user.is_authenticated else []
+        
         if search_keyword:
             companies = Company.objects.filter(company_name__icontains=search_keyword)
             jobs = Job.objects.filter(title__icontains=search_keyword).select_related('company')
@@ -73,11 +76,14 @@ class UserHomeView(PermissionRequiredMixin,TemplateView):
         else:
             companies = Company.objects.all()
             jobs = Job.objects.select_related('company').all()
+        
         context['companies'] = companies
         context['jobs'] = jobs
         context['resumes'] = resumes
         context['user_jobs'] = user_jobs
+        context['favorite_company_ids'] = favorite_company_ids
         return context
+
 
 class UserJobsView(TemplateView):
     template_name = 'users/jobs.html'
@@ -203,10 +209,13 @@ class CollectJobView(LoginRequiredMixin, View):
             button_html = render_to_string('shared/collect_btn.html', {'job': job, 'user_jobs': user_jobs})
             return HttpResponse(button_html)
         return redirect("users:home")
+    
     def get(self, request):
         jobs = Job.objects.select_related('company').all()
         user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
-        return render(request, "users/collect.html", {'jobs': jobs, 'user_jobs': user_jobs})
+        user_companies = User_Company.objects.filter(user=request.user, collect=True).values_list('company_id', flat=True)
+        companies = Company.objects.all()
+        return render(request, "users/collect.html", {'jobs': jobs, 'user_jobs': user_jobs, 'companies': companies, 'user_companies': user_companies})
 
 @method_decorator(login_required, name='dispatch')
 class ApplyForJobCreateView(View):
@@ -254,4 +263,11 @@ class InterviewResponseView(View):
         
         return redirect('users:home')
     
-    
+class FavoriteCompaniesView(LoginRequiredMixin, TemplateView):
+    template_name = 'users/favorite_companies.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['companies'] = Company.objects.all()
+        context['user_companies'] = User_Company.objects.filter(user=self.request.user, collect=True).values_list('company_id', flat=True)
+        return context
