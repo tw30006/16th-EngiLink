@@ -25,7 +25,10 @@
                         <p class="mb-4">電子信箱：{{resume.email}}</p>
                         <p class="mb-4">手機：{{resume.phone_number}}</p>
                         <p class="mb-4">地址：{{resume.address}}</p>
-                        <p class="mb-4">技能：{{resume.skills}}</p>
+                        <div class="editor flex mb-4">
+                            技能：
+                            <p id="description-preview" class="mb-4" data-description="{{ resume.skills|escapejs }}"></p>
+                        </div>
                         <p class="mb-4">個人網站：{{resume.website}}</p>
                         <p class="mb-4">工作經驗：{{resume.experience}}</p>
                         <p class="mb-4">Linkedin：{{resume.linkedin}}</p>
