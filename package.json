@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css --watch\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js --watch\"",
     "build": "concurrently \"tailwindcss -i static/css/style.css -o static/css/output.css\" \"esbuild static/js/entry.js --minify --bundle --outfile=static/js/bundle.js\"",
-    "copy-css": "mkdir -p ./static/css && cp ./node_modules/simplemde/dist/simplemde.min.css ./static/css/"
+    "copy-css": "mkdir -p ./static/css && cp ./node_modules/simplemde/dist/simplemde.min.css ./static/css/",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
