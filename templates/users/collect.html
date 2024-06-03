@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div class="p-4 bg-white rounded-lg shadow-md">
             {% if user_jobs %}
-                <h2 class="mb-4 text-xl font-semibold">你收藏的職缺</h2>
+                <h2 class="mb-4 text-2xl font-semibold">你收藏的職缺</h2>
                 <ul>
                     {% for job in jobs %}
                         {% if job.id in user_jobs %}
@@ -18,19 +18,19 @@
                 </ul>
             {% else %}
                 <div class="flex flex-col items-center p-4">
-                    <h2 class="mb-4 text-xl font-semibold">我收藏的工作</h2>
+                    <h2 class="mb-4 text-2xl font-semibold">我收藏的工作</h2>
                     {% url 'jobs:job_list' as job_list_url %}
-                    <div class="w-full h-auto mb-4 flex justify-center items-center p-2.5">
-                        <img src="{% static 'img/interview.png' %}" alt="Empty jobs" class="object-contain w-full mx-auto h-52">
+                    <div class="w-full h-auto flex justify-center items-center p-2.5">
+                        <img src="{% static 'img/interview.png' %}" alt="Empty jobs" class="object-contain w-full h-auto mx-auto">
                     </div>
-                    <p class="mb-4 text-gray-600">{{ user.username }}，去收藏心儀的工作吧!</p>
-                    <a href="{{ job_list_url }}" class="px-6 py-2 text-white bg-blue-800 rounded-full">前往收藏</a>
+                    <p class="mb-3 text-xl text-gray-600">{{ user.username }}，去收藏心儀的工作吧!</p>
+                    <a href="{{ job_list_url }}" class="px-6 py-2 text-xl text-white bg-blue-800 rounded-full">前往收藏</a>
                 </div>
             {% endif %}
         </div>
         <div class="p-4 bg-white rounded-lg shadow-md">
             {% if user_companies %}
-                <h2 class="mb-4 text-xl font-semibold">你收藏的公司</h2>
+                <h2 class="mb-4 text-2xl font-semibold">你收藏的公司</h2>
                 <ul>
                     {% for company in companies %}
                         {% if company.id in user_companies %}
@@ -44,13 +44,13 @@
                 </ul>
             {% else %}
                 <div class="flex flex-col items-center p-4">
-                    <h2 class="mb-4 text-xl font-semibold">我收藏的公司</h2>
+                    <h2 class="mb-4 text-2xl font-semibold">我收藏的公司</h2>
                     {% url 'companies:company_list' as company_list_url %}
-                    <div class="w-full h-auto mb-4 flex justify-center items-center p-2.5">
-                        <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full mx-auto h-52">
+                    <div class="w-full h-auto flex justify-center items-center p-2.5">
+                        <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full h-auto mx-auto">
                     </div>
-                    <p class="mb-4 text-gray-600">{{ user.username }}，去收藏心儀的公司吧!</p>
-                    <a href="{{ company_list_url }}" class="px-6 py-2 text-white bg-blue-800 rounded-full">前往收藏</a>
+                    <p class="mb-3 text-xl text-gray-600">{{ user.username }}，去收藏心儀的公司吧!</p>
+                    <a href="{{ company_list_url }}" class="px-6 py-2 text-xl text-white bg-blue-800 rounded-full">前往收藏</a>
                 </div>
             {% endif %}
         </div>
