@@ -17,8 +17,15 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                {% url 'jobs:job_list' as job_list_url %}
-                {% include 'empty.html' with title="我收藏的工作" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
+                <div class="flex flex-col items-center p-4">
+                    <h2 class="mb-4 text-xl font-semibold">我收藏的工作</h2>
+                    {% url 'jobs:job_list' as job_list_url %}
+                    <div class="w-full h-auto mb-4 flex justify-center items-center p-2.5">
+                        <img src="{% static 'img/interview.png' %}" alt="Empty jobs" class="object-contain w-full mx-auto h-52">
+                    </div>
+                    <p class="mb-4 text-gray-600">{{ user.username }}，去收藏心儀的工作吧!</p>
+                    <a href="{{ job_list_url }}" class="px-4 py-2 text-white bg-blue-500 rounded-lg">前往收藏</a>
+                </div>
             {% endif %}
         </div>
         <div class="p-4 bg-white rounded-lg shadow-md">
@@ -36,8 +43,15 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                {% url 'companies:company_list' as company_list_url %}
-                {% include 'empty.html' with title="我收藏的公司" message="，去收藏心儀的公司吧!" link=company_list_url text="前往收藏" %}
+                <div class="flex flex-col items-center p-4">
+                    <h2 class="mb-4 text-xl font-semibold">我收藏的公司</h2>
+                    {% url 'companies:company_list' as company_list_url %}
+                    <div class="w-full h-auto mb-4 flex justify-center items-center p-2.5">
+                        <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full mx-auto h-52">
+                    </div>
+                    <p class="mb-4 text-gray-600">{{ user.username }}，去收藏心儀的公司吧!</p>
+                    <a href="{{ company_list_url }}" class="px-4 py-2 text-white bg-blue-500 rounded-lg">前往收藏</a>
+                </div>
             {% endif %}
         </div>
     </div>
