@@ -18,7 +18,7 @@
 </div>
 {% else %}
     {% url 'jobs:job_list' as job_list_url %}
-    {% include 'empty.html' with title="我的收藏" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
+    {% include 'shared/empty.html' with title="我的收藏" message="，去收藏心儀的工作吧!" link=job_list_url text="前往收藏" %}
 {% endif %}
 {% endblock %}
 

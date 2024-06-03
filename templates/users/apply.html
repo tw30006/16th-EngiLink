@@ -77,6 +77,6 @@
     {% endfor %}
 {% elif job_resume_list|length == 0 %}
     {% url 'jobs:job_list' as job_list_url %}
-    {% include 'empty.html' with title="我的應徵" message="，去應徵心儀的工作吧!" link=job_list_url text="前往應徵" %}
+    {% include 'shared/empty.html' with title="我的應徵" message="，去應徵心儀的工作吧!" link=job_list_url text="前往應徵" %}
 {% endif %}
 {% endblock %}
