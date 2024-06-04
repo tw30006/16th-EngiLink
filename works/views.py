@@ -1,7 +1,7 @@
 from django.contrib import messages
 from .forms import WorkForm
 from .models import Work
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
@@ -10,13 +10,25 @@ class WorkCreateView(PermissionRequiredMixin,CreateView):
     model = Work
     form_class = WorkForm
     template_name = 'works/create.html'
-    success_url = reverse_lazy('resumes:work-show')
     permission_required = "user_can_show"
 
     def form_valid(self, form):
         self.object = form.save()
         messages.success(self.request, "新增成功")
         return super().form_valid(form)
+    
+    def get_queryset(self):
+        resume_id = self.kwargs['pk']
+        return Work.objects.filter(resume_id=resume_id)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['resume_id'] = self.kwargs['pk']
+        return context
+    
+    def get_success_url(self):
+        resume_id = self.kwargs['pk']
+        return reverse('resumes:works', kwargs={'pk': resume_id})
 
 
 class WorkListView(PermissionRequiredMixin,ListView):
@@ -26,8 +38,13 @@ class WorkListView(PermissionRequiredMixin,ListView):
     permission_required = "user_can_show"
 
     def get_queryset(self):
-        return Work.objects.filter(resume__user=self.request.user)
+        resume_id = self.kwargs['pk']
+        return Work.objects.filter(resume_id=resume_id)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['resume_id'] = self.kwargs['pk']
+        return context
 
 class WorkUpdateView(UpdateView):
     model = Work

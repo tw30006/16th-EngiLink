@@ -32,9 +32,6 @@ class Education(models.Model):
     objects = models.Manager()
     edu_objects = EducationManager()
 
-    def __str__(self):
-        return f"{self.name}'s Resume ({self.Resume_id})"
-
     def delete(self, *args, **kwargs):
         self.deleted_at = timezone.now()
         self.save()

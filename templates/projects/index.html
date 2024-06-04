@@ -3,14 +3,14 @@
     <div class="container mx-auto max-w-lg mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592;Back</a>
-            <a href="{% url 'resumes:edu'%}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
+            <a href="{% url 'resumes:project' resume_id %}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
         </div>
         <div class="card-body p-4 shadow-md">
             <h1 class="text-3xl font-bold mb-6">專案內容</h1>
             {% if projects %}
             <ul>
                 {% for project in projects %}
-                    <strong><a href="{% url 'resumes:project-edit' pk=project.pk %}">{{ project.project_name }}</a></strong>
+                    <strong><a href="{% url 'projects:project_edit' project.id %}">{{ project.project_name }}</a></strong>
                     <p>負責部分：{{ project.responsibility }}</p>
                     <p>技術運用： {{ project.technologies_used }}</p>
                     <p>說明：{{project.description}}</p>

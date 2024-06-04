@@ -29,8 +29,5 @@ class Project(models.Model):
 
     objects = models.Manager()
 
-    def __str__(self):
-        return f"{self.name}'s Resume ({self.resume_id})"
-
     def get_technologies(self):
         return self.technologies_used.split(", ")

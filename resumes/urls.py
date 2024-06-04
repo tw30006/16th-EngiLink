@@ -9,25 +9,9 @@ from .views import (
     generate_resume_pdf,
     update_positions,
 )
-from educations.views import (
-    EducationCreateView,
-    EducationListView,
-    EducationUpdateView,
-    EducationDeleteView,
-)
-from works.views import (
-    WorkCreateView,
-    WorkListView,
-    WorkUpdateView,
-    WorkDeleteView,
-)
-from projects.views import (
-    ProjectCreateView,
-    ProjectListView,
-    ProjectUpdateView,
-    ProjectDeleteView,
-)
-
+from educations.views import EducationCreateView, EducationListView
+from works.views import WorkCreateView, WorkListView
+from projects.views import ProjectCreateView, ProjectListView
 
 app_name = "resumes"
 
@@ -39,17 +23,11 @@ urlpatterns = [
     path("resume/<int:resume_id>/pdf/", generate_resume_pdf, name="generate_resume_pdf"),
     path("total/<int:resume_id>", TotalListView.as_view(), name="total"),
     path("update_positions/", update_positions, name="update_positions"),
-    path("edu/", EducationCreateView.as_view(), name="edu"),
-    path("edu/show/", EducationListView.as_view(), name="edu-show"),
-    path("edu/edit/<pk>", EducationUpdateView.as_view(), name="edu-edit"),
-    path("edu/delete/<pk>", EducationDeleteView.as_view(), name="edu-delete"),
-    path("work/", WorkCreateView.as_view(), name="work"),
-    path("work/show/", WorkListView.as_view(), name="work-show"),
-    path("work/edit/<pk>", WorkUpdateView.as_view(), name="work-edit"),
-    path("work/delete/<pk>", WorkDeleteView.as_view(), name="work-delete"),
-    path("project/", ProjectCreateView.as_view(), name="project"),
-    path("project/show/", ProjectListView.as_view(), name="project-show"),
-    path("project/edit/<pk>", ProjectUpdateView.as_view(), name="project-edit"),
-    path("project/delete/<pk>", ProjectDeleteView.as_view(), name="project-delete"),
+    path("<pk>/education/", EducationCreateView.as_view(), name="education"),
+    path("<pk>/educations/", EducationListView.as_view(), name="educations"),
+    path("<pk>/work/", WorkCreateView.as_view(), name="work"),
+    path("<pk>/works/", WorkListView.as_view(), name="works"),
+    path("<pk>/project/", ProjectCreateView.as_view(), name="project"),
+    path("<pk>/projects/", ProjectListView.as_view(), name="projects"),
     path("<pk>/", ResumeListView.as_view(), name="show"),
 ]

@@ -15,9 +15,6 @@ class Work(models.Model):
     posit = PositionField(collection='resume')
     objects = models.Manager()
 
-    def __str__(self):
-        return f"{self.name}'s Resume ({self.resume_id})"
-
     def soft_delete(self):
         self.deleted_at = timezone.now()
         self.save()

@@ -6,11 +6,11 @@
             <div class="w-full">
                 <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md">
                     <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
-                    <a href="{% url 'resumes:project-show'%}">專案內容清單</a>
+                    <a href="{% url 'resumes:projects' resume_id %}">專案內容清單</a>
                 </div>
                 <div class="card-body p-4 shadow-md mt-4">
                     <h3 class="text-lg font-semibold mb-4">新增專案內容</h3>
-                    <form method="post" id="myForm" action="{% url 'resumes:project'%}">
+                    <form method="post" id="myForm" action="{% url 'resumes:project' resume_id%}">
                         {% csrf_token %}
                         {{ form|crispy }}
                     <div class="flex justify-end">

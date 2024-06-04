@@ -3,14 +3,14 @@
     <div class="container mx-auto max-w-lg mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}">&#8592;Back</a>
-            <a href="{% url 'resumes:work' %}">&#43;</a>
+            <a href="{% url 'resumes:work' resume_id %}">&#43;</a>
         </div>
         <div class="card-body p-4 shadow-md">
             <h1 class="text-3xl font-bold mb-6">工作經驗</h1>
             {% if works %}
             <ul>
                 {% for work in works %}
-                    <strong><a href="{% url 'resumes:work-edit' pk=work.pk %}">{{ work.company_name }} - {{ work.position }}</a></strong>
+                    <strong><a href="{% url 'works:work_edit' work.pk %}">{{ work.company_name }} - {{ work.position }}</a></strong>
                     <p>在職期間：{{ work.start_date |date:"Y年m月" }}--{{ work.end_date |date:"Y年m月" }}</p>
                     <p>仍在職：{{ work.get_is_current_display }}</p>
                     <hr>

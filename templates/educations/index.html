@@ -4,14 +4,14 @@
     <div class="container mx-auto max-w-lg mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592;Back</a>
-            <a href="{% url 'resumes:edu'%}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
+            <a href="{% url 'resumes:education' resume_id %}" class="edu text-white-600 hover:text-blue-800">&#43;</a>
         </div>
         <div class="card-body p-4 shadow-md">
             <h1 class="text-3xl font-bold mb-6">教育經驗</h1>
             {% if educations %}
                 <ul>
                     {% for education in educations %}
-                        <strong><a href="{% url 'resumes:edu-edit' pk=education.pk %}">{{ education.school_name }} - {{ education.major }}</a></strong>
+                        <strong><a href="{% url 'educations:edu_edit' education.id %}">{{ education.school_name }} - {{ education.major }}</a></strong>
                         <p>學位：{{ education.get_degree_display }}</p>
                         <p>入學期間： {{ education.start_date |date:"Y年m月" }}--{{ education.end_date |date:"Y年m月" }}</p>
                         <hr>
