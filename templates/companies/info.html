@@ -2,13 +2,13 @@
 {% load humanize %}
 {% load static %}
 {% block content %}
-<div class="container mx-auto p-4 bg-gray-100 min-h-screen w-screen">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
+<div class="container w-screen min-h-screen p-4 mx-auto bg-gray-100">
+    <div class="p-6 bg-white rounded-lg shadow-lg">
         <div class="flex items-center mb-6">
             {% if company.logo %}
-                <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-16 h-16 rounded-full mr-4">
+                <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-16 h-16 mr-4 rounded-full">
             {% else %}
-                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-16 h-16 rounded-full mr-4">
+                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-16 h-16 mr-4 rounded-full">
             {% endif %}
             <h1 class="text-2xl font-semibold">{{ company.company_name }}</h1>
         </div>
@@ -18,22 +18,25 @@
         <div class="mb-6">
             <ul class="list-none">
                 <li class="flex items-center mb-2">
-                    <i class="fa-solid fa-location-dot w-4 h-4 text-gray-500"></i>
+                    <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
                     <span class="ml-2">{{ company.address }}</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.address }}" target="_blank" class="inline-flex items-center ml-2 text-blue-500 hover:text-blue-700">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
                 </li>
                 <li class="flex items-center mb-2">
-                    <i class="fa-solid fa-laptop-code w-4 h-4 text-gray-500"></i>
-                    <span>{{ company.type }}</span>
+                    <i class="w-4 h-4 text-gray-500 fa-solid fa-briefcase"></i>
+                    <span class="ml-2">{{ company.type }}</span>
                 </li>
             </ul>
         </div>
         <div class="text-center">
-            <a href="#job-list" class="inline-block bg-blue-500 text-white py-2 px-4 rounded-lg">查看職缺 ({{ job_count }})</a>
+            <a href="#job-list" class="inline-block px-4 py-2 text-white bg-blue-500 rounded-lg">查看職缺 ({{ job_count }})</a>
         </div>
     </div>
 
     <div class="mt-8">
-        <h2 id="job-list" class="scroll-mt-16 text-xl font-semibold mb-4">職缺列表</h2>
+        <h2 id="job-list" class="mb-4 text-xl font-semibold scroll-mt-16">職缺列表</h2>
         <div class="space-y-6">
             {% if jobs %}
                 {% for job in jobs %}
@@ -47,15 +50,15 @@
                         </div>
                         <div class="flex flex-col items-start justify-between w-full space-y-4 md:w-2/3 md:flex-row md:items-center md:space-y-0">
                             <div class="flex flex-col flex-grow space-y-4 md:mr-4">
-                                <h2 class="text-2xl font-bold pl-4">{{ job.title }}</h2>
-                                <div class="flex items-center space-x-2 pl-4">
+                                <h2 class="pl-4 text-2xl font-bold">{{ job.title }}</h2>
+                                <div class="flex items-center pl-4 space-x-2">
                                     <img src="{{ job.company.logo.url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
                                     <p class="text-lg">{{ job.company.company_name }}</p>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-location-dot w-4 h-4 text-gray-500"></i> 
+                                    <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i> 
                                     <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
-                                    <i class="fa-solid fa-sack-dollar w-4 h-4 text-gray-500"></i>
+                                    <i class="w-4 h-4 text-gray-500 fa-solid fa-sack-dollar"></i>
                                     <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
                                 </div>
                             </div>
