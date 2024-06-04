@@ -179,19 +179,21 @@ class UpdateStyleView(DetailView):
     pk_url_kwarg = 'resume_id'
 
 def update_template(request,resume_id):
-    resume = get_object_or_404(Resume, resume_id=resume_id)
+    resume = get_object_or_404(Resume, pk=resume_id)
     print("----------")
     print(resume.pk)
     print("----------")
     if request.method == "POST":
         selected_style = request.POST.get('style')
         print("----------")
-        print(resume.style)
-        print("----------")
+        print(resume.pk)
+        print("3333333333333")
+        print(selected_style)
         resume.style = selected_style
 
         resume.save()
-        return redirect('resumes:total', resume_id=resume_id)
-    
-    return render(request, 'resumes/update_style.html', {'resume': resume})
+        # return redirect('resumes:total', resume_id=resume.pk)
+        return HttpResponse("")
+    return HttpResponse("123")
+    # return render(request, 'resumes/update_style.html', {'resume': resume})
     

@@ -14,7 +14,7 @@
         @click="changeStyle(1)"
         hx-post="{% url 'resumes:update_template' resume.pk %}"
         hx-vals='{"style": "1"}'
-        hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token }}"}'
+        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         hx-swap="outerHTML">樣式一</button>
     </div>
     <div class="w-80 border border-solid border-blue-900 rounded-md p-2 flex flex-col items-center">
