@@ -8,6 +8,8 @@ from .views import (
     TotalListView,
     generate_resume_pdf,
     update_positions,
+    UpdateStyleView,
+    update_template,
 )
 from educations.views import EducationCreateView, EducationListView
 from works.views import WorkCreateView, WorkListView
@@ -29,5 +31,7 @@ urlpatterns = [
     path("<pk>/works/", WorkListView.as_view(), name="works"),
     path("<pk>/project/", ProjectCreateView.as_view(), name="project"),
     path("<pk>/projects/", ProjectListView.as_view(), name="projects"),
+    path("update_style/<int:resume_id>", UpdateStyleView.as_view(), name="update_style"),
+    path('<int:resume_id>/update_template', update_template, name='update_template'),
     path("<pk>/", ResumeListView.as_view(), name="show"),
 ]

@@ -46,6 +46,7 @@ class Resume(models.Model):
     deleted_at = models.DateTimeField(null=True)
     picture = models.FileField(upload_to="img/", null=True)
     posit = models.IntegerField(default=0)
+    style = models.IntegerField(default=1)
 
     objects = ResumeManager()
 

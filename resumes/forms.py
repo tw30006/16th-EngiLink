@@ -52,7 +52,7 @@ class ResumeForm(forms.ModelForm):
 
     class Meta:
         model = Resume
-        exclude = ["deleted_at", "created_at", "user", "posit"]
+        exclude = ["deleted_at", "created_at", "user", "posit", "style"]
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request", None)

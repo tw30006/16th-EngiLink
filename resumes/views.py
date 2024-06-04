@@ -1,13 +1,14 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
     TemplateView,
     ListView,
     CreateView,
     UpdateView,
     DeleteView,
+    DetailView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ResumeForm
@@ -19,6 +20,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 import json
 from weasyprint import HTML
+from django.views.decorators.http import require_POST
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
     template_name = "resumes/area.html"
@@ -85,7 +87,7 @@ class ResumeDeleteView(DeleteView):
 
 
 class TotalListView(ListView):
-    template_name = "resumes/style1.html"
+    template_name = "resumes/style3.html"
     context_object_name = "total_data"
 
     def get_queryset(self):
@@ -169,3 +171,27 @@ def update_positions(request):
             obj.save()
         return JsonResponse({"status": "success"})
     return JsonResponse({"status": "fail", "error": "Invalid request method"})
+
+class UpdateStyleView(DetailView):
+    model = Resume
+    template_name = 'resumes/update_style.html'
+    context_object_name = 'resume' 
+    pk_url_kwarg = 'resume_id'
+
+def update_template(request,resume_id):
+    resume = get_object_or_404(Resume, resume_id=resume_id)
+    print("----------")
+    print(resume.pk)
+    print("----------")
+    if request.method == "POST":
+        selected_style = request.POST.get('style')
+        print("----------")
+        print(resume.style)
+        print("----------")
+        resume.style = selected_style
+
+        resume.save()
+        return redirect('resumes:total', resume_id=resume_id)
+    
+    return render(request, 'resumes/update_style.html', {'resume': resume})
+    

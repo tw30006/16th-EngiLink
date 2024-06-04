@@ -17,8 +17,17 @@ document.addEventListener('alpine:init', () => {
       }
   }));
 });
-
-
+document.addEventListener('alpine:init', () => {
+    console.log('Alpine.js initialized, registering components');
+    Alpine.data('resumePreview', (resume_id, style) => ({
+        resume_id:resume_id,
+        style:style,
+        changeStyle(newStyle) {
+            this.style = newStyle;
+            console.log(this.style);
+        }
+    }));
+});
 Alpine.start();
 
 
