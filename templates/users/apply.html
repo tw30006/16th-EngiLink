@@ -45,7 +45,7 @@
                         <span class="date">{{ job_resume.created_at|date:"Y.m.d H:i" }}</span>
                     </div>
                     <div class="flowchart-node {% if job_resume.read_at %}active{% endif %}">
-                        <p>公司方已讀</p>
+                        <p>公司已讀</p>
                         {% if job_resume.read_at %}
                         <span class="date">{{ job_resume.read_at|date:"Y.m.d H:i" }}</span>
                         {% else %}

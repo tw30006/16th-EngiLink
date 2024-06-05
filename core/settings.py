@@ -19,7 +19,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ADMIN_URL = os.getenv("ADMIN_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == 'True'
+DEBUG = os.getenv('DEBUG', True)
 
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
@@ -211,3 +211,4 @@ MAILCHIMP_LIST_ID = os.getenv('MAILCHIMP_LIST_ID')
 
 
 CSRF_TRUSTED_ORIGINS = ['https://engilink.org']
+
