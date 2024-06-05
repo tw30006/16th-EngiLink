@@ -115,6 +115,9 @@ class JobListView(ListView):
             user_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
             context['user_jobs'] = list(user_jobs)
         return context
+    
+    def get_queryset(self):
+        return Job.objects.filter(is_published=True)
 
 class JobDetailView(DetailView):
     model = Job

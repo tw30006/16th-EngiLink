@@ -12,8 +12,8 @@
                     hx-post="{% url 'jobs:publish' job.id %}"
                     hx-swap="innerHTML"
                     hx-target="#publish-{{ job.id }}"
-                    class="w-full py-2 px-4 rounded-md {% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %} hover:bg-blue-600">
-                {{ job.is_published | yesno:"刊登中,已下架" }}
+                    class="w-full py-2 px-4 rounded-md {% if job.is_published %}bg-blue-800 text-white{% else %}bg-blue-200{% endif %}">
+                {{ job.is_published | yesno:"刊登中,未上架" }}
             </button>
         </form>
         <div class="ml-4">
