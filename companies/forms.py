@@ -81,7 +81,7 @@ class CompanyUpdateForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(CompanyUpdateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         del self.fields["password"]
         instance = kwargs.get('instance')
         if isinstance(instance, Company):
