@@ -1,12 +1,13 @@
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import render, get_object_or_404
-from .models import Job, User_Job
-from .forms import JobForm
-from companies.models import Company
-from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from companies.models import Company
+from jobs.models import User_Job
+from .models import Job
+from .forms import JobForm
 import rules
 
 

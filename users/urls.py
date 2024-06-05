@@ -1,4 +1,5 @@
 from django.urls import path
+from resumes import views as resumes
 from .views import (
     UserHomeView,
     UserLoginView,
@@ -17,7 +18,6 @@ from .views import (
     FavoriteCompaniesView,
     InterviewsCalendarView,
 )
-from resumes import views as resumes
 
 app_name = "users"
 
@@ -32,11 +32,11 @@ urlpatterns = [
         name="password_change",
     ),
     path("<int:pk>/update/", UserUpdateView.as_view(), name="update"),
-    path("<int:pk>/create/",UserAddView.as_view(), name="create"),
+    path("<int:pk>/create/", UserAddView.as_view(), name="create"),
     path("<pk>/resumes/", resumes.ResumeArea.as_view(), name="resumes"),
-    path('<int:job_id>/apply/', ApplyForJobCreateView.as_view(), name='apply'),
-    path('<pk>/applied_jobs/', ApplyForJobListView.as_view(), name='applications'),
-    path('<int:pk>/withdraw/', WithdrawApplicationView.as_view(), name='withdraw'),
+    path("<int:job_id>/apply/", ApplyForJobCreateView.as_view(), name="apply"),
+    path("<pk>/applied_jobs/", ApplyForJobListView.as_view(), name="applications"),
+    path("<int:pk>/withdraw/", WithdrawApplicationView.as_view(), name="withdraw"),
     path("<int:pk>/", UserDetailView.as_view(), name="detail"),
     path("collect/", CollectJobView.as_view(), name="collect"),
     path("jobs/", UserJobsView.as_view(), name="jobs"),
@@ -44,4 +44,3 @@ urlpatterns = [
     path('calendar/', InterviewsCalendarView.as_view(), name='calendar'),
     path("favorites/", FavoriteCompaniesView.as_view(), name="favorites"),
 ]
-

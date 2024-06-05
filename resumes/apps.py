@@ -7,4 +7,5 @@ class ResumeConfig(AppConfig):
 
     def ready(self):
         import educations.rules
+
         educations.rules.add_rule()

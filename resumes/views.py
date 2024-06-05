@@ -1,7 +1,9 @@
 from django.contrib import messages
-from django.urls import reverse_lazy,reverse
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -10,17 +12,14 @@ from django.views.generic import (
     DeleteView,
     DetailView,
 )
-from django.contrib.auth.mixins import LoginRequiredMixin
+from educations.models import Education
+from projects.models import Project
+from works.models import Work
+from weasyprint import HTML
 from .forms import ResumeForm
 from .models import Resume
-from educations.models import Education
-from works.models import Work
-from projects.models import Project
-from django.template.loader import render_to_string
-from django.contrib.auth.mixins import PermissionRequiredMixin
 import json
-from weasyprint import HTML
-from django.views.decorators.http import require_POST
+
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
     template_name = "resumes/area.html"
@@ -90,7 +89,7 @@ class TotalListView(ListView):
     context_object_name = "total_data"
 
     def get_template_names(self):
-        resume_id = self.kwargs.get('resume_id')
+        resume_id = self.kwargs.get("resume_id")
         resume = get_object_or_404(Resume, pk=resume_id)
         return [f"resumes/style{resume.style}.html"]
 
@@ -126,7 +125,7 @@ class TotalListView(ListView):
             "project_data": project_data,
         }
         return context
-    
+
 
 def generate_resume_pdf(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
@@ -145,8 +144,10 @@ def generate_resume_pdf(request, resume_id):
 
     pdf = HTML(string=html_string).write_pdf()
 
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="resume_{user.username}.pdf"'
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'attachment; filename="resume_{user.username}.pdf"'
+    )
 
     return response
 
@@ -176,20 +177,21 @@ def update_positions(request):
         return JsonResponse({"status": "success"})
     return JsonResponse({"status": "fail", "error": "Invalid request method"})
 
+
 class UpdateStyleView(DetailView):
     model = Resume
-    template_name = 'resumes/update_style.html'
-    context_object_name = 'resume' 
-    pk_url_kwarg = 'resume_id'
+    template_name = "resumes/update_style.html"
+    context_object_name = "resume"
+    pk_url_kwarg = "resume_id"
 
-def update_template(request,resume_id):
+
+def update_template(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     if request.method == "POST":
-        selected_style = request.POST.get('style')
+        selected_style = request.POST.get("style")
         resume.style = selected_style
         resume.save()
-        
+
         response = HttpResponse()
-        response['HX-Redirect'] = reverse('resumes:total', args=[resume.pk])
+        response["HX-Redirect"] = reverse("resumes:total", args=[resume.pk])
         return response
-    

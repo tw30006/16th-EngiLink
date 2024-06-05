@@ -1,9 +1,8 @@
 from django import forms
-from .models import Resume
 from datetime import date, datetime
-import re
 from django.core.exceptions import ValidationError
-
+from .models import Resume
+import re
 
 
 class EmailValidator(forms.EmailField):

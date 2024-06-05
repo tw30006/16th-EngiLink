@@ -1,9 +1,18 @@
 from django import forms
 from .models import Education
 
+
 class EducationForm(forms.ModelForm):
-    start_date = forms.DateTimeField(input_formats=["%Y-%m"], widget=forms.DateInput(attrs={'type': 'month'}), required=False)
-    end_date = forms.DateTimeField(input_formats=["%Y-%m"], widget=forms.DateInput(attrs={'type': 'month'}), required=False)
+    start_date = forms.DateTimeField(
+        input_formats=["%Y-%m"],
+        widget=forms.DateInput(attrs={"type": "month"}),
+        required=False,
+    )
+    end_date = forms.DateTimeField(
+        input_formats=["%Y-%m"],
+        widget=forms.DateInput(attrs={"type": "month"}),
+        required=False,
+    )
     field_labels = {
         "school_name": "校名",
         "major": "專業",

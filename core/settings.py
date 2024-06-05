@@ -4,7 +4,6 @@ from django.conf import settings
 from dotenv import load_dotenv
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,10 +15,9 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-ADMIN_URL = os.getenv("ADMIN_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = os.getenv("DEBUG", True)
 
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
@@ -32,9 +30,15 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
+    "django.contrib.humanize",
     "django.contrib.messages",
+    "django.contrib.sessions",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "users",
     "jobs",
     "resumes",
@@ -43,20 +47,13 @@ INSTALLED_APPS = [
     "storages",
     "works",
     "projects",
-    "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
     "rules",
-    'django.contrib.humanize',
     "crispy_forms",
     "crispy_tailwind",
 ]
 
 
 # crispy css
-
 CRISPY_TEMPLATE_PACK = "tailwind"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
@@ -71,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -113,7 +110,9 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -175,12 +174,12 @@ AWS_S3_REGION_NAME = os.getenv("S3_REGION_NAME")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -202,11 +201,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = int(os.getenv("SITE_ID", 1))
-LOGIN_REDIRECT_URL = "/dashboard/"
+LOGIN_REDIRECT_URL = "/users/"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
 
-
-
-CSRF_TRUSTED_ORIGINS = ['https://engilink.org']
-
+CSRF_TRUSTED_ORIGINS = ["https://engilink.org"]

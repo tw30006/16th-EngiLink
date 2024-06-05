@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from resumes.models import Resume
 from django.core.validators import MinValueValidator
 from companies.models import Company
+from resumes.models import Resume
 from users.models import CustomUser
 
 
@@ -28,9 +28,7 @@ class Job(models.Model):
     )
     resumes = models.ManyToManyField(Resume, through="Job_Resume")
     users = models.ManyToManyField(CustomUser, through="User_Job")
-    experience = models.PositiveIntegerField(
-        validators=[MinValueValidator(0)]
-    )
+    experience = models.PositiveIntegerField(validators=[MinValueValidator(0)])
     salary = models.PositiveIntegerField(blank=True, validators=[MinValueValidator(0)])
     address = models.CharField(max_length=250, default="")
     description = models.TextField(default="")
@@ -50,12 +48,13 @@ class Job_Resume(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, default='applied') 
-    withdrawn_at = models.DateTimeField(null=True, blank=True) 
+    status = models.CharField(max_length=20, default="applied")
+    withdrawn_at = models.DateTimeField(null=True, blank=True)
     read_at = models.DateTimeField(null=True, blank=True)
     interview_date = models.DateTimeField(null=True, blank=True)
     interview_invitation = models.TextField(null=True, blank=True)
     accepted = models.CharField(max_length=20, default=None, null=True)
+
 
 class User_Job(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)

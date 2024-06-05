@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
-from django.core.files.base import ContentFile
 
 User = settings.AUTH_USER_MODEL
 
@@ -25,7 +25,6 @@ class Resume(models.Model):
         ("3年以上", "三年以上"),
         ("5年以上", "五年以上"),
     ]
-    
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     resume_id = models.AutoField(primary_key=True)
@@ -67,6 +66,6 @@ class Resume(models.Model):
             img.save(thumb_io, format=img_format)
             thumb_io.seek(0)
             file_extension = "png" if img.mode == "RGBA" else "jpg"
-            new_file_name = f"{self.picture.name.split('.')[0]}_thumb.{file_extension}" 
+            new_file_name = f"{self.picture.name.split('.')[0]}_thumb.{file_extension}"
             self.picture.save(new_file_name, ContentFile(thumb_io.read()), save=False)
         super().save(*args, **kwargs)

@@ -1,22 +1,27 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from .models import CustomUser
 from django import forms
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    UserChangeForm,
+    AuthenticationForm,
+)
 from django.utils.translation import gettext_lazy as _
+from .models import CustomUser
+
 
 class UserRegisterForm(UserCreationForm):
-    
+
     username = forms.CharField(
         label="用戶名",
         help_text="20字或更少。僅限字母、數字和 @/./+/-/_ 符號。",
         error_messages={
-            'unique': "此用戶名已存在。",
-        }
+            "unique": "此用戶名已存在。",
+        },
     )
     email = forms.EmailField(
         label="電子郵件",
         error_messages={
-            'unique': "此電子郵件已存在。",
-        }
+            "unique": "此電子郵件已存在。",
+        },
     )
     password1 = forms.CharField(
         label="密碼",
@@ -26,29 +31,29 @@ class UserRegisterForm(UserCreationForm):
             "您的密碼必須至少包含 8 個字。<br>"
             "您的密碼不能是常用密碼。<br>"
             "您的密碼不能全為數字。<br>"
-        )
+        ),
     )
     password2 = forms.CharField(
         label="確認密碼",
         widget=forms.PasswordInput(),
         help_text="請再次輸入密碼以確認。",
-        error_messages={
-            'password_mismatch': _("兩次輸入的密碼不同。")
-        }
+        error_messages={"password_mismatch": _("兩次輸入的密碼不同。")},
     )
+
     class Meta:
         model = CustomUser
         fields = ("username", "email", "password1", "password2")
-    
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 != password2:
             raise forms.ValidationError(
                 _("兩次輸入的密碼不同。"),
-                code='password_mismatch',
+                code="password_mismatch",
             )
         return password2
+
 
 class UserUpdateForm(UserChangeForm):
     class Meta:
@@ -59,20 +64,16 @@ class UserUpdateForm(UserChangeForm):
 
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(
-        label='用戶名',
+        label="用戶名",
         max_length=20,
-        widget=forms.TextInput(attrs={
-            'autofocus': True,
-            })
+        widget=forms.TextInput(
+            attrs={
+                "autofocus": True,
+            }
+        ),
     )
-    password = forms.CharField(
-        label='密碼',
-        strip=False,
-        widget=forms.PasswordInput()
-    )
-    
+    password = forms.CharField(label="密碼", strip=False, widget=forms.PasswordInput())
+
     error_messages = {
-        'invalid_login': _(
-            "請輸入正確的帳號和密碼。注意！帳號和密碼都區分大小寫。")
+        "invalid_login": _("請輸入正確的帳號和密碼。注意！帳號和密碼都區分大小寫。")
     }
-    

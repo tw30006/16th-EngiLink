@@ -1,9 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from .models import Project
 from .forms import ProjectForm
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from .models import Project
 
 
 class ProjectCreateView(PermissionRequiredMixin,CreateView):

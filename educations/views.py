@@ -1,9 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from .models import Education
 from .forms import EducationForm
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from .models import Education
 
 
 class EducationCreateView(PermissionRequiredMixin,CreateView):
@@ -31,10 +31,10 @@ class EducationCreateView(PermissionRequiredMixin,CreateView):
         return reverse('resumes:educations', kwargs={'pk': resume_id})
 
 
-class EducationListView(PermissionRequiredMixin,ListView):
+class EducationListView(PermissionRequiredMixin, ListView):
     model = Education
-    template_name = 'educations/index.html'
-    context_object_name = 'educations' 
+    template_name = "educations/index.html"
+    context_object_name = "educations"
     permission_required = "user_can_show"
 
     def get_queryset(self):

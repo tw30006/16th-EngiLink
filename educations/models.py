@@ -1,7 +1,8 @@
 from django.db import models
-from resumes.models import Resume
 from django.utils import timezone
 from positions.fields import PositionField
+from resumes.models import Resume
+
 
 class EducationManager(models.Manager):
     def get_queryset(self):
@@ -19,7 +20,9 @@ class Education(models.Model):
         ("7", "肄業"),
     ]
 
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='educations')
+    resume = models.ForeignKey(
+        Resume, on_delete=models.CASCADE, related_name="educations"
+    )
     school_name = models.CharField(max_length=100)
     major = models.CharField(max_length=100)
     degree = models.CharField(max_length=1, choices=DEGREE_CHOICES)
@@ -27,7 +30,7 @@ class Education(models.Model):
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    posit = PositionField(collection='resume')
+    posit = PositionField(collection="resume")
 
     objects = models.Manager()
     edu_objects = EducationManager()
