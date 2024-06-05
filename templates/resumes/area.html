@@ -14,7 +14,7 @@
                 {% for resume in resumes %}
                     <div class="task-wrapper flex justify-between items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
                         <a href="{% url 'resumes:show' pk=resume.pk %}" class="text-blue-600">{{ forloop.counter }}&nbsp;&nbsp;&nbsp;{{ resume.name }}</a>
-                        <a href="{% url 'resumes:total' resume_id=resume.pk %}" class="text-blue-600">預覽</a>
+                        <a href="{% url 'resumes:update_style' resume_id=resume.pk %}" class="text-blue-600">預覽</a>
                     </div>
                 {% endfor %}
             {% else %}

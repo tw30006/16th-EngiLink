@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
@@ -87,8 +87,12 @@ class ResumeDeleteView(DeleteView):
 
 
 class TotalListView(ListView):
-    template_name = "resumes/style3.html"
     context_object_name = "total_data"
+
+    def get_template_names(self):
+        resume_id = self.kwargs.get('resume_id')
+        resume = get_object_or_404(Resume, pk=resume_id)
+        return [f"resumes/style{resume.style}.html"]
 
     def get_queryset(self):
         resume_id = self.kwargs["resume_id"]
@@ -122,7 +126,7 @@ class TotalListView(ListView):
             "project_data": project_data,
         }
         return context
-
+    
 
 def generate_resume_pdf(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
@@ -180,20 +184,12 @@ class UpdateStyleView(DetailView):
 
 def update_template(request,resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
-    print("----------")
-    print(resume.pk)
-    print("----------")
     if request.method == "POST":
         selected_style = request.POST.get('style')
-        print("----------")
-        print(resume.pk)
-        print("3333333333333")
-        print(selected_style)
         resume.style = selected_style
-
         resume.save()
-        # return redirect('resumes:total', resume_id=resume.pk)
-        return HttpResponse("")
-    return HttpResponse("123")
-    # return render(request, 'resumes/update_style.html', {'resume': resume})
+        
+        response = HttpResponse()
+        response['HX-Redirect'] = reverse('resumes:total', args=[resume.pk])
+        return response
     

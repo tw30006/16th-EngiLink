@@ -44,7 +44,7 @@ class Resume(models.Model):
     github = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
-    picture = models.FileField(upload_to="img/", null=True)
+    picture = models.FileField(null=True)
     posit = models.IntegerField(default=0)
     style = models.IntegerField(default=1)
 

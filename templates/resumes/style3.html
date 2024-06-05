@@ -1,8 +1,8 @@
 {% extends 'frontend.html' %}
 {% load static %}
 {% block content %}
-<div class="w-full md:w-1/2 my-5 m-auto shadow-lg">
-    <div class="bg-green-900">
+<div class="md:container md:w-1/2 my-3 m-auto shadow-lg" style="margin: 40px auto;">
+    <div class=" bg-lime-700" style="background-color: #4d7c0f;">
         <section class="flex items-center p-4 md:px-8 py-3">
             {% for resume in total_data.resume_data %}
             <div class="flex flex-col items-center">
@@ -14,16 +14,16 @@
                 <h2 class="text-white text-2xl font-bold">{{ resume.name }}</h2>
             </div>
             <div class="ml-8">
-                <p class="text-gray-200 text-lg">網頁工程師</p>
+                <p class="text-gray-200 text-lg" style="color: #e5e7eb;">網頁工程師</p>
                 <div class="flex">
-                    <p class="text-gray-200 text-base">{{ resume.address }}</p>
-                    <p class="text-gray-200 text-base ml-5">{{ resume.birthday }}</p>
+                    <p class="text-gray-200 text-base" style="color: #e5e7eb;">{{ resume.address }}</p>
+                    <p class="text-gray-200 text-base ml-5" style="color: #e5e7eb;">{{ resume.birthday }}</p>
                 </div>
                 <div>
-                    <p class="text-gray-200 text-base">{{ resume.phone_number }}</p>
+                    <p class="text-gray-200 text-base" style="color: #e5e7eb;">{{ resume.phone_number }}</p>
                     <div class="flex">
-                        <p class="text-gray-200 text-base">{{ resume.email }}</p>
-                        <a href="{{ resume.github }}" class="text-gray-200 hover:text-gray-900 flex items-center ml-3 mb-1">
+                        <p class="text-gray-200 text-base" style="color: #e5e7eb;">{{ resume.email }}</p>
+                        <a href="{{ resume.github }}" class="text-gray-200 hover:text-gray-900 flex items-center ml-3 mb-1" style="color: #e5e7eb;">
                             <i class="fab fa-github text-lg mr-2"></i>
                         </a>
                     </div>
@@ -36,9 +36,9 @@
         <section class="drag-container">
             {% if total_data.project_data %}
                 <h2 class="text-gray-700 text-xl font-bold">專案經驗</h2>
-                <hr class="mb-5 w-1/6 bg-green-900 h-1">
+                <hr class="mb-5 w-1/6 bg-lime-700 h-1" style="background-color: #4d7c0f; margin-bottom: 1.25rem; width: 16.666667%; height: 0.25rem;">
                 {% for project in total_data.project_data %}
-                    <div class="mb-5 drag " data-id="project-{{ project.id }}">
+                    <div class="mb-4 drag " data-id="project-{{ project.id }}">
                         <div>
                             <p class="text-gray-700 font-bold text-lg mb-1">{{ project.project_name }}</p>
                             <p class="text-gray-700 text-base mb-1">項目：<span class="text-gray-500">{{ project.responsibility }}
@@ -60,14 +60,14 @@
         <section class="drag-container">
             {% if total_data.work_data %}
                 <h2 class="text-gray-700 text-xl font-bold">工作經驗</h2>
-                <hr class="mb-5 w-1/6 bg-green-900 h-1">
+                <hr class="mb-5 w-1/6 bg-lime-700 h-1" style="background-color: #4d7c0f; margin-bottom: 1.25rem; width: 16.666667%; height: 0.25rem;">
                 {% for work in total_data.work_data %}
                 <div class="drag" data-id="work-{{ work.id }}">
                     <div class="flex flex-col md:flex-row md:items-center mt-2">
-                        <p class="text-gray-700 text-lg mr-5">{{work.position}} </p>
-                        <p class="text-gray-700 text-base ml-5">{{ work.start_date}} - {{ work.end_date}}</p>
+                        <p class="text-gray-700 text-lg mr-4">{{work.position}} </p>
+                        <p class="text-gray-700 text-base ml-4">{{ work.start_date}} - {{ work.end_date}}</p>
                     </div>
-                    <ul class="list-disc ml-5 text-gray-500">
+                    <ul class="list-disc ml-4 text-gray-500">
                         <li class="text-base">{{ work.company_name }}</li>
                         <li class="leading-relaxed">開發和維護後端邏輯、Mysql數據庫管理、集成第三方服務和API、用戶身份驗證和安全、性能優化。</li>
                     </ul>
@@ -76,39 +76,36 @@
             {% endif %}
         </section>
     </div>
-    <div class="bg-green-900 p-4 md:px-8 py-5">
+    <div class="bg-lime-700 p-4 md:px-8 py-4" style="background-color: #4d7c0f;">
         <section class="drag-container">
             {% if total_data.education_data %}
             <h2 class="text-white text-xl font-bold">教育經驗</h2>
             <hr class="w-full h-0.5">
             {% for education in total_data.education_data %}
-                <div class="my-3 drag" data-id="education-{{ education.id }}">
+                <div class="my-4 drag" data-id="education-{{ education.id }}">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mt-2">
-                        <p class="text-gray-200 text-lg">{{ education.school_name }}</p>
-                        <p class="text-gray-200 text-lg sm:text-lg">{{education.major}}</p>
-                        <p class="text-gray-200 text-sm sm:text-lg">{{ education.start_date}} - {{ education.end_date}}</p>
+                        <p class="text-gray-200 text-lg" style="color: #e5e7eb;">{{ education.school_name }}</p>
+                        <p class="text-gray-200 text-lg sm:text-lg" style="color: #e5e7eb;">{{education.major}}</p>
+                        <p class="text-gray-200 text-sm sm:text-lg" style="color: #e5e7eb;">{{ education.start_date}} - {{ education.end_date}}</p>
                     </div>
                 </div>
                 {% endfor %}
             {% endif %}
         </section>
         <section class="flex flex-col md:flex-row justify-between">
-            <div class="flex-1 mb-6 md:mb-0">
+            <div class="flex-1 mb-4 md:mb-0">
                 <h2 class="text-white font-bold text-xl">技能</h2>
                 <hr class="w-full h-0.5">
-                {% for resume in total_data.resume_data %}
-                <ul class="flex flex-wrap justify-between list-disc p-0 m-0 mt-2">
-                    {% for skill in resume.get_skills%}
-                    <li class="text-gray-200 text-base ml-4">{{ skill }}</li>
-                {% endfor %}
-                </ul>
+                {% for resume in total_data.resume_data %}    
+                <div class="text-gray-200 text-base" style="color: #e5e7eb;">{{ resume.skills }}</div>
             </div>
             {% endfor %}
         </section>
     </div>
 </div>
-<div class="flex justify-evenly my-5">
-    <button class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">返回</button>
-    <button class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">下載PDF</button>
+<div class="flex justify-evenly my-4">
+    {% for resume in total_data.resume_data %}
+    <a class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">下載PDF</a>
+    {% endfor %}
 </div>
 {% endblock %}
