@@ -36,7 +36,7 @@
         {% for resume in total_data.resume_data %}
         <h2 class="text-white text-xl font-bold">技能</h2>
         <hr class="mb-4 w-1/6 bg-white h-0.5"></hr>
-        <div class="text-gray-400 text-base" style="color: #9ca3af;">{{ resume.skills }}</div>
+        <div class="text-gray-400 text-base markdown-content" style="color: #9ca3af;">{{ resume.skills|linebreaksbr }}</div>
         {% endfor %}
     </div>
     <div class="bg-gray-100 md:w-5/12 w-full h-auto sm:m-10 p-6" style="@media (min-width: 768px) {

@@ -29,7 +29,9 @@ class ResumeForm(forms.ModelForm):
 
     skills = forms.CharField(
         label="技能",
-        widget=forms.Textarea(attrs={"class": "easymde"}),
+        widget=forms.Textarea(attrs={
+            "placeholder": "本區塊支援Markdown語法"
+        }),
     )
 
     birthday = forms.DateTimeField(

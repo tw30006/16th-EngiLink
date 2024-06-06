@@ -97,7 +97,7 @@
                 <h2 class="text-white font-bold text-xl">技能</h2>
                 <hr class="w-full h-0.5">
                 {% for resume in total_data.resume_data %}    
-                <div class="text-gray-200 text-base" style="color: #e5e7eb;">{{ resume.skills }}</div>
+                <div class="text-gray-200 text-base markdown-content" style="color: #e5e7eb;">{{ resume.skills|linebreaksbr }}</div>
             </div>
             {% endfor %}
         </section>
