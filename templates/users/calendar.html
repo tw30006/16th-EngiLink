@@ -13,11 +13,27 @@
             events: [
                 {% for interview in interviews %}
                 {
-                    title: " {{ interview.job.title }}-{{ interview.job.company.company_name }} ",
-                    start: "{{ interview.interview_date|date:'Y-m-d' }}"
+                    title: "{{ interview.job.title }}-{{ interview.job.company.company_name }}",
+                    start: "{{ interview.interview_date|date:'Y-m-d' }}",
+                    interviewInfo: {
+                        company: "{{ interview.job.company.company_name }}",
+                        jobTitle: "{{ interview.job.title }}",
+                        time:"{{ interview.interview_date|date:'H:i' }}"
+                    }
                 },
                 {% endfor %}
-            ]
+            ],
+            eventClick: function(info) {
+                let interview = info.event.extendedProps.interviewInfo;
+                info.el.style.backgroundColor = 'green';
+                info.event.setProp('title', "公司：" + interview.company +"\n時間：" + interview.time);
+            },
+            eventMouseEnter: function(info) {
+                info.el.style.cursor = 'pointer';
+            },
+            eventMouseLeave: function(info) {
+                info.el.style.cursor = 'default';
+            }
         });
         calendar.render();
     });
