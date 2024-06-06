@@ -38,10 +38,20 @@ class ResumeListView(ListView):
     template_name = "resumes/index.html"
     context_object_name = "resumes"
 
+    def get_template_names(self):
+        resume = get_object_or_404(Resume, pk=self.kwargs["pk"])
+        return [f"resumes/style{resume.style}.html"]
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         resume = get_object_or_404(Resume, pk=self.kwargs["pk"])
         context["resume"] = resume
+        context["total_data"] = {
+            "resume_data" : [resume],
+            "education_data" : resume.educations.all(),
+            "work_data" : resume.works.all(),
+            "project_data" : resume.projects.all(),
+        }
         return context
 
 
@@ -180,9 +190,9 @@ def update_positions(request):
 
 class UpdateStyleView(DetailView):
     model = Resume
-    template_name = "resumes/update_style.html"
-    context_object_name = "resume"
-    pk_url_kwarg = "resume_id"
+    template_name = 'resumes/update_style.html'
+    context_object_name = 'resume' 
+    pk_url_kwarg = 'resume_id' 
 
 
 def update_template(request, resume_id):
@@ -195,3 +205,5 @@ def update_template(request, resume_id):
         response = HttpResponse()
         response["HX-Redirect"] = reverse("resumes:total", args=[resume.pk])
         return response
+    
+    return render(request, f'resumes/style{resume.style}.html', {'resume': resume})

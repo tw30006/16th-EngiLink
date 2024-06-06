@@ -10,34 +10,12 @@
         </div>
         <div class="card-body p-4 shadow-md">
             <h1 class="text-3xl font-bold mb-6">我的個人資料</h1>
-            <p class="italic mb-6">點擊姓名進入編輯</p>
-            <section>
-                <div class="flex items-start space-y-6">
-                    {% if resume.picture %}
-                        <img src="{{ resume.picture.url }}" alt="photo" class="w-40 h-32 mr-6">
-                    {% else %}
-                        <img src="{% static 'img/fakepic.png' %}" alt="無照片顯示" class="w-32 h-32 mr-6">
-                    {% endif %}
-                    <div>
-                        <p class="mb-4">姓名：<strong><a href="{% url 'resumes:edit' pk=resume.pk %}" class="text-blue-600 hover:underline">{{ resume.name }}</a></strong></p>
-                        <p class="mb-4">性別：{{ resume.gender }}</p>
-                        <p class="mb-4">生日：{{resume.birthday}}</p>
-                        <p class="mb-4">電子信箱：{{resume.email}}</p>
-                        <p class="mb-4">手機：{{resume.phone_number}}</p>
-                        <p class="mb-4">地址：{{resume.address}}</p>
-                        <div class="editor flex mb-4">
-                            技能：
-                            <p id="description-preview" class="mb-4" data-description="{{ resume.skills|escapejs }}"></p>
-                        </div>
-                        <p class="mb-4">個人網站：{{resume.website}}</p>
-                        <p class="mb-4">工作經驗：{{resume.experience}}</p>
-                        <p class="mb-4">Linkedin：{{resume.linkedin}}</p>
-                        <p class="mb-4">GitHub：{{resume.github}}</p>
-                    </div>
-                </div>
+            <section id="resume-content">
+                {% include "resumes/style" | add:resume.style | add:".html" %}
             </section>
         </div>
     </div>
+
 {% endblock %}
 
 
