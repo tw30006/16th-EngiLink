@@ -43,7 +43,7 @@ class UserRegisterForm(UserCreationForm):
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
+        if password1 != password2:
             raise forms.ValidationError(
                 _("兩次輸入的密碼不同。"),
                 code='password_mismatch',
@@ -55,9 +55,6 @@ class UserUpdateForm(UserChangeForm):
         model = CustomUser
         fields = ["username", "email"]
 
-    def __init__(self, *args, **kwargs):
-        super(UserUpdateForm, self).__init__(*args, **kwargs)
-        del self.fields["password"]
 
 
 class CustomLoginForm(AuthenticationForm):
