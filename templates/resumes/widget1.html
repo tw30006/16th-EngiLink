@@ -1,0 +1,77 @@
+<div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10 custom-margin w-full">
+    <div class="bg-blue-900 md:w-1/5 h-auto sm:p-8 p-4">
+        {% for resume in total_data.resume_data %}
+        {% if resume.picture %}
+        <div class="flex items-center justify-center mb-8">
+            <img src="{{ resume.picture.url }}" class="rounded-full w-32 border-2 h-32">
+        </div>
+        {% endif %}
+        <h2 class="text-white text-xl font-bold">簡介</h2>
+        <hr class="mb-4 w-1/6 bg-white h-0.5">
+        <p class="text-white text-xl mb-2">{{ resume.name }}</p>
+        <div class="flex justify-between">
+            <p class="text-gray-400 text-base">{{ resume.get_gender_display }}</p>
+            <p class="text-gray-400 text-base">{{ resume.birthday }}</p>
+        </div>
+        <p class="text-gray-400 text-base">{{ resume.address }}</p>
+        <p class="text-gray-400 text-base">{{ resume.email }}</p>
+        {% endfor %}
+        <section class="drag-container mt-4">
+            {% if total_data.education_data %}
+            <h2 class="text-white text-xl font-bold">教育經驗</h2>
+            <hr class="mb-5 w-1/6 bg-white h-0.5">
+            {% for education in total_data.education_data %}
+                <div class="my-4 drag" data-id="education-{{ education.id }}">
+                    <p class="text-gray-400 text-xl">{{ education.school_name }}</p>
+                    <p class="text-gray-400 text-base">{{education.major}} - <span class="text-gray-400 text-base">{{ education.get_degree_display }}</span></p>
+                    <p class="text-gray-400 text-sm">{{ education.start_date}} - <span class="text-gray-400 text-sm">{{ education.end_date}}</span></p>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </section>
+        {% for resume in total_data.resume_data %}
+        <h2 class="text-white text-xl font-bold">技能</h2>
+        <hr class="mb-4 w-1/6 bg-white h-0.5">
+        <div class="text-gray-400 text-base">{{ resume.skills }}</div>
+        {% endfor %}
+    </div>
+    <div class="bg-gray-100 md:w-5/6 w-full h-auto sm:m-10 p-6 custom-box">
+        <section class="drag-container">
+            {% if total_data.project_data %}
+            <h2 class="text-gray-700 text-xl">專案經驗</h2>
+            <hr class="mb-5 w-full bg-gray-700 h-1">
+            {% for project in total_data.project_data %}
+            <div class="mb-4 drag" data-id="project-{{ project.id }}">
+                <p class="text-gray-700 text-lg font-bold">{{ project.project_name }}</p>
+                <p class="text-gray-700 text-base">項目：<span class="text-gray-700">{{ project.responsibility }}</span></p>
+                {% for technology in project.get_technologies %}
+                <p class="text-gray-700 text-base">技術：<span class="text-gray-700">{{ technology }}</span></p>
+                {% endfor %}
+                <p class="text-gray-700 text-base leading-relaxed">說明：<span class="text-gray-700">{{project.description}}</span></p>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </section>
+        <section class="my-5 drag-container">
+            {% if total_data.work_data %}
+            <h2 class="text-gray-700 text-xl">工作經驗</h2>
+            <hr class="mb-5 w-full bg-gray-700 h-1">
+            {% for work in total_data.work_data %}
+            <div class="drag mt-2" data-id="work-{{ work.id }}">
+                <h3 class="text-gray-700 text-lg">{{work.position}}</h3>
+                <ul class="list-disc ml-4 text-gray-500">
+                    <li>{{ work.company_name }}</li>
+                    <li>{{ work.start_date}} - {{ work.end_date}}</li>
+                    <li class="leading-relaxed">開發和維護後端邏輯、Mysql數據庫管理、集成第三方服務和API、用戶身份驗證和安全、性能優化。</li>
+                </ul>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </section>
+    </div>
+</div>
+<div class="flex justify-evenly my-4">
+    {% for resume in total_data.resume_data %}
+    <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}" class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">下載PDF</a>
+    {% endfor %}
+</div>

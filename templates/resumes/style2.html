@@ -83,7 +83,7 @@
                     <hr class="mb-5 w-1/6 bg-blue-900 h-1" style="background-color: #1e3a8a; margin-bottom: 1rem; width: 16.666667%; height: 0.25rem;">
                     {% for education in total_data.education_data %}
                         <div class="my-3 drag" data-id="education-{{ education.id }}">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mt-2">
+                            <div class="flex flex-col justify-between mt-2">
                                 <p class="text-gray-700 text-lg">{{ education.school_name }}</p>
                                 <p class="text-gray-700 text-sm sm:text-base">{{education.major}}</p>
                                 <p class="text-gray-500 text-sm sm:text-base">{{ education.start_date}} - {{ education.end_date}}</p>

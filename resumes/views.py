@@ -38,10 +38,6 @@ class ResumeListView(ListView):
     template_name = "resumes/index.html"
     context_object_name = "resumes"
 
-    def get_template_names(self):
-        resume = get_object_or_404(Resume, pk=self.kwargs["pk"])
-        return [f"resumes/style{resume.style}.html"]
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         resume = get_object_or_404(Resume, pk=self.kwargs["pk"])

@@ -1,9 +1,9 @@
 {% extends 'frontend.html' %}
 {% load static %}
 {% block content %}
-    <div class="container mx-auto max-w-lg mt-8">
+    <div class="container mx-auto max-w-4xl mt-8">
         <div class="header-bar flex justify-between items-center bg-blue-600 text-white p-4 rounded-t-md mb-4">
-            <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592;Back</a>
+            <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-800 mr-4">&#8592; Back</a>
             <a href="{% url 'resumes:education' resume.resume_id %}" class="edu text-white-600 hover:text-blue-800">教育經歷&#43;</a>
             <a href="{% url 'resumes:work' resume.resume_id %}" class="text-white-600 hover:text-blue-800 ml-4">工作經驗&#43;</a>
             <a href="{% url 'resumes:project' resume.resume_id %}" class="text-white-600 hover:text-blue-800 ml-4">專案內容&#43;</a>
@@ -11,15 +11,14 @@
         <div class="card-body p-4 shadow-md">
             <h1 class="text-3xl font-bold mb-6">我的個人資料</h1>
             <section id="resume-content">
-                {% include "resumes/style" | add:resume.style | add:".html" %}
+                {% if resume.style == 1 %}
+                    {% include "resumes/widget1.html" %}
+                {% elif resume.style == 2 %}
+                    {% include "resumes/widget2.html" %}
+                {% else %}
+                    {% include "resumes/widget3.html" %}
+                {% endif %}
             </section>
         </div>
     </div>
-
 {% endblock %}
-
-
-
-
-
-
