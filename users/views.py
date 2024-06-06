@@ -20,10 +20,10 @@ from .models import CustomUser
 from resumes.models import Resume 
 from companies.models import Company, User_Company
 from companies.forms import CompanyUpdateForm
-
 from jobs.models import Job, User_Job, Job_Resume
 from mailchimp3 import MailChimp
-
+from django.http import HttpResponseRedirect,HttpResponse
+from django.template.loader import render_to_string
 
 
 class UserRegisterView(FormView):
@@ -246,6 +246,16 @@ class InterviewResponseView(LoginRequiredMixin,View):
             job_resume.save()
         
         return redirect('users:home')
+    
+class InterviewsCalendarView(View):
+    def get(self, request):
+        interviews = Job_Resume.objects.filter(resume__user=request.user, 
+                                                interview_date__isnull=False,
+                                                accepted='accept')
+        context = {
+            'interviews': interviews
+        }
+        return render(request, 'users/calendar.html', context)
     
 class FavoriteCompaniesView(LoginRequiredMixin, TemplateView):
     template_name = 'users/favorite_companies.html'

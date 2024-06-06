@@ -14,7 +14,8 @@ from .views import (
     WithdrawApplicationView,
     CollectJobView,
     InterviewResponseView,
-    FavoriteCompaniesView
+    FavoriteCompaniesView,
+    InterviewsCalendarView,
 )
 from resumes import views as resumes
 
@@ -40,6 +41,7 @@ urlpatterns = [
     path("collect/", CollectJobView.as_view(), name="collect"),
     path("jobs/", UserJobsView.as_view(), name="jobs"),
     path('interview/<int:pk>/', InterviewResponseView.as_view(), name='interview'),
+    path('calendar/', InterviewsCalendarView.as_view(), name='calendar'),
     path("favorites/", FavoriteCompaniesView.as_view(), name="favorites"),
 ]
 
