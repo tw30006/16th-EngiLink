@@ -15,18 +15,25 @@
                 {
                     title: "{{ interview.job.title }}-{{ interview.job.company.company_name }}",
                     start: "{{ interview.interview_date|date:'Y-m-d' }}",
+                    originalTitle: "{{ interview.job.title }}-{{ interview.job.company.company_name }}",
                     interviewInfo: {
                         company: "{{ interview.job.company.company_name }}",
                         jobTitle: "{{ interview.job.title }}",
-                        time:"{{ interview.interview_date|date:'H:i' }}"
+                        interviewDate: "{{ interview.interview_date|date:'Y-m-d' }}",
+                        time: "{{ interview.interview_date|date:'H:i' }}"
                     }
                 },
                 {% endfor %}
             ],
             eventClick: function(info) {
                 let interview = info.event.extendedProps.interviewInfo;
-                info.el.style.backgroundColor = 'green';
-                info.event.setProp('title', "公司：" + interview.company +"\n時間：" + interview.time);
+                if (info.el.style.backgroundColor === 'green') {
+                    info.el.style.backgroundColor = '';
+                    info.event.setProp('title', info.event.extendedProps.originalTitle);
+                } else {
+                    info.el.style.backgroundColor = 'green';
+                    info.event.setProp('title', "公司：" + interview.company + "\n时间：" + interview.time);
+                }
             },
             eventMouseEnter: function(info) {
                 info.el.style.cursor = 'pointer';
