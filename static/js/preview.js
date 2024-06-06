@@ -1,7 +1,7 @@
 const uploadExists= document.querySelector('input[type="file"]')
 
 if (uploadExists){
-  aa.addEventListener('change', function(event) {
+  uploadExists.addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();

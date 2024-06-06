@@ -20,11 +20,11 @@
         </div>
     </div>
 {% else %}
-    <input type="hidden" id="userType" value="{{ request.user.user_type }}">
+    <input type="hidden" value="{{ request.user.user_type }}">
     {% if request.user.user_type == 2 %}
-        <input type="hidden" id="companyHomeUrl" value="{% url 'companies:home'  %}">
+        <input type="hidden" value="{% url 'companies:home'  %}">
     {% else %}
-        <input type="hidden" id="userHomeUrl" value="{% url 'users:home' %}">
+        <input type="hidden" value="{% url 'users:home' %}">
     {% endif %}
     <script src="{% static 'js/home.js' %}"></script>
 {% endif %}

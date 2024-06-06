@@ -1,9 +1,8 @@
 import "./sweetalert.js";
-import 'htmx.org';
 import "./drag.js";
-import "./markdown.js"
+import "./markdown.js";
 import "./alpine.js";
 import "./notice.js";
 import "./preview.js";
-import "./home.js";
 import "./font.js";
+import "htmx.org";
