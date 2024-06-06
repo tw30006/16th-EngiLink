@@ -245,8 +245,10 @@ class MarkAsReadView(View):
 class InterviewResultCreateView(View):
     def post(self, request, job_resume_id, *args, **kwargs):
         interview_date = request.POST.get('interview_date')
+        interview_invitation = request.POST.get('interview_invitation')
         job_resume = Job_Resume.objects.get(pk=job_resume_id)
         job_resume.interview_date = interview_date
+        job_resume.interview_invitation = interview_invitation
         job_resume.save()
         return redirect('companies:home')
     

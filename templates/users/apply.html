@@ -24,14 +24,24 @@
                 <div class="col-span-4 flex flex-col justify-between">
                     {% if job_resume.interview_date and job_resume.accepted is none %}
                         <div class="mb-4 border-2 border-red-500 p-4">
-                                <p class="text-xl mb-2">{{ job_resume.job.company.company_name }}對您發出面試邀請</p>
-                                <p class="text-xl mb-2">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</p>
-                                <br>
-                                <form action="{% url 'users:interview' job_resume.id %}" method="post" class="flex gap-4 justify-end">
-                                    {% csrf_token %}
-                                    <button type="submit" name="response" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">接受</button>
-                                    <button type="submit" name="response" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">拒絕</button>
-                                </form>
+                            <p class="text-xl mb-2">{{ job_resume.job.company.company_name }}對您發出面試邀請</p>
+                            <p class="text-xl mb-2">面試時間：{{ job_resume.interview_date | date:"Y.m.d H:i" }}</p>
+                            <br>
+                            <form action="{% url 'users:interview' job_resume.id %}" method="post" class="flex gap-4 justify-end">
+                                {% csrf_token %}
+                                <button type="submit" name="response" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">接受</button>
+                                <button type="submit" name="response" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">拒絕</button>
+                            </form>
+                            {% if job_resume.interview_invitation %}
+                                <div x-data="{ open: false }" class="mt-4">
+                                    <button @click="open = !open" class="text-xl mb-2 text-blue-500">
+                                        <strong>查看面試邀請信：</strong>
+                                    </button>
+                                    <div x-show="open" class="mt-2 p-4 bg-gray-200 rounded-lg">
+                                        {{ job_resume.interview_invitation|linebreaks }}
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>
@@ -80,3 +90,5 @@
     {% include 'shared/empty.html' with title="我的應徵" message="，去應徵心儀的工作吧!" link=job_list_url text="前往應徵" %}
 {% endif %}
 {% endblock %}
+
+
