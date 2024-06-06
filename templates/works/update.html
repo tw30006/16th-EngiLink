@@ -9,12 +9,13 @@
                 </div>
                 <div class="card-body p-4 shadow-md mt-4">
                     <h3 class="text-lg font-semibold mb-4">編輯專案內容</h3>
-                    <form method="post" id="myForm" action="{% url 'resumes:work_edit' work.pk %}">
+                    <form method="post" id="myForm" action="{% url 'works:work_edit' work.pk %}">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="flex justify-end">
                             <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">提交</button>
-                            <form method="post" action="{% url 'resumes:work_delete' work.pk %}">
+                            </form>
+                            <form method="post" action="{% url 'works:work_delete' work.pk %}">
                                 {% csrf_token %}
                                 <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
                             </form>

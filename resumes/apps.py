@@ -7,5 +7,10 @@ class ResumeConfig(AppConfig):
 
     def ready(self):
         import educations.rules
-
         educations.rules.add_rule()
+
+        import projects.rules
+        projects.rules.add_rule()
+
+        import works.rules
+        works.rules.add_rule()

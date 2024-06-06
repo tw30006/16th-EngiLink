@@ -4,6 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from .forms import WorkForm
 from .models import Work
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+from resumes.models import Resume
+import rules
 
 
 class WorkCreateView(PermissionRequiredMixin, CreateView):
@@ -12,14 +16,21 @@ class WorkCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'works/create.html'
     permission_required = "user_can_show"
 
-    def form_valid(self, form):
-        self.object = form.save()
-        messages.success(self.request, "新增成功")
-        return super().form_valid(form)
+    def dispatch(self, request, *args, **kwargs):
+        resume_id = self.kwargs.get('pk')
+        self.resume = get_object_or_404(Resume, pk=resume_id)
+        if not rules.test_rule('is_work_user',request.user, self.resume):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
     
     def get_queryset(self):
         resume_id = self.kwargs['pk']
         return Work.objects.filter(resume_id=resume_id)
+    
+    def form_valid(self, form):
+        self.object = form.save()
+        messages.success(self.request, "新增成功")
+        return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,6 +48,13 @@ class WorkListView(PermissionRequiredMixin, ListView):
     context_object_name = "works"
     permission_required = "user_can_show"
 
+    def dispatch(self, request, *args, **kwargs):
+            resume_id = self.kwargs.get('pk')
+            self.resume = get_object_or_404(Resume, pk=resume_id)
+            if not rules.test_rule('is_work_user',request.user, self.resume):
+                return HttpResponseForbidden()
+            return super().dispatch(request, *args, **kwargs)
+    
     def get_queryset(self):
         resume_id = self.kwargs['pk']
         return Work.objects.filter(resume_id=resume_id)
@@ -52,10 +70,20 @@ class WorkUpdateView(UpdateView):
     template_name = "works/update.html"
     success_url = reverse_lazy("resumes:work-show")
 
+    def dispatch(self, request, *args, **kwargs):
+        work = self.get_object()
+        resume = work.resume
+        if not rules.test_rule("is_work_user", request.user, resume):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
-        self.object = form.save()
         messages.success(self.request, "更新成功")
+        self.object = form.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('resumes:works', kwargs={'pk': self.object.resume.pk})
 
 
 class WorkDeleteView(DeleteView):
@@ -63,5 +91,17 @@ class WorkDeleteView(DeleteView):
     success_url = reverse_lazy("resumes:work-show")
 
     def dispatch(self, request, *args, **kwargs):
-        messages.success(self.request, "刪除成功")
+        work = self.get_object()
+        resume = work.resume
+        if not rules.test_rule("is_work_user", request.user, resume):
+            return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, "刪除成功")
+        return response
+
+    def get_success_url(self):
+        return reverse_lazy('resumes:works', kwargs={'pk': self.object.resume.pk})
+

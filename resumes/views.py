@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden 
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -19,7 +19,8 @@ from weasyprint import HTML
 from .forms import ResumeForm
 from .models import Resume
 import json
-
+import rules
+from weasyprint import HTML
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
     template_name = "resumes/area.html"
@@ -32,12 +33,22 @@ class ResumeArea(PermissionRequiredMixin, TemplateView):
         context["count"] = user_resumes.count()
         return context
 
+    def get_queryset(self):
+            user = self.request.user
+            return Resume.objects.filter(user=user)
 
-class ResumeListView(ListView):
+class ResumeListView(DetailView):
     model = Resume
     template_name = "resumes/index.html"
-    context_object_name = "resumes"
+    context_object_name = "resume"
 
+    def dispatch(self, request, *args, **kwargs):
+        resume_id = self.kwargs.get('pk')
+        resume = get_object_or_404(Resume, pk=resume_id)
+        if not rules.test_rule('is_resume_user',request.user,resume):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         resume = get_object_or_404(Resume, pk=self.kwargs["pk"])
@@ -49,6 +60,8 @@ class ResumeListView(ListView):
             "project_data" : resume.projects.all(),
         }
         return context
+    
+    
 
 
 class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
@@ -56,14 +69,16 @@ class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     form_class = ResumeForm
     template_name = "resumes/create.html"
     success_url = reverse_lazy("resumes:index")
-    permission_required = "user_can_show"
-
+    permission_required = "users.user_can_show"
+    
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
 
     def form_valid(self, form):
+        print(self.request.user)
+        print("6"*100)
         form.instance.user = self.request.user
         messages.success(self.request, "新增成功")
         return super().form_valid(form)
@@ -74,6 +89,13 @@ class ResumeUpdateView(UpdateView):
     form_class = ResumeForm
     template_name = "resumes/update.html"
     success_url = reverse_lazy("resumes:index")
+
+    def dispatch(self, request, *args, **kwargs):
+        resume_id = self.kwargs.get('pk')
+        resume = get_object_or_404(Resume, pk=resume_id)
+        if not rules.test_rule('is_resume_user',request.user,resume):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         resume = form.save(commit=False)
@@ -87,8 +109,13 @@ class ResumeDeleteView(DeleteView):
     success_url = reverse_lazy("resumes:index")
 
     def dispatch(self, request, *args, **kwargs):
+        resume_id = self.kwargs.get('pk')
+        resume = get_object_or_404(Resume, pk=resume_id)
+        if not rules.test_rule('is_resume_user',request.user,resume):
+            return HttpResponseForbidden()
+        response = super().dispatch(request, *args, **kwargs)
         messages.success(self.request, "刪除成功")
-        return super().dispatch(request, *args, **kwargs)
+        return response
 
 
 class TotalListView(ListView):

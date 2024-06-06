@@ -2,8 +2,8 @@ import rules
 
 
 @rules.predicate
-def is_work_user(user, work):
-    return user == work.resume.user
+def is_work_user(user,resume):
+    return user == resume.user
 
 
 def add_rule():
