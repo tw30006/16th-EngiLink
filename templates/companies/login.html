@@ -1,53 +1,58 @@
 {% extends 'backend.html' %} 
 {% block content %}
-    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
-        <div class='header-bar flex justify-center items-center bg-violet-700 text-white p-4 rounded-t-md w-full'>
+    <div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
+        <div class='flex items-center justify-center w-full p-4 text-white header-bar bg-violet-700 rounded-t-md'>
             <h2>公司登入</h2>
         </div>
-        <div class="task-items-wrapper flex flex-col w-full">
-            <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+        <div class="flex flex-col w-full task-items-wrapper">
+            <div class="flex items-center justify-center w-full px-6 py-4 bg-white border-t border-gray-300 task-wrapper">
                 <form method="post" class="w-full max-w-lg">
                     {% csrf_token %}
                     <div class="mb-4">
-                        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">用戶名<span class="asteriskField text-red-600">*</span></label>
-                        <input type="text" name="username" autofocus required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <label for="id_username" class="block mb-2 text-sm font-bold text-gray-700">用戶名<span class="text-red-600 asteriskField">*</span></label>
+                        <input type="text" name="username" autofocus required id="id_username" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
-                        <label for="id_password" class="block text-gray-700 text-sm font-bold mb-2">密碼<span class="asteriskField text-red-600">*</span></label>
-                        <input type="password" name="password" required id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <label for="id_password" class="block mb-2 text-sm font-bold text-gray-700">密碼<span class="text-red-600 asteriskField">*</span></label>
+                        <input type="password" name="password" required id="id_password" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" class="button border border-violet-700 bg-white text-violet-700 px-4 py-2 hover:bg-violet-700 hover:text-white rounded">登入</button>
+                        <button type="submit" class="px-4 py-2 bg-white border rounded button border-violet-700 text-violet-700 hover:bg-violet-700 hover:text-white">登入</button>
                     </div>
                 </form>
             </div>
         </div>
         <br>
         <br>
-        <small><a href="{% url 'companies:register' %}" class="text-violet-700 hover:underline">前往註冊</a></small>
+        <small>
+            <button>
+                <a href="{% url 'companies:register' %}" class="block px-4 py-2 bg-white border rounded border-violet-600 text-violet-600 button hover:bg-violet-600 hover:text-white">前往註冊</a>
+            </button>
+        </small>
+          
     </div>
 {% endblock %}
 
 
 
-<div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
-    <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+<div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
+    <div class='flex items-center justify-center w-full p-4 text-white bg-blue-600 header-bar rounded-t-md'>
         <h2>公司登入</h2>
     </div>
-    <div class="task-items-wrapper flex flex-col w-full">
-        <div class="task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+    <div class="flex flex-col w-full task-items-wrapper">
+        <div class="flex items-center justify-center w-full px-6 py-4 bg-white border-t border-gray-300 task-wrapper">
             <form method="post" class="w-full max-w-lg">
                 {% csrf_token %}
                 <div class="mb-4">
-                    <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">帳號：</label>
-                    <input type="text" name="username" autofocus required id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label for="id_username" class="block mb-2 text-sm font-bold text-gray-700">帳號：</label>
+                    <input type="text" name="username" autofocus required id="id_username" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="id_password" class="block text-gray-700 text-sm font-bold mb-2">密碼：</label>
-                    <input type="password" name="password" required id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label for="id_password" class="block mb-2 text-sm font-bold text-gray-700">密碼：</label>
+                    <input type="password" name="password" required id="id_password" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">登入</button>
+                    <button type="submit" class="px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">登入</button>
                 </div>
             </form>
         </div>
