@@ -1,19 +1,20 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
-from django.urls import reverse_lazy, reverse
-from django.utils import timezone
-from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template import Template, Context
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
+from jobs.models import Job_Resume, Job, User_Job
 from .models import Company, User_Company
-from jobs.models import Job_Resume,Job
-from .forms import CompanyRegisterForm, CompanyUpdateForm 
-from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.template import Template, Context
+from .forms import CompanyRegisterForm, CompanyUpdateForm
 import rules
 
 
@@ -163,11 +164,13 @@ class CompanyListView(ListView):
         if search_keyword:
             queryset = queryset.filter(company_name__icontains=search_keyword)
         return queryset
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        favorite_company_ids = User_Company.objects.filter(user=self.request.user, collect=True).values_list('company_id', flat=True)
-        context['favorite_company_ids'] = favorite_company_ids
+        favorite_company_ids = User_Company.objects.filter(
+            user=self.request.user, collect=True
+        ).values_list("company_id", flat=True)
+        context["favorite_company_ids"] = favorite_company_ids
         return context
 
 
@@ -253,18 +256,21 @@ class MarkAsReadView(View):
 
 class InterviewResultCreateView(View):
     def post(self, request, job_resume_id, *args, **kwargs):
-        interview_date = request.POST.get('interview_date')
-        interview_invitation = request.POST.get('interview_invitation')
+        interview_date = request.POST.get("interview_date")
+        interview_invitation = request.POST.get("interview_invitation")
         job_resume = Job_Resume.objects.get(pk=job_resume_id)
         job_resume.interview_date = interview_date
         job_resume.interview_invitation = interview_invitation
         job_resume.save()
-        return redirect('companies:home')
-    
+        return redirect("companies:home")
+
+
 class FavoriteCompanyView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        company = get_object_or_404(Company, id=self.kwargs['company_id'])
-        user_company, created = User_Company.objects.get_or_create(company=company, user=request.user)
+        company = get_object_or_404(Company, id=self.kwargs["company_id"])
+        user_company, created = User_Company.objects.get_or_create(
+            company=company, user=request.user
+        )
         if user_company.collect:
             user_company.collect = False
             messages.success(request, "已取消收藏公司")
@@ -272,7 +278,8 @@ class FavoriteCompanyView(LoginRequiredMixin, View):
             user_company.collect = True
             messages.success(request, "已收藏公司")
         user_company.save()
-        return redirect(request.META.get('HTTP_REFERER', 'companies:company_list'))
+        return redirect(request.META.get("HTTP_REFERER", "companies:company_list"))
+
 
 class CollectCompanyView(LoginRequiredMixin, View):
     def post(self, request):
@@ -282,17 +289,37 @@ class CollectCompanyView(LoginRequiredMixin, View):
         if user_company.exists():
             user_company.delete()
         else:
-            user_company = User_Company.objects.create(company=company, user=request.user)
-        
-        if 'HX-Request' in request.headers:
-            user_companies = User_Company.objects.filter(user=request.user, collect=True).values_list('company_id', flat=True)
-            button_html = render_to_string('shared/collect_btn.html', {'company': company, 'user_companies': user_companies})
+            user_company = User_Company.objects.create(
+                company=company, user=request.user
+            )
+
+        if "HX-Request" in request.headers:
+            user_companies = User_Company.objects.filter(
+                user=request.user, collect=True
+            ).values_list("company_id", flat=True)
+            button_html = render_to_string(
+                "shared/collect_btn.html",
+                {"company": company, "user_companies": user_companies},
+            )
             return HttpResponse(button_html)
         return redirect("users:home")
-    
+
     def get(self, request):
         companies = Company.objects.all()
-        user_companies = User_Company.objects.filter(user=request.user, collect=True).values_list('company_id', flat=True)
-        user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
-        jobs = Job.objects.select_related('company').all()
-        return render(request, "users/collect.html", {'companies': companies, 'user_companies': user_companies, 'jobs': jobs, 'user_jobs': user_jobs})
+        user_companies = User_Company.objects.filter(
+            user=request.user, collect=True
+        ).values_list("company_id", flat=True)
+        user_jobs = User_Job.objects.filter(user=request.user).values_list(
+            "job_id", flat=True
+        )
+        jobs = Job.objects.select_related("company").all()
+        return render(
+            request,
+            "users/collect.html",
+            {
+                "companies": companies,
+                "user_companies": user_companies,
+                "jobs": jobs,
+                "user_jobs": user_jobs,
+            },
+        )

@@ -1,6 +1,6 @@
-import os
+from companies.models import Company, User_Company
 from django.contrib import messages
-from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -18,7 +18,6 @@ from django.views.generic.list import ListView
 from .forms import UserRegisterForm, UserUpdateForm, CustomLoginForm
 from .models import CustomUser
 from resumes.models import Resume
-from companies.models import Company, User_Company
 from companies.forms import CompanyUpdateForm
 from jobs.models import Job, User_Job, Job_Resume
 from django.template.loader import render_to_string
@@ -201,7 +200,7 @@ class UserAddView(LoginRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
     def get_queryset(self):
-        return User.objects.filter(id=self.request.user.id)
+        return CustomUser.objects.filter(id=self.request.user.id)
 
 
 class CollectJobView(LoginRequiredMixin, View):

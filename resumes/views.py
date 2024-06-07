@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseForbidden 
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -20,7 +20,7 @@ from .forms import ResumeForm
 from .models import Resume
 import json
 import rules
-from weasyprint import HTML
+
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
     template_name = "resumes/area.html"
@@ -34,8 +34,9 @@ class ResumeArea(PermissionRequiredMixin, TemplateView):
         return context
 
     def get_queryset(self):
-            user = self.request.user
-            return Resume.objects.filter(user=user)
+        user = self.request.user
+        return Resume.objects.filter(user=user)
+
 
 class ResumeListView(DetailView):
     model = Resume
@@ -43,25 +44,23 @@ class ResumeListView(DetailView):
     context_object_name = "resume"
 
     def dispatch(self, request, *args, **kwargs):
-        resume_id = self.kwargs.get('pk')
+        resume_id = self.kwargs.get("pk")
         resume = get_object_or_404(Resume, pk=resume_id)
-        if not rules.test_rule('is_resume_user',request.user,resume):
+        if not rules.test_rule("is_resume_user", request.user, resume):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         resume = get_object_or_404(Resume, pk=self.kwargs["pk"])
         context["resume"] = resume
         context["total_data"] = {
-            "resume_data" : [resume],
-            "education_data" : resume.educations.all(),
-            "work_data" : resume.works.all(),
-            "project_data" : resume.projects.all(),
+            "resume_data": [resume],
+            "education_data": resume.educations.all(),
+            "work_data": resume.works.all(),
+            "project_data": resume.projects.all(),
         }
         return context
-    
-    
 
 
 class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
@@ -70,7 +69,7 @@ class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     template_name = "resumes/create.html"
     success_url = reverse_lazy("resumes:index")
     permission_required = "users.user_can_show"
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["request"] = self.request
@@ -78,7 +77,7 @@ class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         print(self.request.user)
-        print("6"*100)
+        print("6" * 100)
         form.instance.user = self.request.user
         messages.success(self.request, "新增成功")
         return super().form_valid(form)
@@ -91,9 +90,9 @@ class ResumeUpdateView(UpdateView):
     success_url = reverse_lazy("resumes:index")
 
     def dispatch(self, request, *args, **kwargs):
-        resume_id = self.kwargs.get('pk')
+        resume_id = self.kwargs.get("pk")
         resume = get_object_or_404(Resume, pk=resume_id)
-        if not rules.test_rule('is_resume_user',request.user,resume):
+        if not rules.test_rule("is_resume_user", request.user, resume):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
@@ -109,9 +108,9 @@ class ResumeDeleteView(DeleteView):
     success_url = reverse_lazy("resumes:index")
 
     def dispatch(self, request, *args, **kwargs):
-        resume_id = self.kwargs.get('pk')
+        resume_id = self.kwargs.get("pk")
         resume = get_object_or_404(Resume, pk=resume_id)
-        if not rules.test_rule('is_resume_user',request.user,resume):
+        if not rules.test_rule("is_resume_user", request.user, resume):
             return HttpResponseForbidden()
         response = super().dispatch(request, *args, **kwargs)
         messages.success(self.request, "刪除成功")
@@ -122,9 +121,9 @@ class TotalListView(ListView):
     context_object_name = "total_data"
 
     def dispatch(self, request, *args, **kwargs):
-        resume_id = self.kwargs.get('resume_id')
+        resume_id = self.kwargs.get("resume_id")
         resume = get_object_or_404(Resume, pk=resume_id)
-        if not rules.test_rule('is_resume_user',request.user,resume):
+        if not rules.test_rule("is_resume_user", request.user, resume):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
@@ -220,9 +219,9 @@ def update_positions(request):
 
 class UpdateStyleView(DetailView):
     model = Resume
-    template_name = 'resumes/update_style.html'
-    context_object_name = 'resume' 
-    pk_url_kwarg = 'resume_id' 
+    template_name = "resumes/update_style.html"
+    context_object_name = "resume"
+    pk_url_kwarg = "resume_id"
 
 
 def update_template(request, resume_id):
@@ -235,5 +234,5 @@ def update_template(request, resume_id):
         response = HttpResponse()
         response["HX-Redirect"] = reverse("resumes:total", args=[resume.pk])
         return response
-    
-    return render(request, f'resumes/style{resume.style}.html', {'resume': resume})
+
+    return render(request, f"resumes/style{resume.style}.html", {"resume": resume})
