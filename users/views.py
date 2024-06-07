@@ -1,28 +1,26 @@
-from companies.models import Company, User_Company
-from django.contrib import messages
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect, get_object_or_404, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView, UpdateView
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
+from django.core.paginator import Paginator
+from django.contrib import messages
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import TemplateView, FormView, UpdateView, DetailView, ListView
+import os
+
 from .forms import UserRegisterForm, UserUpdateForm, CustomLoginForm
 from .models import CustomUser
 from resumes.models import Resume
+from companies.models import Company, User_Company
 from companies.forms import CompanyUpdateForm
 from jobs.models import Job, User_Job, Job_Resume
-from django.template.loader import render_to_string
 from mailchimp3 import MailChimp
-import os
 
 
 class UserRegisterView(FormView):
@@ -205,44 +203,57 @@ class UserAddView(LoginRequiredMixin, UpdateView):
 
 class CollectJobView(LoginRequiredMixin, View):
     def post(self, request):
-        job_id = request.POST.get("job_id")
-        job = get_object_or_404(Job, id=job_id)
-        user_job = User_Job.objects.filter(user=request.user, job=job)
-        if user_job.exists():
-            user_job.delete()
-        else:
-            user_job = User_Job.objects.create(job=job, user=request.user)
-
-        if "HX-Request" in request.headers:
-            user_jobs = User_Job.objects.filter(user=request.user).values_list(
-                "job_id", flat=True
-            )
-            button_html = render_to_string(
-                "shared/collect_btn.html", {"job": job, "user_jobs": user_jobs}
-            )
-            return HttpResponse(button_html)
-        return redirect("users:home")
-
+        try:
+            job_id = request.POST.get("job_id")
+            job = get_object_or_404(Job, id=job_id)
+            user_job = User_Job.objects.filter(user=request.user, job=job)
+            if user_job.exists():
+                user_job.delete()
+            else:
+                user_job = User_Job.objects.create(job=job, user=request.user)
+            
+            if 'HX-Request' in request.headers:
+                user_jobs = User_Job.objects.filter(user=request.user).values_list('job_id', flat=True)
+                button_html = render_to_string('shared/collect_btn.html', {'job': job, 'user_jobs': user_jobs})
+                return HttpResponse(button_html)
+            return redirect("users:home")
+        except Exception as e:
+            logger.error("Error in post method: %s", e)
+            return HttpResponse("Internal Server Error", status=500)
+    
     def get(self, request):
-        jobs = Job.objects.select_related("company").all()
-        user_jobs = User_Job.objects.filter(user=request.user).values_list(
-            "job_id", flat=True
-        )
-        user_companies = User_Company.objects.filter(
-            user=request.user, collect=True
-        ).values_list("company_id", flat=True)
-        companies = Company.objects.all()
-        return render(
-            request,
-            "users/collect.html",
-            {
-                "jobs": jobs,
-                "user_jobs": user_jobs,
-                "companies": companies,
-                "user_companies": user_companies,
-            },
-        )
+        try:
+            user_jobs = User_Job.objects.filter(user=request.user).select_related('job', 'job__company').order_by('-id')
+            user_companies = User_Company.objects.filter(user=request.user, collect=True).select_related('company').order_by('-id')
+            
+            job_paginator = Paginator(user_jobs, 10)
+            company_paginator = Paginator(user_companies, 10)
 
+            job_page_number = request.GET.get('job_page')
+            company_page_number = request.GET.get('company_page')
+
+            job_page_obj = job_paginator.get_page(job_page_number)
+            company_page_obj = company_paginator.get_page(company_page_number)
+
+            context = {
+                'job_page_obj': job_page_obj,
+                'company_page_obj': company_page_obj,
+                'user_jobs': user_jobs.values_list('job_id', flat=True),
+                'user_companies': user_companies.values_list('company_id', flat=True),
+                'tab': request.GET.get('tab', 'jobs')
+            }
+
+            if request.headers.get('HX-Request'):
+                if 'tab' in request.GET:
+                    if request.GET['tab'] == 'jobs':
+                        return render(request, "users/collect_jobs.html", context)
+                    elif request.GET['tab'] == 'companies':
+                        return render(request, "users/collect_companies.html", context)
+
+            return render(request, "users/collect.html", context)
+        except Exception as e:
+            logger.error("Error in get method: %s", e)
+            return HttpResponse("Internal Server Error", status=500)
 
 class ApplyForJobCreateView(LoginRequiredMixin, View):
 
