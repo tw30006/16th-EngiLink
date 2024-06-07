@@ -1,0 +1,68 @@
+{% load static %}
+{% load humanize %}
+<div id="companies-content" class="p-4 rounded-lg shadow-md bg-gray-50">
+    {% if company_page_obj %}
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-green-200 rounded">你收藏的公司</h2>
+        <ul>
+            {% for user_company in company_page_obj %}
+                <li class="mb-2">
+                    <div class="relative flex flex-col transition-shadow duration-300 bg-white rounded-lg shadow-lg hover:shadow-2xl md:flex-row">
+                        <a href="{% url 'companies:company_info' user_company.company.id %}" class="absolute inset-0 z-10"></a>
+                        <div class="z-0 flex-grow p-4 md:flex md:flex-row">
+                            <div class="flex-grow w-full md:w-1/2">
+                                <div class="flex items-center mb-4">
+                                    {% if user_company.company.logo %}
+                                        <img src="{{ user_company.company.logo.url }}" alt="{{ user_company.company.company_name }}" class="w-12 h-12 mr-2">
+                                    {% else %}
+                                        <img src="{% static 'images/default_logo.jpg' %}" alt="{{ user_company.company.company_name }}" class="w-12 h-12 mr-2">
+                                    {% endif %}
+                                    <h2 class="text-xl font-semibold">{{ user_company.company.company_name }}</h2>
+                                </div>
+                                <div class="flex items-center mb-2">
+                                    <i class="w-4 h-4 mr-1 text-gray-500 fa-solid fa-location-dot"></i>
+                                    <div class="text-gray-600 truncate">{{ user_company.company.address|slice:":3" }}</div>
+                                    <i class="w-4 h-4 ml-4 mr-1 text-gray-500 fa-solid fa-briefcase"></i>
+                                    <div class="text-gray-600 truncate">{{ user_company.company.type }}</div>
+                                </div>
+                            </div>
+                            <div class="flex-grow w-full text-gray-700 md:w-1/2">
+                                <p class="text-lg line-clamp-3"><strong>公司簡介：</strong>{{ user_company.company.description }}</p>
+                            </div>
+                        </div>
+                        <div class="z-20 self-end flex-shrink-0 p-4">
+                            <form action="{% url 'companies:favorite_company' user_company.company.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="flex items-center justify-center w-8 h-8 bg-red-500 rounded-full hover:bg-pink-300">
+                                    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="flex justify-center mt-4">
+            {% if company_page_obj.has_previous %}
+                <a href="?company_page={{ company_page_obj.previous_page_number }}&tab=companies"
+                   hx-get="?company_page={{ company_page_obj.previous_page_number }}&tab=companies"
+                   hx-target="#companies-content" hx-swap="outerHTML" class="px-2 py-1 text-gray-800">上一頁</a>
+            {% endif %}
+            <span class="px-2 py-1 text-gray-800">{{ company_page_obj.number }} / {{ company_page_obj.paginator.num_pages }}</span>
+            {% if company_page_obj.has_next %}
+                <a href="?company_page={{ company_page_obj.next_page_number }}&tab=companies"
+                   hx-get="?company_page={{ company_page_obj.next_page_number }}&tab=companies"
+                   hx-target="#companies-content" hx-swap="outerHTML" class="px-2 py-1 text-gray-800">下一頁</a>
+            {% endif %}
+        </div>
+    {% else %}
+    <div class="flex flex-col items-center p-4">
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-green-200 rounded">我收藏的公司</h2>
+        {% url 'companies:company_list' as company_list_url %}
+        <div class="w-full flex justify-center items-center p-2.5">
+            <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full h-auto max-w-xs max-h-screen mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
+        </div>
+        <p class="mb-3 text-xl text-gray-800">{{ user.username }}，去收藏心儀的公司吧!</p>
+        <a href="{{ company_list_url }}" class="px-6 py-2 text-xl text-white bg-green-800 rounded-full">前往收藏</a>
+    </div>
+    {% endif %}
+</div>
