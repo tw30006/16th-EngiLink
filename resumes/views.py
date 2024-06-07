@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -63,12 +63,11 @@ class ResumeListView(DetailView):
         return context
 
 
-class ResumeCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class ResumeCreateView(LoginRequiredMixin, CreateView):
     model = Resume
     form_class = ResumeForm
     template_name = "resumes/create.html"
     success_url = reverse_lazy("resumes:index")
-    permission_required = "users.user_can_show"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
