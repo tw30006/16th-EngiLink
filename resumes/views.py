@@ -121,6 +121,13 @@ class ResumeDeleteView(DeleteView):
 class TotalListView(ListView):
     context_object_name = "total_data"
 
+    def dispatch(self, request, *args, **kwargs):
+        resume_id = self.kwargs.get('resume_id')
+        resume = get_object_or_404(Resume, pk=resume_id)
+        if not rules.test_rule('is_resume_user',request.user,resume):
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_template_names(self):
         resume_id = self.kwargs.get("resume_id")
         resume = get_object_or_404(Resume, pk=resume_id)
