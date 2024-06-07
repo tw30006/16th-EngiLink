@@ -16,6 +16,22 @@
                                 </div>
                             {% elif field.label == "工作內容" %}
                                 <textarea name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="w-full h-32 p-2 border border-gray-300 rounded-md">{{ field.value|default_if_none:'' }}</textarea>
+                            {% elif field.label == "人數需求" %}
+                                <div class="flex items-center w-full space-x-2">
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <span class="text-lg font-medium text-gray-700">人</span>
+                                </div>
+                            {% elif field.label == "工作經驗" %}
+                                <div class="flex items-center w-full space-x-2">
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <span class="text-lg font-medium text-gray-700">年</span>
+                                </div>
+                            {% elif field.label == "工作薪資" %}
+                                <div class="flex items-center w-full space-x-2">
+                                    <span class="text-lg font-medium text-gray-700 whitespace-nowrap">月薪 NT$</span>
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="flex-grow p-2 border border-gray-300 rounded-md">
+                                    <span class="text-lg font-medium text-gray-700">元</span>
+                                </div>
                             {% else %}
                                 <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
                             {% endif %}
