@@ -1,8 +1,9 @@
+{% load humanize %}
 <div class="p-6 bg-white rounded-lg shadow-md">
     <h2 class="mb-4 text-2xl font-bold">{{ job.title }}</h2>
-    <p class="mb-2"><span class="font-semibold">需求人數：</span>{{ job.openings }}</p>
-    <p class="mb-2"><span class="font-semibold">工作年資：</span>{{ job.experience }}</p>
-    <p class="mb-2"><span class="font-semibold">工作薪資：</span>{{ job.salary }}</p>
+    <p class="mb-2"><span class="font-semibold">需求人數：</span>{{ job.openings }}人</p>
+    <p class="mb-2"><span class="font-semibold">工作年資：</span>{{ job.experience }}年</p>
+    <p class="mb-2"><span class="font-semibold">工作薪資：</span>月薪NT${{ job.salary|intcomma }}元</p>
     <p class="mb-2"><span class="font-semibold">工作地點：</span>{{ job.address }}</p>
     <p class="mb-4"><span class="font-semibold">工作描述：</span>{{ job.description }}</p>
     <div class="flex items-center justify-between">
