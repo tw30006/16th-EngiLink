@@ -1,9 +1,8 @@
 <!-- collect_btn.html -->
-<button id="collect-button-{{ job.id }}" type="submit" class="flex items-center justify-center w-8 h-8 bg-gray-300 rounded-full hover:bg-pink-300">
+<button id="collect-button-{{ job.id }}" type="submit" class="flex items-center justify-center w-8 h-8 {% if job.id in user_jobs %}bg-red-500{% else %}bg-gray-300{% endif %} rounded-full hover:bg-pink-300">
     {% if job.id in user_jobs %}
-    <i class="fa-solid fa-heart w-4 h-4 fill-current"></i>
+    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
     {% else %}
-    <i class="fa-solid fa-heart w-4 h-4 text-white fill-current"></i>
+    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
     {% endif %}
 </button>
-
