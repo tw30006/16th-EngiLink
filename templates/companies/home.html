@@ -1,7 +1,29 @@
 {% extends 'backend.html' %}
+{% load static %}
 {% block content %}
-{% if user.is_authenticated %}
-    <p>歡迎，{{request.user}}!</p>
-    <p>為您的職缺推薦最佳人選！</p>
-{% endif %} 
+<div class="flex items-center justify-center min-h-screen bg-gray-100 py-12">
+    <div class="max-w-screen-lg mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-8 shadow-lg rounded-lg">
+                <h1 class="text-4xl font-bold mb-6">歡迎，{{ request.user }}!</h1>
+                <h2 class="text-2xl font-semibold mb-4">EngiLink的服務</h2>
+                <p class="text-gray-700 mb-4">
+                    我們致力於幫助公司找到最優秀的人才。無論您是在尋找技術專家、管理人才還是其他職位的專業人士，我們都能為您提供最佳的推薦。
+                </p>
+                <p class="text-gray-700 mb-4">
+                    EngiLink通過深入了解您的需求，為您匹配最合適的候選人。我們的服務包括但不限於職位發布、候選人篩選、面試安排以及後續跟進。
+                </p>
+                <p class="text-gray-700 mb-4">
+                    立即聯絡我們，讓我們為您找到理想的人才，助您的公司更上一層樓！
+                </p>
+            </div>
+
+            <div class="bg-white p-8 shadow-lg rounded-lg flex justify-center items-center">
+                <div class="w-full h-64 bg-gray-200 rounded-lg flex justify-center items-center">
+                    <span class="text-gray-500"><img src="{% static 'img/company.jpg' %}" alt="company"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
