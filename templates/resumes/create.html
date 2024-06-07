@@ -1,32 +1,55 @@
 {% extends 'frontend.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="container mx-auto max-w-lg mt-8">
+    <div class="container max-w-lg mx-auto mt-8">
         <div class="flex justify-center">
             <div class="w-full">
-                <div class="header-bar flex justify-start items-center bg-blue-600 text-white p-4 rounded-t-md">
+                <div class="flex items-center justify-start p-4 text-white bg-blue-600 header-bar rounded-t-md">
                     <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
                 </div>
 
-                <div class="card-body p-4 shadow-md mt-4">
-                    <h3 class="text-lg font-semibold mb-4">新增個人資料</h3>
-                    <form method="post" id="myForm" action="{% url 'resumes:create'%}" enctype="multipart/form-data">
+                <div class="p-4 mt-4 shadow-md card-body">
+                    <h3 class="mb-4 text-lg font-semibold">新增個人資料</h3>
+                    <form method="post" id="myForm" action="{% url 'resumes:create' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form|crispy }}
-                        <div class="ml-4 mb-4">
-                            <div class="mb-2"> 
-                                <div id="preview-container" class="hidden mt-4"> 
-                                    <img id="preview" src="#" alt="Image Preview" class="w-72 h-72 border border-black" />
+                        <div class="w-full md:w-2/3">
+                            {% for field in form %}
+                                {% if field.name == "picture" %}
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <small class="text-gray-500">(只能上傳 .jpeg 圖片)</small>
+                                        {% if field.errors %}
+                                            <div class="mt-1 text-sm text-red-600">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% elif field.name == "address" %}
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <small class="text-gray-500">請填入正確地址</small>
+                                        {% if field.errors %}
+                                            <div class="mt-1 text-sm text-red-600">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    {{ field|as_crispy_field }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="mb-4 ml-4">
+                            <div class="mb-2">
+                                <div id="preview-container" class="hidden mt-4">
+                                    <img id="preview" src="#" alt="Image Preview" class="border border-black w-72 h-72" />
                                 </div>
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">提交</button>
+                            <button type="submit" class="px-2 py-2 text-blue-600 bg-white border border-blue-600 button hover:bg-blue-600 hover:text-white">提交</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
 {% endblock %}
