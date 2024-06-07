@@ -33,6 +33,9 @@ class Project(models.Model):
 
     objects = models.Manager()
 
+    class Meta:
+        ordering = ['posit']
+
     def get_technologies(self):
         try:
             return ast.literal_eval(self.technologies_used)

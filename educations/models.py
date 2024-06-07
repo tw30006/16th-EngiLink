@@ -34,7 +34,10 @@ class Education(models.Model):
 
     objects = models.Manager()
     edu_objects = EducationManager()
-
+    
+    class Meta:
+        ordering = ['posit']
+    
     def delete(self, *args, **kwargs):
         self.deleted_at = timezone.now()
         self.save()

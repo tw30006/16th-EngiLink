@@ -18,6 +18,9 @@ class Work(models.Model):
     posit = PositionField(collection="resume")
     objects = models.Manager()
 
+    class Meta:
+        ordering = ['posit']
+
     def soft_delete(self):
         self.deleted_at = timezone.now()
         self.save()

@@ -1,5 +1,4 @@
 import { Sortable } from '@shopify/draggable';
-import Alpine from 'alpinejs';
 
 function dragElement(element){
     const sortable = new Sortable(document.querySelectorAll('.drag-container'), {
@@ -43,12 +42,6 @@ function sendPositionUpdate(list) {
     });
 }
 
-
-document.addEventListener('alpine:init', () => {
-    Alpine.data('draggable', () => ({
-        init(){
-            dragElement();
-        }
-    }))
-})
-
+document.addEventListener('DOMContentLoaded', () => {
+    dragElement();
+});
