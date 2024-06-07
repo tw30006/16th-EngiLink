@@ -1,0 +1,68 @@
+{% load static %}
+{% load humanize %}
+<div id="jobs-content" class="p-4 rounded-lg shadow-md bg-gray-50">
+    {% if job_page_obj %}
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-blue-200 rounded">你收藏的職缺</h2>
+        <ul>
+            {% for user_job in job_page_obj %}
+                <li class="mb-2">
+                    <div class="flex flex-col transition-shadow duration-300 bg-white rounded-lg shadow-lg hover:shadow-2xl md:flex-row">
+                        <div class="flex-grow p-4 md:flex md:flex-row">
+                            <div class="flex-grow w-full truncate md:w-1/2">
+                                <h2 class="text-2xl font-bold truncate">{{ user_job.job.title }}</h2>
+                                <div class="flex items-center mt-2 space-x-2">
+                                    {% if user_job.job.company.logo %}
+                                        <img src="{{ user_job.job.company.logo.url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
+                                    {% else %}
+                                        <img src="{% static 'images/default_logo.jpg' %}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
+                                    {% endif %}
+                                    <p class="max-w-full text-lg">{{ user_job.job.company.company_name }}</p>
+                                </div>
+                                <div class="flex items-center mt-2 space-x-2">
+                                    <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
+                                    <p class="text-gray-700">{{ user_job.job.address|slice:":3" }}</p>
+                                    <i class="w-4 h-4 text-gray-500 truncate fa-solid fa-sack-dollar"></i>
+                                    <p class="text-gray-700">NT${{ user_job.job.salary|intcomma }}</p>
+                                </div>
+                            </div>
+                            <div class="flex-grow w-full text-gray-700 md:w-1/2">
+                                <p class="text-lg line-clamp-3"><strong>工作內容：</strong>{{ user_job.job.description }}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end flex-shrink-0 p-4 space-x-2 md:space-x-0 md:space-y-4 md:flex-col md:items-end">
+                            <a href="{% url 'users:apply' user_job.job.id %}" class="inline-block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</a>
+                            <form action="{% url 'users:collect' %}" method="post" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ user_job.job.id }}" hx-swap="outerHTML">
+                                {% csrf_token %}
+                                <input type="hidden" name="job_id" value="{{ user_job.job.id }}">
+                                {% include 'shared/collect_btn.html' with job=user_job.job user_jobs=user_jobs %}
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="flex justify-center mt-4">
+            {% if job_page_obj.has_previous %}
+                <a href="?job_page={{ job_page_obj.previous_page_number }}&tab=jobs"
+                   hx-get="?job_page={{ job_page_obj.previous_page_number }}&tab=jobs"
+                   hx-target="#jobs-content" hx-swap="outerHTML" class="px-2 py-1 text-gray-800">上一頁</a>
+            {% endif %}
+            <span class="px-2 py-1 text-gray-800">{{ job_page_obj.number }} / {{ job_page_obj.paginator.num_pages }}</span>
+            {% if job_page_obj.has_next %}
+                <a href="?job_page={{ job_page_obj.next_page_number }}&tab=jobs"
+                   hx-get="?job_page={{ job_page_obj.next_page_number }}&tab=jobs"
+                   hx-target="#jobs-content" hx-swap="outerHTML" class="px-2 py-1 text-gray-800">下一頁</a>
+            {% endif %}
+        </div>
+    {% else %}
+    <div class="flex flex-col items-center p-4">
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-blue-200">我收藏的工作</h2>
+        {% url 'jobs:job_list' as job_list_url %}
+        <div class="w-full flex justify-center items-center p-2.5">
+            <img src="{% static 'img/interview.png' %}" alt="Empty jobs" class="object-contain w-full h-auto max-w-xs max-h-screen mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
+        </div>
+        <p class="mb-3 text-xl text-gray-800">{{ user.username }}，去收藏心儀的工作吧!</p>
+        <a href="{{ job_list_url }}" class="px-6 py-2 text-xl text-white bg-blue-800 rounded-full">前往收藏</a>
+    </div>
+    {% endif %}
+</div>
