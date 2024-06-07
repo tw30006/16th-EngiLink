@@ -9,9 +9,11 @@
                     <div class="w-full h-36 md:w-1/3">
                         <img src="{{ job.company_banner_url }}" alt="公司圖片" class="object-cover w-full h-full rounded-t-lg md:rounded-t-none md:rounded-l-lg">
                     </div>
-                    <a href="{% url 'jobs:job_detail' pk=job.id %}"><div class="flex flex-col justify-between p-4 space-y-4 md:flex-row md:space-y-0 md:items-center md:w-2/3">
+                    <div class="flex flex-col justify-between p-4 space-y-4 md:flex-row md:space-y-0 md:items-center md:w-2/3">
                         <div class="flex-grow overflow-hidden md:flex md:flex-col md:justify-center md:max-w-full">
-                            <h2 class="text-2xl font-bold truncate">{{ job.title }}</h2>
+                            <a href="{% url 'jobs:job_detail' pk=job.id %}" class="no-underline">
+                                <h2 class="text-2xl font-bold truncate">{{ job.title }}</h2>
+                            </a>
                             <div class="flex items-center mt-2 space-x-2">
                                 <img src="{{ job.company_logo_url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
                                 <p class="max-w-full text-lg truncate">{{ job.company_name }}</p>
@@ -34,15 +36,17 @@
                                 {% include 'shared/collect_btn.html' %}
                             </form>
                             {% else %}
-                            <p class="text-gray-700">有找到合適職缺嗎？</p>
-                            <p class="text-gray-700">EngiLink協助您找到更多心儀職缺！<a href="{% url 'users:login' %}" class="text-blue-500 hover:underline">立即登入</a></p>
+                            <div class="text-right">
+                                <p class="text-gray-700">有找到合適職缺嗎？</p>
+                                <p class="text-gray-700">EngiLink協助您找到更多心儀職缺！</p>
+                                <a href="{% url 'users:login' %}" class="inline-block px-4 py-2 mt-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">立即登入</a>
+                            </div>
                             {% endif %}
                         </div>
-                    </div></a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
 {% endblock %}
-
