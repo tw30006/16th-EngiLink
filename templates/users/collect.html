@@ -2,58 +2,22 @@
 {% load static %}
 {% block content %}
 <div class="container p-4 mx-auto">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div class="p-4 bg-white rounded-lg shadow-md">
-            {% if user_jobs %}
-                <h2 class="mb-4 text-2xl font-semibold">你收藏的職缺</h2>
-                <ul>
-                    {% for job in jobs %}
-                        {% if job.id in user_jobs %}
-                            <li class="mb-2">
-                                <div class="font-bold">{{ job.title }}</div>
-                                <div class="text-gray-600">{{ job.company.company_name }}</div>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="flex flex-col items-center p-4">
-                    <h2 class="mb-4 text-2xl font-semibold">我收藏的工作</h2>
-                    {% url 'jobs:job_list' as job_list_url %}
-                    <div class="w-full h-auto flex justify-center items-center p-2.5">
-                        <img src="{% static 'img/interview.png' %}" alt="Empty jobs" class="object-contain w-full h-auto mx-auto">
-                    </div>
-                    <p class="mb-3 text-xl text-gray-600">{{ user.username }}，去收藏心儀的工作吧!</p>
-                    <a href="{{ job_list_url }}" class="px-6 py-2 text-xl text-white bg-blue-800 rounded-full">前往收藏</a>
-                </div>
-            {% endif %}
+    <div class="flex justify-center mb-4">
+        <div class="px-4 py-2 bg-blue-200">
+            <button id="jobs-tab" class="text-xl font-semibold text-black focus:outline-none"
+                    hx-get="?tab=jobs" hx-target="#content" hx-swap="innerHTML" hx-boost="true">已收藏職缺</button>
         </div>
-        <div class="p-4 bg-white rounded-lg shadow-md">
-            {% if user_companies %}
-                <h2 class="mb-4 text-2xl font-semibold">你收藏的公司</h2>
-                <ul>
-                    {% for company in companies %}
-                        {% if company.id in user_companies %}
-                            <li class="mb-2">
-                                <div class="font-bold">{{ company.company_name }}</div>
-                                <div class="text-gray-600">{{ company.address }}</div>
-                                <div class="text-gray-600">{{ company.description }}</div>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="flex flex-col items-center p-4">
-                    <h2 class="mb-4 text-2xl font-semibold">我收藏的公司</h2>
-                    {% url 'companies:company_list' as company_list_url %}
-                    <div class="w-full h-auto flex justify-center items-center p-2.5">
-                        <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full h-auto mx-auto">
-                    </div>
-                    <p class="mb-3 text-xl text-gray-600">{{ user.username }}，去收藏心儀的公司吧!</p>
-                    <a href="{{ company_list_url }}" class="px-6 py-2 text-xl text-white bg-blue-800 rounded-full">前往收藏</a>
-                </div>
-            {% endif %}
+        <div class="px-4 py-2 ml-4 bg-green-200">
+            <button id="companies-tab" class="text-xl font-semibold text-black focus:outline-none"
+                    hx-get="?tab=companies" hx-target="#content" hx-swap="innerHTML" hx-boost="true">已收藏公司</button>
         </div>
+    </div>
+    <div id="content">
+        {% if tab == 'companies' %}
+            {% include 'users/collect_companies.html' %}
+        {% else %}
+            {% include 'users/collect_jobs.html' %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
