@@ -2,30 +2,35 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
-        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+    <div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
+        <div class='flex items-center justify-center w-full p-4 text-white bg-blue-600 header-bar rounded-t-md'>
             <h2>求職者登入</h2>
         </div>
-        <div class="task-items-wrapper flex flex-col w-full">
-            <div class=" container task-wrapper flex justify-center items-center py-4 px-6 bg-white border-t border-gray-300 w-full">
+        <div class="flex flex-col w-full task-items-wrapper">
+            <div class="container flex items-center justify-center w-full px-6 py-4 bg-white border-t border-gray-300 task-wrapper">
                 <form method="post" class="w-full max-w-lg">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <br>
                     <div class="mb-4">
                         <div class="flex justify-end">
-                            <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">登入</button>
+                            <button type="submit" class="px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">登入</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <br>
-        <small><a href="{% provider_login_url 'google' %}" class="text-blue-600 hover:underline">Google帳號登入</a></small>
-        <br>
-        <small><a href="{% url 'users:register' %}" class="text-blue-600 hover:underline">前往註冊</a></small>
+        <small>
+        <div class="flex flex-col space-y-4">
+            <a href="{% provider_login_url 'google' %}" class="flex items-center px-4 py-2 text-blue-600 no-underline bg-white border border-blue-600 rounded hover:bg-blue-600 hover:text-white">
+                <i class="mr-2 fa-brands fa-google"></i>
+                <span>Google帳號登入</span>
+            </a>
+            <a href="{% url 'users:register' %}" class="block px-4 py-2 mt-4 text-center text-blue-600 no-underline bg-white border border-blue-600 rounded hover:bg-blue-600 hover:text-white">
+                前往註冊
+            </a>
+        </div>
+        </small>
     </div>
-
-    
 {% endblock %}
 
