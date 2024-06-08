@@ -1,6 +1,20 @@
 {% extends "backend.html" %}
 {% load humanize %}
 {% block content %}
+<header class="sticky z-10 w-full py-8 text-center bg-blue-50 top-16">
+    <div class="container px-4 mx-auto">
+        <h1 class="text-2xl font-bold">拓展求職視野，尋找理想工作</h1>
+        <div class="flex flex-wrap justify-center mt-6">
+            <form action="{% url 'jobs:job_list' %}" method="get" class="flex w-full md:w-2/3">
+                <input type="text" name="q" placeholder="搜尋職缺名稱" class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-indigo-500" value="{{ request.GET.q|default:'' }}"/>
+                <button type="submit" class="p-2 text-white bg-user-blue rounded-r-lg">搜尋</button>
+                {% if request.GET.q %}
+                    <a href="{% url 'jobs:job_list' %}" class="p-2 ml-2 text-white bg-red-500 rounded-lg">取消搜尋</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</header>
 <div>
     <div class="container px-4 py-8 mx-auto">
         <div class="mx-auto space-y-6 md:w-4/5 lg:w-2/3">

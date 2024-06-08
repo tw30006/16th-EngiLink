@@ -1,13 +1,20 @@
 {% extends 'backend.html' %}
 {% load static %}
 {% block content %}
-<div class="pt-16">
-    <div class="flex justify-end mb-4">
-        <form action="{% url 'companies:company_list' %}" method="get" class="flex">
-            <input type="text" name="q" placeholder="搜尋公司名稱" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
-            <button type="submit" class="user-md-btn-full">Search</button>
-        </form>
-    </div>
+    <header class="sticky z-10 w-full py-8 text-center bg-blue-50 top-16">
+        <div class="container px-4 mx-auto">
+            <h1 class="text-2xl font-bold">拓展求職視野，尋找理想工作</h1>
+            <div class="flex flex-wrap justify-center mt-6">
+                <form action="{% url 'companies:company_list' %}" method="get" class="flex w-full md:w-2/3">
+                    <input type="text" name="q" placeholder="搜尋公司名稱" class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-indigo-500" value="{{ request.GET.q|default:'' }}"/>
+                    <button type="submit" class="p-2 text-white bg-user-blue rounded-r-lg">搜尋</button>
+                    {% if request.GET.q %}
+                        <a href="{% url 'companies:company_list' %}" class="p-2 ml-2 text-white bg-red-500 rounded-lg">取消搜尋</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </header>
     <div class="container px-4 py-8 mx-auto">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {% for company in companies_list %}

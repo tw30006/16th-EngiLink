@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
     <header class="sticky z-10 w-full py-8 text-center bg-blue-50 top-16">
         <div class="container px-4 mx-auto">
-            <h1 class="text-2xl font-bold">拓展求職視野，尋找理想工作</h1>
+        <h1 class="text-2xl font-bold">拓展求職視野，尋找理想工作</h1>
             <div class="flex flex-wrap justify-center mt-6">
                 <form action="{% url 'users:home' %}" method="get" class="flex w-full md:w-2/3">
                     <input type="text" name="q" placeholder="找工作、公司..." class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-indigo-500" value="{{ request.GET.q|default:'' }}"/>
