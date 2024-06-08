@@ -24,32 +24,34 @@
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {% for job in jobs %}
-                    <div class="relative p-4 transition-shadow bg-white rounded-lg shadow hover:shadow-xl">
-                        <div class="flex items-center mb-4">
-                            {% if job.company.logo %}
-                                <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
-                            {% else %}
-                                <img src="/static/images/default_logo.jpg" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
-                            {% endif %}
-                            <div class="overflow-hidden whitespace-nowrap">
-                                <h3 class="text-lg font-semibold truncate">{{ job.title }}</h3>
-                                <p class="font-semibold text-blue-600 truncate">{{ job.company.company_name }}</p>
+                    <a href="{% url 'jobs:job_detail' pk=job.id %}">
+                        <div class="relative p-4 transition-shadow bg-white rounded-lg shadow hover:shadow-xl">
+                            <div class="flex items-center mb-4">
+                                {% if job.company.logo %}
+                                    <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
+                                {% else %}
+                                    <img src="/static/images/default_logo.jpg" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
+                                {% endif %}
+                                <div class="overflow-hidden whitespace-nowrap">
+                                    <h3 class="text-lg font-semibold truncate">{{ job.title }}</h3>
+                                    <p class="font-semibold text-blue-600 truncate">{{ job.company.company_name }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between space-x-2">
+                                <div class="flex items-center space-x-2">
+                                    <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
+                                    <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
+                                    <i class="w-4 h-4 text-gray-500 fa-solid fa-sack-dollar"></i>
+                                    <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
+                                </div>
+                                <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="job_id" value="{{ job.id }}"> 
+                                    {% include 'shared/collect_btn.html' %}
+                                </form>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between space-x-2">
-                            <div class="flex items-center space-x-2">
-                                <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
-                                <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
-                                <i class="w-4 h-4 text-gray-500 fa-solid fa-sack-dollar"></i>
-                                <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
-                            </div>
-                            <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
-                                {% csrf_token %}
-                                <input type="hidden" name="job_id" value="{{ job.id }}"> 
-                                {% include 'shared/collect_btn.html' %}
-                            </form>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>            
         </section>
@@ -60,48 +62,50 @@
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {% for company in companies %}
-                <div class="flex flex-col justify-between h-full overflow-hidden transition-shadow bg-white rounded-lg shadow-md hover:shadow-xl lg:col-span-1">
-                    <div class="relative p-2">
-                        {% if company.banner %}
-                            <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
-                                <img src="{{ company.banner.url }}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                    <a href="{% url 'companies:company_info' company.id %}">
+                        <div class="flex flex-col justify-between h-full overflow-hidden transition-shadow bg-white rounded-lg shadow-md hover:shadow-xl lg:col-span-1">
+                            <div class="relative p-2">
+                                {% if company.banner %}
+                                    <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
+                                        <img src="{{ company.banner.url }}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                                    </div>
+                                {% else %}
+                                    <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
+                                        <img src="/static/images/default_banner.jpg" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% else %}
-                            <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
-                                <img src="/static/images/default_banner.jpg" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                            <div class="flex-grow p-4">
+                                <div class="flex items-center mb-4">
+                                    {% if company.logo %}
+                                        <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                                    {% else %}
+                                        <img src="/static/images/default_logo.jpg" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                                    {% endif %}
+                                    <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
+                                </div>
+                                <div class="card-description min-h-[3rem]">
+                                    <p class="text-gray-600 line-clamp-3">{{ company.description }}</p>
+                                </div>
                             </div>
-                        {% endif %}
-                    </div>
-                    <div class="flex-grow p-4">
-                        <div class="flex items-center mb-4">
-                            {% if company.logo %}
-                                <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
-                            {% else %}
-                                <img src="/static/images/default_logo.jpg" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
-                            {% endif %}
-                            <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
+                            <div class="flex-shrink-0 p-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
+                                        <p class="flex items-center text-xs text-gray-600">{{ company.address|slice:":3" }}</p>
+                                        <i class="w-4 h-4 text-gray-500 fa-solid fa-briefcase"></i>
+                                        <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
+                                    </div>
+                                    <form action="{% url 'companies:favorite_company' company.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in favorite_company_ids %} bg-red-500 {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-pink-300">
+                                            <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>                    
                         </div>
-                        <div class="card-description min-h-[3rem]">
-                            <p class="text-gray-600 line-clamp-3">{{ company.description }}</p>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 p-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
-                                <p class="flex items-center text-xs text-gray-600">{{ company.address|slice:":3" }}</p>
-                                <i class="w-4 h-4 text-gray-500 fa-solid fa-briefcase"></i>
-                                <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
-                            </div>
-                            <form action="{% url 'companies:favorite_company' company.id %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in favorite_company_ids %} bg-red-500 {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-pink-300">
-                                    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>                    
-                </div>
+                    </a>
                 {% endfor %}
             </div>
         </section>
