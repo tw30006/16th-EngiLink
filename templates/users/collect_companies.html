@@ -2,7 +2,7 @@
 {% load humanize %}
 <div id="companies-content" class="p-4 rounded-lg shadow-md bg-gray-50">
     {% if company_page_obj %}
-        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-green-200 rounded">你收藏的公司</h2>
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-company-green text-white rounded">你收藏的公司</h2>
         <ul>
             {% for user_company in company_page_obj %}
                 <li class="mb-2">
@@ -32,7 +32,7 @@
                         <div class="z-20 self-end flex-shrink-0 p-4">
                             <form action="{% url 'companies:favorite_company' user_company.company.id %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="flex items-center justify-center w-8 h-8 bg-red-500 rounded-full hover:bg-pink-300">
+                                <button type="submit" class="flex items-center justify-center w-8 h-8 bg-gray-300 rounded-full hover:bg-user-blue">
                                     <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
                                 </button>
                             </form>
@@ -56,13 +56,13 @@
         </div>
     {% else %}
     <div class="flex flex-col items-center p-4">
-        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-green-200 rounded">我收藏的公司</h2>
+        <h2 class="inline-block p-2 mb-4 text-2xl font-semibold bg-company-green text-white rounded">我收藏的公司</h2>
         {% url 'companies:company_list' as company_list_url %}
         <div class="w-full flex justify-center items-center p-2.5">
             <img src="{% static 'img/interview.png' %}" alt="Empty companies" class="object-contain w-full h-auto max-w-xs max-h-screen mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
         </div>
         <p class="mb-3 text-xl text-gray-800">{{ user.username }}，去收藏心儀的公司吧!</p>
-        <a href="{{ company_list_url }}" class="px-6 py-2 text-xl text-white bg-green-800 rounded-full">前往收藏</a>
+        <a href="{{ company_list_url }}" class="px-6 py-2 text-xl text-white bg-company-green rounded-full">前往收藏</a>
     </div>
     {% endif %}
 </div>
