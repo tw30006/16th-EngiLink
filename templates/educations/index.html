@@ -11,7 +11,7 @@
             {% if educations %}
                 <ul>
                     {% for education in educations %}
-                        <strong><a href="{% url 'educations:edu_edit' education.id %}">{{ education.school_name }} - {{ education.major }}</a></strong>
+                        <strong>{{ education.school_name }} - {{ education.major }}</strong> <a href="{% url 'educations:edu_edit' education.id %}">編輯</a>  <a href="{% url 'educations:edu_delete' education.pk %}">刪除</a>
                         <p>學位：{{ education.get_degree_display }}</p>
                         <p>入學期間： {{ education.start_date |date:"Y年m月" }}--{{ education.end_date |date:"Y年m月" }}</p>
                         <hr>
