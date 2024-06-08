@@ -1,5 +1,5 @@
-<div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10 custom-margin w-full">
-    <div class="bg-blue-900 md:w-1/5 h-auto sm:p-8 p-4">
+<div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10 custom-margin w-full items-stretch">
+    <div class="bg-blue-900 h-auto md:flex-shrink-0 sm:p-8 p-4">
         {% for resume in total_data.resume_data %}
         {% if resume.picture %}
         <div class="flex items-center justify-center mb-8">
@@ -35,7 +35,7 @@
         <div class="text-gray-400 text-base">{{ resume.skills }}</div>
         {% endfor %}
     </div>
-    <div class="bg-gray-100 md:w-5/6 w-full h-auto sm:m-10 p-6 custom-box">
+    <div class="bg-gray-100 md:w-5/6 w-full h-auto sm:p-6 custom-box flex-grow">
         <section class="drag-container">
             {% if total_data.project_data %}
             <h2 class="text-gray-700 text-xl">專案經驗</h2>
@@ -62,7 +62,6 @@
                 <ul class="list-disc ml-4 text-gray-500">
                     <li>{{ work.company_name }}</li>
                     <li>{{ work.start_date}} - {{ work.end_date}}</li>
-                    <li class="leading-relaxed">開發和維護後端邏輯、Mysql數據庫管理、集成第三方服務和API、用戶身份驗證和安全、性能優化。</li>
                 </ul>
             </div>
             {% endfor %}

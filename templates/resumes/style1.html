@@ -1,8 +1,9 @@
 {% extends 'frontend.html' %}
 {% load static %}
 {% block content %}
-<div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10 custom-margin" style="display: flex; justify-content: center; width: 80%; margin: 40px auto;">
-    <div class="bg-blue-900 md:w-[20%] h-auto sm:p-8 p-4" style="background-color: #1e3a8a; ">
+<div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10" style="display: flex; justify-content: center; width: 80%;">
+    <div class="bg-blue-900 h-auto sm:p-8 p-4" style="background-color: #1e3a8a; box-sizing: border-box;
+    flex-shrink: 0; height: auto;">
         {% for resume in total_data.resume_data %}
         {% if resume.picture %}
         <div class="flex items-center justify-center mb-8">
@@ -39,11 +40,11 @@
         <div class="text-gray-400 text-base markdown-content" style="color: #9ca3af;">{{ resume.skills|linebreaksbr }}</div>
         {% endfor %}
     </div>
-    <div class="bg-gray-100 md:w-5/12 w-full h-auto sm:m-10 p-6" style="@media (min-width: 768px) {
+    <div class="bg-gray-100 md:w-[60%] w-full h-full sm:p-6" style="@media (min-width: 768px) {
         .custom-box {
             width: 40%;
         }
-    }">
+    } box-sizing: border-box; flex-grow: 1; height: auto;">
         <section class="drag-container">
             {% if total_data.project_data %}
             <h2 class="text-gray-700 text-xl">專案經驗</h2>
@@ -73,7 +74,6 @@
                 <ul class="list-disc ml-4 text-gray-500">
                     <li>{{ work.company_name }}</li>
                     <li>{{ work.start_date}} - {{ work.end_date}}</li>
-                    <li class="leading-relaxed">開發和維護後端邏輯、Mysql數據庫管理、集成第三方服務和API、用戶身份驗證和安全、性能優化。</li>
                 </ul>
             </div>
             {% endfor %}
