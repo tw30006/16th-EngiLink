@@ -16,7 +16,7 @@
                             <p class="text-red-500"><strong>求職者已取消應徵</strong> <br>{{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
                         {% else %}
                         <div class="text-right">
-                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="px-4 py-2 bg-indigo-500 text-white rounded-lg ml-2">查看求職者履歷</a>
+                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">查看求職者履歷</a>
                         </div>
                         {% endif %}
                     </div>
@@ -25,7 +25,7 @@
                             {% if not job_resume.read_at %}
                                 <form action="{% url 'companies:mark' job_resume.pk %}" method="post" class="mt-4">
                                     {% csrf_token %}
-                                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg">發送面試</button>
+                                    <button type="submit" class="company-md-btn-full">發送面試</button>
                                 </form>
                             {% else %}
                                 {% if job_resume.interview_date %}
@@ -55,11 +55,11 @@
                                             此致
                                             {{ company.company_name }}
                                         </textarea>
-                                        <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">發送面試邀請</button>
+                                        <button type="submit" class="mt-4 px-4 py-2 bg-company-green text-white rounded-lg">發送面試邀請</button>
                                     </form>
                                 {% endif %}
                                     {% if job_resume.accepted ==  'accept' %}
-                                        <p class="mt-4 text-xl text-blue-600">求職者同意參與此次面試</p>
+                                        <p class="mt-4 text-xl text-company-green">求職者同意參與此次面試</p>
                                     {% elif job_resume.accepted == 'reject' %}
                                         <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
                                     {% elif not job_resume.interview_date %}

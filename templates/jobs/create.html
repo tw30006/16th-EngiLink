@@ -2,7 +2,7 @@
 {% block content %}
     <div class="flex justify-center py-8">
         <div class="w-full max-w-lg p-6 mb-6 bg-white rounded-lg shadow-md">
-            <h1 class="px-4 py-2 mb-6 text-2xl font-bold text-center bg-pink-300 rounded">刊登職缺</h1>
+            <h1 class="px-4 py-2 mb-6 text-2xl text-white text-center bg-company-green rounded">刊登職缺</h1>
             <form method="post" class="space-y-4">
                 {% csrf_token %}
                 <div class="space-y-4">
@@ -42,7 +42,7 @@
                     {% endfor %}
                 </div>
                 <div class="flex justify-end mt-4">
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">新增職缺</button>
+                    <button type="submit" class="company-md-btn">新增職缺</button>
                 </div>
             </form>
         </div>

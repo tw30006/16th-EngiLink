@@ -1,7 +1,7 @@
 {% extends 'backend.html' %} 
 {% block content %}
 <div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
-    <div class='flex items-center justify-center w-full p-4 text-white bg-violet-700 header-bar rounded-t-md'>
+    <div class='flex items-center justify-center w-full p-4 text-white bg-company-green header-bar rounded-t-md'>
         <h2>公司註冊</h2>
     </div>
     <div class="flex flex-col w-full task-items-wrapper">
@@ -53,16 +53,16 @@
                     <label for="file_upload_banner" class="block mb-2 text-sm font-bold text-gray-700">
                         上傳公司照片
                     </label>
-                    <input type="file" name="banner" id="file_upload" class="file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
+                    <input type="file" name="banner" id="file_upload" class="file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-company-green file:text-white hover:file:bg-white hover:file:text-company-green hover:file:border-company-green file:border"/>
                 </div>
                 <div class="mb-4">
                     <label for="file_upload_logo" class="block mb-2 text-sm font-bold text-gray-700">
                         上傳logo
                     </label>
-                    <input type="file" name="logo" id="file_upload" class="file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
+                    <input type="file" name="logo" id="file_upload" class="file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-company-green file:text-white hover:file:bg-white hover:file:text-company-green hover:file:border-company-green file:border"/>
                 </div>
                 <div class="flex justify-end px-1">
-                    <button type="submit" class="px-4 py-2 text-violet-700 bg-white border border-violet-700 rounded button hover:bg-violet-700 hover:text-white">新增</button>
+                    <button type="submit" class="company-md-btn">新增</button>
                 </div>
             </form>
         </div>

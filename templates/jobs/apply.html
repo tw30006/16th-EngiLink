@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="flex justify-center items-center h-screen">
+<div class="flex justify-center items-center">
     <div class="max-w-lg w-full px-4 py-8 rounded-lg shadow-lg text-center">
         <img src="{% static 'img/resume.png' %}" alt="resume">
         <h1 class="text-2xl font-semibold mb-4">使用者：{{ request.user }}</h1>
@@ -17,10 +17,10 @@
             {% endfor %}
             </select>
             {% if resumes|length != 0 %}
-            <button type="submit" class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:bg-indigo-600">提交</button>
+            <button type="submit" class="user-md-btn-full">提交</button>
             {% else %}
             <p class="text-gray-700 mb-2">您還未創建任何履歷。</p>
-            <a href="{% url 'resumes:index' %}" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg inline-block">創建履歷</a>
+            <a href="{% url 'resumes:index' %}" class="user-md-btn-full">創建履歷</a>
             {% endif %}
         </form>
     </div>

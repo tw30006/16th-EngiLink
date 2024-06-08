@@ -1,7 +1,7 @@
 {% extends 'backend.html' %} 
 {% block content %}
-    <div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
-        <div class='flex items-center justify-center w-full p-4 text-white header-bar bg-violet-700 rounded-t-md'>
+    <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
+        <div class='header-bar flex justify-center items-center bg-company-green text-white p-4 rounded-t-md w-full'>
             <h2>公司登入</h2>
         </div>
         <div class="flex flex-col w-full task-items-wrapper">
@@ -17,47 +17,16 @@
                         <input type="password" name="password" required id="id_password" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" class="px-4 py-2 bg-white border rounded button border-violet-700 text-violet-700 hover:bg-violet-700 hover:text-white">登入</button>
+                        <button type="submit" class="button company-md-btn">登入</button>
                     </div>
                 </form>
             </div>
         </div>
         <br>
         <br>
-        <small>
-            <button>
-                <a href="{% url 'companies:register' %}" class="block px-4 py-2 bg-white border rounded border-violet-600 text-violet-600 button hover:bg-violet-600 hover:text-white">前往註冊</a>
-            </button>
-        </small>
-          
+        <small><a href="{% url 'companies:register' %}" class="text-company-green hover:underline">前往註冊</a></small>
     </div>
 {% endblock %}
 
 
 
-<div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
-    <div class='flex items-center justify-center w-full p-4 text-white bg-blue-600 header-bar rounded-t-md'>
-        <h2>公司登入</h2>
-    </div>
-    <div class="flex flex-col w-full task-items-wrapper">
-        <div class="flex items-center justify-center w-full px-6 py-4 bg-white border-t border-gray-300 task-wrapper">
-            <form method="post" class="w-full max-w-lg">
-                {% csrf_token %}
-                <div class="mb-4">
-                    <label for="id_username" class="block mb-2 text-sm font-bold text-gray-700">帳號：</label>
-                    <input type="text" name="username" autofocus required id="id_username" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="mb-6">
-                    <label for="id_password" class="block mb-2 text-sm font-bold text-gray-700">密碼：</label>
-                    <input type="password" name="password" required id="id_password" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit" class="px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">登入</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <br>
-    <br>
-    <small><a href="{% url 'companies:register' %}" class="text-blue-600 hover:underline">前往註冊</a></small>
-</div>

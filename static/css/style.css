@@ -13,3 +13,15 @@
 .user-md-btn-full {
     @apply border border-solid bg-user-blue  py-2 px-4 text-white rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue;
 }
+
+.company-sm-btn {
+    @apply border border-solid border-company-green p-2 text-company-green rounded-md hover:text-white hover:bg-company-green;
+}
+
+.company-md-btn {
+    @apply border border-solid border-company-green py-2 px-4 text-company-green rounded-md hover:text-white hover:bg-company-green;
+}
+
+.company-md-btn-full {
+    @apply border border-solid bg-company-green  py-2 px-4 text-white rounded-md hover:bg-white hover:border-company-green hover:text-company-green;
+}

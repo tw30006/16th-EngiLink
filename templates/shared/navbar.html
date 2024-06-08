@@ -19,7 +19,7 @@
                         {% else %}
                             {% if user.company and user.company.id %}
                                 <a href="{% url 'companies:jobs' user.company.id %}">
-                                    <button class="px-2 py-1 text-lg text-user-blue">
+                                    <button class="px-2 py-1 text-lg text-company-green">
                                         刊登職缺
                                     </button>
                                 </a>
@@ -35,7 +35,7 @@
                         <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-user-blue">找工作</a>
                         {% else %}
                         <a href="{% url 'companies:applications' user.id %}">
-                            <button class="px-2 py-1 text-lg text-user-blue">
+                            <button class="px-2 py-1 text-lg text-company-green">
                                 查看應徵
                             </button>
                         </a>
@@ -46,7 +46,7 @@
                         <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-lg text-user-blue">履歷工具</a>
                         {% else %}
                             {% if user.company and user.company.id %}
-                                <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-user-blue">查看公司資料</a>
+                                <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-company-green">查看公司資料</a>
                             {% else %}
                                 <a href="#"  class="px-2 py-1 text-lg text-user-blue">查看公司資料</a>
                             {% endif %}    
