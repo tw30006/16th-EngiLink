@@ -5,9 +5,9 @@
         <div class="header-bar flex justify-between items-center bg-user-blue text-white p-4 rounded-t-md mb-4">
             <a href="{% url 'resumes:index' %}" class="text-white-600 hover:text-blue-200 mr-4">&#8592; Back</a>
             <a href="{% url 'resumes:edit' pk=resume.pk %}" class="text-white-600 hover:text-blue-200 mr-4">編輯&#43;</a>
-            <a href="{% url 'resumes:education' resume.resume_id %}" class="edu text-white-600 hover:text-blue-200">教育經歷&#43;</a>
-            <a href="{% url 'resumes:work' resume.resume_id %}" class="text-white-600 hover:text-blue-200 ml-4">工作經驗&#43;</a>
-            <a href="{% url 'resumes:project' resume.resume_id %}" class="text-white-600 hover:text-blue-200 ml-4">專案內容&#43;</a>
+            <a href="{% url 'resumes:educations' resume.resume_id %}" class="edu text-white-600 hover:text-blue-200">教育經歷&#43;</a>
+            <a href="{% url 'resumes:works' resume.resume_id %}" class="text-white-600 hover:text-blue-200 ml-4">工作經驗&#43;</a>
+            <a href="{% url 'resumes:projects' resume.resume_id %}" class="text-white-600 hover:text-blue-200 ml-4">專案內容&#43;</a>
             <a href="{% url 'resumes:update_style' resume.resume_id %}" class="text-white-600 hover:text-blue-200 ml-4">更換樣式&#43;</a>
         </div>
         <div class="card-body p-4 shadow-md">
