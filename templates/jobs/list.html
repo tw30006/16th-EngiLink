@@ -27,7 +27,7 @@
                         </div>
                         <div class="flex justify-end flex-shrink-0 space-x-4 md:justify-center md:flex-col md:items-end md:space-y-4 md:space-x-0">
                             {% if request.user.user_type == 1 %}
-                            <a href="{% url 'users:apply' job.id %}" class="block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
+                            <a href="{% url 'users:apply' job.id %}" class="user-md-btn-full">
                                 立即應徵
                             </a>                            
                             <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
@@ -39,7 +39,7 @@
                             <div class="text-right">
                                 <p class="text-gray-700">有找到合適職缺嗎？</p>
                                 <p class="text-gray-700">EngiLink協助您找到更多心儀職缺！</p>
-                                <a href="{% url 'users:login' %}" class="inline-block px-4 py-2 mt-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">立即登入</a>
+                                <a href="{% url 'users:login' %}" class="text-user-blue hover:underline">立即登入</a>
                             </div>
                             {% endif %}
                         </div>

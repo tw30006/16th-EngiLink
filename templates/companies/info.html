@@ -20,7 +20,7 @@
                 <li class="flex items-center mb-2">
                     <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
                     <span class="ml-2">{{ company.address }}</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.address }}" target="_blank" class="inline-flex items-center ml-2 text-blue-500 hover:text-blue-700">
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ company.address }}" target="_blank" class="inline-flex items-center ml-2 text-user-blue">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
             </ul>
         </div>
         <div class="text-center">
-            <a href="#job-list" class="inline-block px-4 py-2 text-white bg-blue-500 rounded-lg">查看職缺 ({{ job_count }})</a>
+            <a href="#job-list" class="inline-block px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">查看職缺 ({{ job_count }})</a>
         </div>
     </div>
 
@@ -64,11 +64,11 @@
                             </div>
                             <div class="flex flex-row items-center justify-end w-full mt-4 space-x-4 md:flex-col md:items-start md:w-auto md:space-x-0 md:space-y-4 md:mt-0 md:flex-shrink-0">
                                 {% if request.user.user_type == 1 %}
-                                    <a href="{% url 'users:apply' job.id %}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</a>
-                                    <a href="{% url 'users:collect' %}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</a>
+                                    <a href="{% url 'users:apply' job.id %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">立即應徵</a>
+                                    <a href="{% url 'users:collect' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">收藏職缺</a>
                                 {% else %}
-                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">立即應徵</a>
-                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">收藏職缺</a>
+                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">立即應徵</a>
+                                    <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">收藏職缺</a>
                                 {% endif %}
                             </div>
                         </div>

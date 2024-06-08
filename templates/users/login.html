@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="container flex flex-col items-center justify-center max-w-lg pt-16 mx-auto">
-        <div class='flex items-center justify-center w-full p-4 text-white bg-blue-600 header-bar rounded-t-md'>
+        <div class='flex items-center justify-center w-full p-4 text-white bg-user-blue header-bar rounded-t-md'>
             <h2>求職者登入</h2>
         </div>
         <div class="flex flex-col w-full task-items-wrapper">
@@ -14,7 +14,7 @@
                     <br>
                     <div class="mb-4">
                         <div class="flex justify-end">
-                            <button type="submit" class="px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded button hover:bg-blue-600 hover:text-white">登入</button>
+                            <button type="submit" class="button user-md-btn">登入</button>
                         </div>
                     </div>
                 </form>
@@ -22,11 +22,11 @@
         </div>
         <small>
         <div class="flex flex-col space-y-4">
-            <a href="{% provider_login_url 'google' %}" class="flex items-center px-4 py-2 text-blue-600 no-underline bg-white border border-blue-600 rounded hover:bg-blue-600 hover:text-white">
+            <a href="{% provider_login_url 'google' %}" class="flex items-center px-4 py-2 text-user-blue no-underline bg-white border border-user-blue rounded hover:bg-white hover:text-user-blue  hover:border-user-blue">
                 <i class="mr-2 fa-brands fa-google"></i>
                 <span>Google帳號登入</span>
             </a>
-            <a href="{% url 'users:register' %}" class="block px-4 py-2 mt-4 text-center text-blue-600 no-underline bg-white border border-blue-600 rounded hover:bg-blue-600 hover:text-white">
+            <a href="{% url 'users:register' %}" class="block px-4 py-2 mt-4 text-center text-user-blue no-underline bg-white border border-user-blue rounded hover:bg-white hover:text-user-blue  hover:border-user-blue">
                 前往註冊
             </a>
         </div>

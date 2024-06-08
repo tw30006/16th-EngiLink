@@ -24,7 +24,7 @@
         </div>
         <div class="flex justify-center">
             {% if request.user.user_type == 1 %}
-            <a href="{% url 'users:apply' job.id %}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">立即應徵</a>
+            <a href="{% url 'users:apply' job.id %}" class="user-md-btn-full">立即應徵</a>
             {% else %}
             <p class="text-gray-700">想了解該筆職缺資訊嗎？立刻<a href="{% url 'users:login' %}" class="text-blue-500 hover:underline">登入</a></p>
             {% endif %}

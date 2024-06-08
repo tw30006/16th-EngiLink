@@ -3,16 +3,16 @@
 {% block content %}
 {% if not user.is_authenticated %}
     <div class="flex justify-center items-center h-screen">
-        <div class="flex flex-col justify-center items-center">
+        <div class="flex flex-col justify-center items-center mx-2">
             <img src="{% static 'img/logo.png' %}" class="w-40 mb-4 mr-2">
-            <h1 class="text-blue-800 font-bold text-5xl">EngiLink</h1>
+            <h1 class="text-user-blue font-bold text-5xl">EngiLink</h1>
             <br>
             <h4 class="text-xl mb-4">Connect me, just EngiLink</h4>
             <h4 class="text-xl mb-4">媒合英才，盡在EngiLink</h4>
-            <p class="italic font-light">Connecting top engineers and businesses worldwide. Join us now!</p>
+            <p class="italic font-light px-2 text-center">Connecting top engineers and businesses worldwide. Join us now!</p>
             <div class="flex">
-                <button class="bg-blue-800 text-white px-8 py-4 rounded-full mt-8 mr-4 hover:bg-blue-200 hover:text-black" onclick="location.href='{% url 'users:login' %}'">求職者登入</button>
-                <button class="bg-blue-800 text-white px-8 py-4 rounded-full mt-8 hover:bg-blue-200 hover:text-black" onclick="location.href='{% url 'companies:login' %}'">公司登入</button>
+                <button class="bg-user-blue text-white px-8 py-4 rounded-full mt-8 mr-4 hover:bg-white hover:text-user-blue hover:border-user-blue border" onclick="location.href='{% url 'users:login' %}'">求職者登入</button>
+                <button class="bg-user-blue text-white px-8 py-4 rounded-full mt-8 hover:bg-white hover:text-user-blue hover:border-user-blue border" onclick="location.href='{% url 'companies:login' %}'">公司登入</button>
             </div>
         </div>
         <div class="hidden lg:block">

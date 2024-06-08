@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.user-sm-btn {
+    @apply border border-solid border-user-blue p-2 text-user-blue rounded-md hover:text-white hover:bg-user-blue;
+}
+
+.user-md-btn {
+    @apply border border-solid border-user-blue py-2 px-4 text-user-blue rounded-md hover:text-white hover:bg-user-blue;
+}
+
+.user-md-btn-full {
+    @apply border border-solid bg-user-blue  py-2 px-4 text-white rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue;
+}

@@ -4,7 +4,7 @@
 <div class="container max-w-lg mx-auto mt-8">
     <div class="flex justify-center">
         <div class="w-full">
-            <div class="flex items-center justify-start p-4 text-white bg-blue-600 header-bar rounded-t-md">
+            <div class="flex items-center justify-start p-4 text-white bg-user-blue header-bar rounded-t-md">
                 <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
             </div>
             <div class="p-4 mt-4 shadow-md card-body">
@@ -42,8 +42,8 @@
                             <img id="preview" src="#" alt="Image Preview" class="border border-black w-72 h-72" />
                         </div>
                         <div class="flex justify-end w-full mt-4 space-x-2">
-                            <button type="submit" class="px-2 py-2 text-blue-600 bg-white border border-blue-600 button hover:bg-blue-600 hover:text-white">提交</button>
-                            <button type="submit" form="deleteForm" class="px-2 py-2 text-blue-600 bg-white border border-blue-600 button hover:bg-blue-600 hover:text-white">刪除</button>
+                            <button type="submit" class="user-sm-btn">提交</button>
+                            <button type="submit" form="deleteForm" class="user-sm-btn">刪除</button>
                         </div>
                     </form>
                 </div>

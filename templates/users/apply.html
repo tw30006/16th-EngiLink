@@ -12,7 +12,7 @@
                     {% if job_resume.accepted == 'accept' %}
                         {% if job_resume.interview_invitation %}
                             <div x-data="{ open: false }" class="mt-4">
-                                <button @click="open = !open" class="text-xl mb-2 text-blue-500">
+                                <button @click="open = !open" class="text-xl mb-2 text-user-blue">
                                     <strong>查看面試邀請信</strong>
                                 </button>
                                 <div x-show="open" class="mt-2 p-4 bg-gray-200 rounded-lg">
@@ -46,7 +46,7 @@
                             </form>
                             {% if job_resume.interview_invitation %}
                                 <div x-data="{ open: false }" class="mt-4">
-                                    <button @click="open = !open" class="text-xl mb-2 text-blue-500">
+                                    <button @click="open = !open" class="text-xl mb-2 text-user-blue">
                                         <strong>查看面試邀請信</strong>
                                     </button>
                                     <div x-show="open" class="mt-2 p-4 bg-gray-200 rounded-lg">

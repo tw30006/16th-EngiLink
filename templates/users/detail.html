@@ -11,7 +11,7 @@
         <p><span class="font-semibold">Email:</span> {{ user.email }}</p>
     </div>
     <div class="flex justify-end">
-        <a class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700" href="{% url 'users:update' user.id %}">編輯個人資料</a>
+        <a class="px-4 py-2 text-white bg-user-blue rounded hover:text-white hover:bg-user-blue" href="{% url 'users:update' user.id %}">編輯個人資料</a>
     </div>
 </div>
 {% endblock %}

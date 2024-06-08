@@ -109,7 +109,7 @@
         </div>
         <div class="flex justify-evenly my-4">
             {% for resume in total_data.resume_data %}
-            <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}" class="text-lg md:text-xl border border-solid border-blue-800 py-2 px-4 text-blue-800 rounded-md hover:text-white hover:bg-blue-800">下載PDF</a>
+            <a href="{% url 'resumes:generate_resume_pdf' resume.resume_id %}" class="text-lg md:text-xl user-md-btn">下載PDF</a>
             {% endfor %}
         </div>
     </div>

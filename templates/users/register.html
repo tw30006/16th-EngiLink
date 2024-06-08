@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="container mx-auto flex flex-col justify-center items-center max-w-lg pt-16">
-        <div class='header-bar flex justify-center items-center bg-blue-600 text-white p-4 rounded-t-md w-full'>
+        <div class='header-bar flex justify-center items-center bg-user-blue text-white p-4 rounded-t-md w-full'>
             <h2>註冊</h2>
         </div>
         <div class="task-items-wrapper flex flex-col w-full">
@@ -11,7 +11,7 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="flex justify-end">
-                        <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-4 py-2 hover:bg-blue-600 hover:text-white rounded">提交</button>
+                        <button type="submit" class="button user-md-btn">提交</button>
                     </div>
                 </form>
             </div>

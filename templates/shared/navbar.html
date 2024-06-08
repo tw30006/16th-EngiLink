@@ -15,16 +15,16 @@
                 <ul class="hidden md:flex md:items-center">
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                            <a href="{% url 'companies:company_list' %}"class="px-2 py-1 text-lg text-blue-800">找公司</a>
+                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-lg text-user-blue">找公司</a>
                         {% else %}
                             {% if user.company and user.company.id %}
                                 <a href="{% url 'companies:jobs' user.company.id %}">
-                                    <button class="px-2 py-1 text-lg text-blue-800">
+                                    <button class="px-2 py-1 text-lg text-user-blue">
                                         刊登職缺
                                     </button>
                                 </a>
                             {% else %}
-                                <button class="px-2 py-1 text-lg text-gray-500" disabled>
+                                <button class="px-2 py-1 text-lg text-user-blue" disabled>
                                     刊登職缺
                                 </button>
                             {% endif %}
@@ -32,10 +32,10 @@
                     </li>
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-blue-800">找工作</a>
+                        <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-user-blue">找工作</a>
                         {% else %}
                         <a href="{% url 'companies:applications' user.id %}">
-                            <button class="px-2 py-1 text-lg text-blue-800">
+                            <button class="px-2 py-1 text-lg text-user-blue">
                                 查看應徵
                             </button>
                         </a>
@@ -43,37 +43,42 @@
                     </li>
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-lg text-blue-800">履歷工具</a>
+                        <a href="{% url 'resumes:index' %}" class="px-2 py-1 text-lg text-user-blue">履歷工具</a>
                         {% else %}
                             {% if user.company and user.company.id %}
-                                <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-blue-800">查看公司資料</a>
+                                <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-user-blue">查看公司資料</a>
                             {% else %}
-                                <a href="#"  class="px-2 py-1 text-lg text-blue-800">查看公司資料</a>
+                                <a href="#"  class="px-2 py-1 text-lg text-user-blue">查看公司資料</a>
                             {% endif %}    
                         {% endif %}
                     </li>
                     
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{% url 'users:collect' %}" class="px-2 py-1 text-lg text-blue-800">我的收藏</a>
+                        <a href="{% url 'users:collect' %}" class="px-2 py-1 text-lg text-user-blue">我的收藏</a>
                         {% endif %}
                     </li>
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{%  url 'users:applications' user.id %}" class="px-2 py-1 text-lg text-blue-800">應徵紀錄</a>
+                        <a href="{%  url 'users:applications' user.id %}" class="px-2 py-1 text-lg text-user-blue">應徵紀錄</a>
                         {% endif %}
                     </li>
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
-                        <a href="{%  url 'users:calendar' %}" class="px-2 py-1 text-lg text-blue-800">面試行事曆</a>
+                        <a href="{%  url 'users:calendar' %}" class="px-2 py-1 text-lg text-user-blue">面試行事曆</a>
                         {% endif %}
                     </li>
                     <li class="px-2">
                         <form
                         action="{% url 'users:logout' %}" method="post">
                         {% csrf_token %}
-                        <button class="px-2 py-1 text-lg text-blue-800" tabindex="-1" id="user-menu-item-2">登出</button>
+                        {% if request.user.user_type == 1 %}
+                        <button class="px-2 py-1 text-lg text-user-blue" tabindex="-1" id="user-menu-item-2">登出</button>
                         </form>
+                        {% else %}
+                        <button class="px-2 py-1 text-lg text-company-green" tabindex="-1" id="user-menu-item-2">登出</button>
+                        </form>
+                        {% endif %}
                     </li>
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
@@ -83,7 +88,7 @@
                 </ul>
             </div>
             <div class="md:hidden">
-                <button type="button" class="inline-flex items-center justify-center p-2 text-blue-800 rounded-md hover:bg-blue-200 hover:text-white md:hidden" aria-controls="mobile-menu" aria-expanded="false" @click="openMenu = !openMenu">
+                <button type="button" class="inline-flex items-center justify-center p-2 text-user-blue rounded-md hover:bg-blue-200 hover:text-white md:hidden" aria-controls="mobile-menu" aria-expanded="false" @click="openMenu = !openMenu">
                     <span class="sr-only">Open menu</span>
                     <i class="fa-solid fa-bars block w-6 h-6"></i>
                 </button>
@@ -132,21 +137,21 @@
                 <div>
                     <ul class="hidden md:flex md:items-center">
                         <li class="px-1">
-                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-lg text-blue-800">找公司</a>
+                            <a href="{% url 'companies:company_list' %}" class="px-2 py-1 text-lg text-user-blue">找公司</a>
                         </li>
                         <li class="px-1">
-                            <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-blue-800">找工作</a>
+                            <a href="{% url 'jobs:job_list' %}" class="px-2 py-1 text-lg text-user-blue">找工作</a>
                         </li>
                         <li class="px-1">
-                            <a href="{% url 'users:login' %}" class="px-2 py-1 text-lg text-blue-800">求職者登入</a>
+                            <a href="{% url 'users:login' %}" class="px-2 py-1 text-lg text-user-blue">求職者登入</a>
                         </li>
                         <li class="px-1">
-                            <a href="{% url 'companies:login' %}" class="px-2 py-1 text-lg text-blue-800">公司登入</a>
+                            <a href="{% url 'companies:login' %}" class="px-2 py-1 text-lg text-user-blue">公司登入</a>
                         </li>
                     </ul>
                 </div>
                 <div class="md:hidden">
-                    <button type="button" class="inline-flex items-center justify-center p-2 text-blue-800 rounded-md hover:bg-blue-200 hover:text-white md:hidden" aria-controls="mobile-menu" aria-expanded="false" @click="openMenu = !openMenu">
+                    <button type="button" class="inline-flex items-center justify-center p-2 text-user-blue rounded-md hover:bg-blue-200 hover:text-white md:hidden" aria-controls="mobile-menu" aria-expanded="false" @click="openMenu = !openMenu">
                         <span class="sr-only">Open menu</span>
                         <i class="fa-solid fa-bars block w-6 h-6"></i>
                     </button>
