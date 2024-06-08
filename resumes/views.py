@@ -162,6 +162,7 @@ class TotalListView(ListView):
             "work_data": work_data,
             "project_data": project_data,
         }
+        context["is_total_page"] = True
         return context
 
 

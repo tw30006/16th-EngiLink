@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import Template, Context
@@ -15,6 +16,10 @@ from django.views.generic.detail import DetailView
 from jobs.models import Job_Resume, Job, User_Job
 from .models import Company, User_Company
 from .forms import CompanyRegisterForm, CompanyUpdateForm
+from resumes.models import Resume
+from educations.models import Education
+from projects.models import Project
+from works.models import Work
 import rules
 
 
@@ -242,17 +247,28 @@ class JobApplicationsView(ListView):
 
 class JobApplicationDetailView(DetailView):
     model = Job_Resume
-    template_name = "companies/candidate.html"
     context_object_name = "user"
+
+    def get_template_names(self):
+        job_resume = self.get_object()
+        resume = job_resume.resume
+        return [f"resumes/style{resume.style}.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.get_object()
-        resume = user.resume
-        context["resume"] = resume
-        context["educations"] = resume.educations.all()
-        context["works"] = resume.works.all()
-        context["projects"] = resume.projects.all()
+        job_resume = self.get_object()
+        resume = job_resume.resume
+        resume_data = [resume]
+        education_data = resume.educations.all()
+        work_data = resume.works.all()
+        project_data = resume.projects.all()
+
+        context["total_data"] = {
+            "resume_data": resume_data,
+            "education_data": education_data,
+            "work_data": work_data,
+            "project_data": project_data,
+        }
         return context
 
 

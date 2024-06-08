@@ -103,8 +103,10 @@
     </div>
 </div>
 <div class="flex justify-evenly my-4">
+    {% if is_total_page %}
     {% for resume in total_data.resume_data %}
     <a class="text-lg md:text-xl user-md-btn">下載PDF</a>
     {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

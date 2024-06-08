@@ -19,13 +19,13 @@
                         {% else %}
                             {% if user.company and user.company.id %}
                                 <a href="{% url 'companies:jobs' user.company.id %}">
-                                    <button class="px-2 py-1 text-lg text-blue-800">
+                                    <button class="px-2 py-1 text-lg text-company-green">
                                         職缺列表
                                     </button>
                                 </a>
 
                                 <a href="{% url 'companies:jobs_create' user.company.id %}">
-                                    <button class="px-2 py-1 text-lg text-blue-800">
+                                    <button class="px-2 py-1 text-lg text-company-green">
                                         刊登職缺
                                     </button>
                                 </a>
