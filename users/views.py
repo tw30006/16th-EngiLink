@@ -279,6 +279,7 @@ class ApplyForJobCreateView(View):
         job_id = request.POST.get("job_id")
         resume_id = request.POST.get("resume_id")
         Job_Resume.objects.create(job_id=job_id, resume_id=resume_id, status="applied")
+        messages.success(self.request, "投遞成功")
         return redirect("users:home")
 
 
@@ -314,9 +315,8 @@ class InterviewResponseView(View):
         if response in ["accept", "reject"]:
             job_resume.accepted = response
             job_resume.save()
-
+        messages.success(request, "已接受面試" if response == "accept" else "已拒絕面試")
         return redirect("users:home")
-
 
 class InterviewsCalendarView(View):
     def get(self, request):

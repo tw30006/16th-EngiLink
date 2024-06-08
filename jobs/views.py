@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -49,6 +50,7 @@ class AddView(CreateView):
 
     def form_valid(self, form):
         form.instance.company = get_object_or_404(Company, pk=self.kwargs.get("pk"))
+        messages.success(self.request, "新增成功")
         self.success_url = reverse(
             "companies:jobs", kwargs={"pk": form.instance.company.pk}
         )
@@ -76,6 +78,7 @@ class EditView(UpdateView):
 
     def form_valid(self, form):
         company_id = form.instance.company.id
+        messages.success(self.request, "更新成功")
         self.success_url = reverse("companies:jobs", kwargs={"pk": company_id})
         return super().form_valid(form)
     
@@ -92,6 +95,7 @@ class JobDeleteView(DeleteView):
 
     def get_success_url(self):
         pk = self.object.company.pk
+        messages.success(self.request, "刪除成功")
         return reverse("companies:jobs", kwargs={"pk": pk})
     
     def dispatch(self, request, *args, **kwargs):

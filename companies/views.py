@@ -60,7 +60,16 @@ class CompanyHomeView(PermissionRequiredMixin, TemplateView):
 
 
 class CompanyLoginView(LoginView):
-    template_name = "companies/login.html"
+    template_name = "companies/login.html"   
+    
+    def form_invalid(self, form):
+        messages.error(self.request, "登入失敗")
+        return super().form_invalid(form)
+    
+    def form_valid(self, form):
+        messages.success(self.request, "登入成功")
+        return super().form_valid(form)
+        
 
     def get_default_redirect_url(self):
         user = self.request.user
@@ -135,6 +144,9 @@ class CompanyUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView)
         context["user"] = self.object.custom_user
         return context
 
+    def form_valid(self, form):
+        messages.success(self.request, "更新成功")
+        return super().form_valid(form)
 
 class CompanyPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
     template_name = "companies/password_change_form.html"
@@ -262,6 +274,7 @@ class InterviewResultCreateView(View):
         job_resume.interview_date = interview_date
         job_resume.interview_invitation = interview_invitation
         job_resume.save()
+        messages.success(self.request, "發送成功")
         return redirect("companies:home")
 
 
