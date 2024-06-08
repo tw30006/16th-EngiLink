@@ -56,7 +56,7 @@ class ResumeListView(DetailView):
         context["resume"] = resume
         context["total_data"] = {
             "resume_data": [resume],
-            "education_data": resume.educations.all(),
+            "education_data": Education.edu_objects.filter(resume_id=resume.resume_id),
             "work_data": resume.works.all(),
             "project_data": resume.projects.all(),
         }

@@ -10,10 +10,24 @@
             {% if works %}
             <ul>
                 {% for work in works %}
-                    <strong><a href="{% url 'works:work_edit' work.pk %}">{{ work.company_name }} - {{ work.position }}</a></strong>
-                    <p>在職期間：{{ work.start_date |date:"Y年m月" }}--{{ work.end_date |date:"Y年m月" }}</p>
-                    <p>仍在職：{{ work.get_is_current_display }}</p>
-                    <hr>
+                    <li class="flex justify-between items-center mb-4">
+                        <div>
+                            <strong>{{ work.company_name }} - {{ work.position }}</strong>
+                            <p>在職期間：{{ work.start_date |date:"Y年m月" }}--{{ work.end_date |date:"Y年m月" }}</p>
+                            <p>仍在職：{{ work.get_is_current_display }}</p>
+                            <hr>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">
+                                <a href="{% url 'works:work_edit' work.pk %}">編輯</a>
+                            </button>
+                            <form method="post" action="{% url 'works:work_delete' work.pk %}" onsubmit="return confirm('確定要刪除嗎？');">
+                                {% csrf_token %}
+                                <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
+                            </form>
+                        </div>
+                    </li>
+                    
                 {% endfor %}
             </ul>
         {% else %}

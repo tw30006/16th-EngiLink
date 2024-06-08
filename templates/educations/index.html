@@ -11,10 +11,24 @@
             {% if educations %}
                 <ul>
                     {% for education in educations %}
-                        <strong>{{ education.school_name }} - {{ education.major }}</strong> <a href="{% url 'educations:edu_edit' education.id %}">編輯</a>  <a href="{% url 'educations:edu_delete' education.pk %}">刪除</a>
-                        <p>學位：{{ education.get_degree_display }}</p>
-                        <p>入學期間： {{ education.start_date |date:"Y年m月" }}--{{ education.end_date |date:"Y年m月" }}</p>
-                        <hr>
+                        <li class="flex justify-between items-center mb-4">
+                            <div>
+                                <strong>{{ education.school_name }} - {{ education.major }}</strong>
+                                <p>學位：{{ education.get_degree_display }}</p>
+                                <p>入學期間： {{ education.start_date |date:"Y年m月" }}--{{ education.end_date |date:"Y年m月" }}</p>
+                                <hr>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">
+                                    <a href="{% url 'educations:edu_edit' education.id %}">編輯</a>
+                                </button>
+                                <form method="post" action="{% url 'educations:edu_delete' education.pk %}" onsubmit="return confirm('確定要刪除嗎？');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
+                                </form>
+                            </div>
+            
+                        </li>
                     {% endfor %}
                 </ul>
             {% else %}

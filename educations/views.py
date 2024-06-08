@@ -57,7 +57,7 @@ class EducationListView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         resume_id = self.kwargs['pk']
-        return Education.objects.filter(resume_id=resume_id)
+        return Education.edu_objects.filter(resume_id=resume_id)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -96,11 +96,7 @@ class EducationDeleteView(DeleteView):
         if not rules.test_rule("is_education_user", request.user, resume):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
-    
-    def delete(self, request, *args, **kwargs):
-        response = super().delete(request, *args, **kwargs)
-        messages.success(self.request, "刪除成功")
-        return response
 
     def get_success_url(self):
+        messages.success(self.request, "刪除成功")
         return reverse_lazy('resumes:educations', kwargs={'pk': self.object.resume.pk})

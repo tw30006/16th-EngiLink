@@ -96,12 +96,8 @@ class WorkDeleteView(DeleteView):
         if not rules.test_rule("is_work_user", request.user, resume):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
-    
-    def delete(self, request, *args, **kwargs):
-        response = super().delete(request, *args, **kwargs)
-        messages.success(self.request, "刪除成功")
-        return response
 
     def get_success_url(self):
+        messages.success(self.request, "刪除成功")
         return reverse_lazy('resumes:works', kwargs={'pk': self.object.resume.pk})
 

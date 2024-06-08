@@ -10,11 +10,25 @@
             {% if projects %}
             <ul>
                 {% for project in projects %}
-                    <strong><a href="{% url 'projects:project_edit' project.id %}">{{ project.project_name }}</a></strong>
-                    <p>負責部分：{{ project.responsibility }}</p>
-                    <p>技術運用： {{ project.technologies_used }}</p>
-                    <p>說明：{{project.description}}</p>
-                    <hr>
+                <li class="flex justify-between items-center mb-4">
+                    <div>
+                        <strong>{{ project.project_name }}</strong>
+                        <p>負責部分：{{ project.responsibility }}</p>
+                        <p>技術運用： {{ project.technologies_used }}</p>
+                        <p>說明：{{project.description}}</p>
+                        <hr>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">
+                            <a href="{% url 'projects:project_edit' project.id %}">編輯</a>
+                        </button>
+                        <form method="post" action="{% url 'projects:project_delete' project.pk %}" onsubmit="return confirm('確定要刪除嗎？');">
+                            {% csrf_token %}
+                            <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
+                        </form>
+                    </div>
+                </li>
+                    
                 {% endfor %}
             </ul>
         {% else %}
