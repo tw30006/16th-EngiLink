@@ -28,8 +28,8 @@ class EducationCreateView(PermissionRequiredMixin, CreateView):
         return Education.objects.filter(resume_id=resume_id)
 
     def form_valid(self, form):
+        form.instance.resume = self.resume
         messages.success(self.request, "新增成功")
-        self.object = form.save()
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):

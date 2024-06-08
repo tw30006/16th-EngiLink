@@ -23,7 +23,7 @@ class WorkForm(forms.ModelForm):
 
     class Meta:
         model = Work
-        exclude = ["deleted_at", "created_at", "posit"]
+        exclude = ["resume", "deleted_at", "created_at", "posit"]
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request", None)

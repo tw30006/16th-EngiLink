@@ -25,8 +25,8 @@ class ProjectCreateView(PermissionRequiredMixin,CreateView):
             return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
+        form.instance.resume = self.resume
         messages.success(self.request, "新增成功")
-        self.object = form.save()
         return super().form_valid(form)
     
     def get_queryset(self):

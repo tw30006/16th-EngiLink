@@ -28,7 +28,7 @@ class WorkCreateView(PermissionRequiredMixin, CreateView):
         return Work.objects.filter(resume_id=resume_id)
     
     def form_valid(self, form):
-        self.object = form.save()
+        form.instance.resume = self.resume
         messages.success(self.request, "新增成功")
         return super().form_valid(form)
     

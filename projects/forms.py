@@ -7,16 +7,16 @@ class ProjectForm(forms.ModelForm):
         choices=Project.SKILL_CHOICES, widget=forms.CheckboxSelectMultiple
     )
 
-    class Meta:
-        model = Project
-        exclude = ["deleted_at", "created_at", "posit"]
-
     field_labels = {
         "project_name": "專案名稱",
         "responsibility": "負責項目",
         "technologies_used": "技能使用",
         "description": "說明",
     }
+
+    class Meta:
+        model = Project
+        exclude = ["resume", "deleted_at", "created_at", "posit"]
 
     def clean_skills(self):
         return ", ".join(self.cleaned_data["technologies_used"])
