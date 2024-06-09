@@ -102,8 +102,8 @@ class ResumeForm(forms.ModelForm):
         if phone_number is None:
             return phone_number
     
-        if len(phone_number) != 10 or not phone_number.startswith("09"):
-            raise ValidationError("輸入格式錯誤, 電話必須是10碼並以09開頭!")
+        if len(phone_number) != 10:
+            raise ValidationError("輸入格式錯誤, 電話必須是10碼!")
         return phone_number
 
     def clean_address(self):

@@ -157,6 +157,6 @@ class CompanyUpdateForm(UserChangeForm):
 
     def clean_tel(self):
         tel = self.cleaned_data.get("tel")
-        if len(tel) != 10 or not tel.startswith("09"):
-            raise ValidationError("輸入格式錯誤, 電話必須是10碼並以09開頭!")
+        if len(tel) != 10:
+            raise ValidationError("輸入格式錯誤, 電話必須是10碼!")
         return tel
