@@ -18,12 +18,12 @@
                             <hr>
                         </div>
                         <div class="flex space-x-2">
-                            <button class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">
+                            <button class="button user-sm-btn">
                                 <a href="{% url 'works:work_edit' work.pk %}">編輯</a>
                             </button>
                             <form method="post" action="{% url 'works:work_delete' work.pk %}" onsubmit="return confirm('確定要刪除嗎？');">
                                 {% csrf_token %}
-                                <button type="submit" class="button border border-blue-600 bg-white text-blue-600 px-2 py-2 hover:bg-blue-600 hover:text-white">刪除</button>
+                                <button type="submit" class="button user-sm-btn">刪除</button>
                             </form>
                         </div>
                     </li>
