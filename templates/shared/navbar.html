@@ -30,7 +30,7 @@
                                     </button>
                                 </a>
                             {% else %}
-                                <button class="px-2 py-1 text-lg text-user-blue" disabled>
+                                <button class="px-2 py-1 text-lg text-company-green" disabled>
                                     刊登職缺
                                 </button>
                             {% endif %}
@@ -54,7 +54,7 @@
                             {% if user.company and user.company.id %}
                                 <a href="{% url 'companies:detail' user.company.id %}"  class="px-2 py-1 text-lg text-company-green">查看公司資料</a>
                             {% else %}
-                                <a href="#"  class="px-2 py-1 text-lg text-user-blue">查看公司資料</a>
+                                <a href="#"  class="px-2 py-1 text-lg text-company-green">查看公司資料</a>
                             {% endif %}    
                         {% endif %}
                     </li>
