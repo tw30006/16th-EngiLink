@@ -1,7 +1,7 @@
 {% extends "backend.html" %}
 {% block content %}
-    <div class="flex justify-center py-8">
-        <div class="w-full max-w-lg p-6 mb-6 bg-white rounded-lg shadow-md">
+    <div class="flex justify-center py-8 px-4 md:px-0">
+        <div class="w-full sm:max-w-md md:max-w-lg p-6 mb-6 bg-white rounded-lg shadow-md md:p-6 md:mb-6">
             <h1 class="px-4 py-2 mb-6 text-2xl text-white text-center bg-company-green rounded">刊登職缺</h1>
             <form method="post" class="space-y-4">
                 {% csrf_token %}
@@ -18,19 +18,15 @@
                                 <textarea name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="w-full h-32 p-2 border border-gray-300 rounded-md">{{ field.value|default_if_none:'' }}</textarea>
                             {% elif field.label == "人數需求" %}
                                 <div class="flex items-center w-full space-x-2">
-                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
-                                    <span class="text-lg font-medium text-gray-700">人</span>
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md" placeholder="人">
                                 </div>
                             {% elif field.label == "工作經驗" %}
                                 <div class="flex items-center w-full space-x-2">
-                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">
-                                    <span class="text-lg font-medium text-gray-700">年</span>
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md" placeholder="年">
                                 </div>
                             {% elif field.label == "工作薪資" %}
                                 <div class="flex items-center w-full space-x-2">
-                                    <span class="text-lg font-medium text-gray-700 whitespace-nowrap">月薪 NT$</span>
-                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="flex-grow p-2 border border-gray-300 rounded-md">
-                                    <span class="text-lg font-medium text-gray-700">元</span>
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md" placeholder="NT$xxxxx元">
                                 </div>
                             {% else %}
                                 <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" id="{{ field.id_for_label }}" class="w-full p-2 border border-gray-300 rounded-md">

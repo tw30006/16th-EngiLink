@@ -118,7 +118,7 @@
                 {% elif request.user.user_type == 2 %}
                     {% if user.company and user.company.id %}
                         <a href="{% url 'companies:detail' user.company.id %}"  class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" >查看公司資料</a>
-                        <a href="{% url 'companies:jobs' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
+                        <a href="{% url 'companies:jobs_create' user.company.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white" aria-current="page">刊登職缺</a>
                     {% endif %}
                     
                     <a href="{% url 'companies:applications' user.id %}" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-700 hover:text-white">查看應徵</a>
