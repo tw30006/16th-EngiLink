@@ -184,10 +184,13 @@ class CompanyListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        favorite_company_ids = User_Company.objects.filter(
-            user=self.request.user, collect=True
-        ).values_list("company_id", flat=True)
-        context["favorite_company_ids"] = favorite_company_ids
+        if self.request.user.is_authenticated:
+            favorite_company_ids = User_Company.objects.filter(
+                user=self.request.user, collect=True
+            ).values_list("company_id", flat=True)
+            context["favorite_company_ids"] = favorite_company_ids
+        else:
+            context["favorite_company_ids"] = []
         return context
 
 
