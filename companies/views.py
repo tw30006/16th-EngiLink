@@ -60,9 +60,15 @@ class CompanyRegisterView(FormView):
 
 
 class CompanyHomeView(PermissionRequiredMixin, TemplateView):
+    model = Company
     template_name = "companies/home.html"
     permission_required = "company_can_show"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        company = Company.objects.get(custom_user=self.request.user)
+        context["company"] = company
+        return context
 
 class CompanyLoginView(LoginView):
     template_name = "companies/login.html"   
