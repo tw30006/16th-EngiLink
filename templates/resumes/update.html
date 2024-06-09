@@ -9,8 +9,8 @@
             </div>
             <div class="p-4 mt-4 shadow-md card-body">
                 <h3 class="mb-4 text-lg font-semibold">編輯個人信息</h3>
-                <div>
-                    <form method="post" id="myForm" action="{% url 'resumes:edit' pk=resume.pk %}" enctype="multipart/form-data" class="flex flex-wrap">
+                <div x-data>
+                    <form method="post" id="myForm" action="{% url 'resumes:edit' pk=resume.pk %}" enctype="multipart/form-data" class="flex flex-wrap" @submit.prevent="showProcessingMessage($event)">
                         {% csrf_token %}
                         <div class="w-full md:w-2/3">
                             {% for field in form %}
@@ -54,4 +54,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

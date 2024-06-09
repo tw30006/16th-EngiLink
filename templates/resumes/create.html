@@ -8,9 +8,9 @@
                     <a href="{% url 'resumes:index' %}" class="text-white">&#8592;Back</a>
                 </div>
 
-                <div class="p-4 mt-4 shadow-md card-body">
+                <div class="p-4 mt-4 shadow-md card-body" x-data>
                     <h3 class="mb-4 text-lg font-semibold">新增個人資料</h3>
-                    <form method="post" id="myForm" action="{% url 'resumes:create' %}" enctype="multipart/form-data">
+                    <form method="post" id="myForm" action="{% url 'resumes:create' %}" enctype="multipart/form-data" @submit.prevent="showProcessingMessage($event)">
                         {% csrf_token %}
                         <div class="w-full md:w-2/3">
                             {% for field in form %}

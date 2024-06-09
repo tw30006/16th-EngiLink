@@ -1,5 +1,4 @@
 import { Sortable } from '@shopify/draggable';
-
 function dragElement(element){
     const sortable = new Sortable(document.querySelectorAll('.drag-container'), {
         draggable: '.drag',

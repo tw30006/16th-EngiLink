@@ -218,7 +218,6 @@ class CollectJobView(LoginRequiredMixin, View):
                 return HttpResponse(button_html)
             return redirect("users:home")
         except Exception as e:
-            logger.error("Error in post method: %s", e)
             return HttpResponse("Internal Server Error", status=500)
     
     def get(self, request):
