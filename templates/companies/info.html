@@ -69,7 +69,11 @@
                             <div class="flex flex-row items-center justify-end w-full mt-4 space-x-4 md:flex-col md:items-start md:w-auto md:space-x-0 md:space-y-4 md:mt-0 md:flex-shrink-0">
                                 {% if request.user.user_type == 1 %}
                                     <a href="{% url 'users:apply' job.id %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">立即應徵</a>
-                                    <a href="{% url 'users:collect' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">收藏職缺</a>
+                                    <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="job_id" value="{{ job.id }}">
+                                        {% include 'shared/collect_btn.html' %}
+                                    </form>
                                 {% else %}
                                     <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">立即應徵</a>
                                     <a href="{% url 'users:login' %}" class="px-4 py-2 text-white bg-user-blue rounded-md hover:bg-white hover:border-user-blue hover:text-user-blue border">收藏職缺</a>

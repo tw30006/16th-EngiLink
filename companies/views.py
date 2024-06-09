@@ -211,6 +211,8 @@ class CompanyInfoView(DetailView):
         context["address"] = self.object.address[3:]
         context["job_count"] = self.object.jobs.count()
         context["jobs"] = self.object.jobs.all()
+        collected_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
+        context["user_jobs"] = list(collected_jobs)
         return context
 
 
