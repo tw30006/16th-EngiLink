@@ -1,4 +1,5 @@
 {% extends 'frontend.html' %}
+{% load static %}
 {% load humanize %}
 {% block content %}
 {% if user.is_authenticated %}
@@ -30,7 +31,7 @@
                                 {% if job.company.logo %}
                                     <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
                                 {% else %}
-                                    <img src="/static/images/default_logo.jpg" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
+                                    <img src="{% static 'img/company.jpg' %}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
                                 {% endif %}
                                 <div class="overflow-hidden whitespace-nowrap">
                                     <h3 class="text-lg font-semibold truncate">{{ job.title }}</h3>
@@ -71,7 +72,7 @@
                                     </div>
                                 {% else %}
                                     <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
-                                        <img src="/static/images/default_banner.jpg" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                                        <img src="{% static 'img/company_banner.webp' %}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
                                     </div>
                                 {% endif %}
                             </div>
@@ -80,7 +81,7 @@
                                     {% if company.logo %}
                                         <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
                                     {% else %}
-                                        <img src="/static/images/default_logo.jpg" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                                        <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
                                     {% endif %}
                                     <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
                                 </div>
