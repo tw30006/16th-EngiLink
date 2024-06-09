@@ -98,12 +98,19 @@ class ResumeForm(forms.ModelForm):
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get("phone_number")
+
+        if phone_number is None:
+            return phone_number
+    
         if len(phone_number) != 10 or not phone_number.startswith("09"):
             raise ValidationError("輸入格式錯誤, 電話必須是10碼並以09開頭!")
         return phone_number
 
     def clean_address(self):
         address = self.cleaned_data.get("address")
+
+        if address is None:
+            return address
 
         if not re.match(r"^[\u4e00-\u9fa5a-zA-Z0-9-]+$", address):
             raise ValidationError("請輸入正確格式!")
