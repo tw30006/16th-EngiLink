@@ -16,7 +16,7 @@
                             <p class="text-red-500"><strong>求職者已取消應徵</strong> <br>{{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
                         {% else %}
                         <div class="text-right">
-                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">查看求職者履歷</a>
+                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">查看履歷</a>
                         </div>
                         {% endif %}
                     </div>
