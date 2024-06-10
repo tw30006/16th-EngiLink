@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import logout, login, get_backends
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import Template, Context
@@ -16,10 +15,7 @@ from django.views.generic.detail import DetailView
 from jobs.models import Job_Resume, Job, User_Job
 from .models import Company, User_Company
 from .forms import CompanyRegisterForm, CompanyUpdateForm
-from resumes.models import Resume
-from educations.models import Education
-from projects.models import Project
-from works.models import Work
+from django.contrib.auth.models import AnonymousUser
 import rules
 
 
@@ -211,8 +207,13 @@ class CompanyInfoView(DetailView):
         context["address"] = self.object.address[3:]
         context["job_count"] = self.object.jobs.count()
         context["jobs"] = self.object.jobs.all()
-        collected_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
-        context["user_jobs"] = list(collected_jobs)
+
+        if isinstance(self.request.user, AnonymousUser):
+            context["user_jobs"] = []
+        else:
+            collected_jobs = User_Job.objects.filter(user=self.request.user).values_list('job_id', flat=True)
+            context["user_jobs"] = list(collected_jobs)
+            
         return context
 
 
