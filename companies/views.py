@@ -305,6 +305,18 @@ class InterviewResultCreateView(View):
         return redirect("companies:home")
 
 
+class CompanyInterviewsCalendarView(View):
+    def get(self, request):
+        company_user = request.user 
+        interviews = Job_Resume.objects.filter(
+            job__company=company_user.company,  
+            interview_date__isnull=False,
+            accepted="accept"
+        )
+
+        context = {"interviews": interviews}
+        return render(request, "companies/calendar.html", context)
+
 class FavoriteCompanyView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         company = get_object_or_404(Company, id=self.kwargs["company_id"])

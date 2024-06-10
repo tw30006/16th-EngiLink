@@ -14,6 +14,7 @@ from .views import (
     MarkAsReadView,
     InterviewResultCreateView,
     FavoriteCompanyView,
+    CompanyInterviewsCalendarView
 )
 from jobs import views as jobs
 
@@ -48,4 +49,5 @@ urlpatterns = [
         FavoriteCompanyView.as_view(),
         name="favorite_company",
     ),
+    path('calendar/', CompanyInterviewsCalendarView.as_view(), name='calendar'),
 ]

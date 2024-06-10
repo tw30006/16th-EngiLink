@@ -62,6 +62,8 @@
                     <li class="px-2">
                         {% if request.user.user_type == 1 %}
                         <a href="{% url 'users:collect' %}" class="px-2 py-1 text-lg text-user-blue">我的收藏</a>
+                        {% else %}
+                        <a href="{%  url 'companies:calendar' %}" class="px-2 py-1 text-lg text-company-green">面試行事曆</a>
                         {% endif %}
                     </li>
                     <li class="px-2">
