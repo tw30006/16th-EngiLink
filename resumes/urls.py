@@ -6,7 +6,9 @@ from .views import (
     ResumeUpdateView,
     ResumeDeleteView,
     TotalListView,
-    generate_resume_pdf,
+    generate_pdf_1,
+    generate_pdf_2,
+    generate_pdf_3,
     update_positions,
     UpdateStyleView,
     update_template,
@@ -22,9 +24,9 @@ urlpatterns = [
     path("create/", ResumeCreateView.as_view(), name="create"),
     path("edit/<pk>", ResumeUpdateView.as_view(), name="edit"),
     path("delete/<pk>", ResumeDeleteView.as_view(), name="delete"),
-    path(
-        "resume/<int:resume_id>/pdf/", generate_resume_pdf, name="generate_resume_pdf"
-    ),
+    path("resume/<int:resume_id>/pdf_1/", generate_pdf_1, name="generate_pdf_1"),
+    path("resume/<int:resume_id>/pdf_2/", generate_pdf_2, name="generate_pdf_2"),
+    path("resume/<int:resume_id>/pdf_3/", generate_pdf_3, name="generate_pdf_3"),
     path("total/<int:resume_id>", TotalListView.as_view(), name="total"),
     path("update_positions/", update_positions, name="update_positions"),
     path("<pk>/education/", EducationCreateView.as_view(), name="education"),
@@ -34,6 +36,6 @@ urlpatterns = [
     path("<pk>/project/", ProjectCreateView.as_view(), name="project"),
     path("<pk>/projects/", ProjectListView.as_view(), name="projects"),
     path("update_style/<int:resume_id>", UpdateStyleView.as_view(), name="update_style"),
-    path('<int:resume_id>/update_template', update_template, name='update_template'),
+    path("<int:resume_id>/update_template", update_template, name="update_template"),
     path("<pk>/", ResumeListView.as_view(), name="show"),
 ]

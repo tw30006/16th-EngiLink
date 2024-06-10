@@ -166,7 +166,7 @@ class TotalListView(ListView):
         return context
 
 
-def generate_resume_pdf(request, resume_id):
+def generate_pdf_1(request, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
@@ -178,7 +178,57 @@ def generate_resume_pdf(request, resume_id):
     }
 
     html_string = render_to_string(
-        "pdf_template.html", {"user": user, "total_data": total_data}
+        "pdf_template1.html", {"user": user, "total_data": total_data}
+    )
+
+    pdf = HTML(string=html_string).write_pdf()
+
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'attachment; filename="resume_{user.username}.pdf"'
+    )
+
+    return response
+
+
+def generate_pdf_2(request, resume_id):
+    resume = get_object_or_404(Resume, pk=resume_id)
+    user = resume.user
+
+    total_data = {
+        "resume_data": [resume],
+        "education_data": Education.objects.filter(resume=resume),
+        "work_data": Work.objects.filter(resume=resume),
+        "project_data": Project.objects.filter(resume=resume),
+    }
+
+    html_string = render_to_string(
+        "pdf_template2.html", {"user": user, "total_data": total_data}
+    )
+
+    pdf = HTML(string=html_string).write_pdf()
+
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'attachment; filename="resume_{user.username}.pdf"'
+    )
+
+    return response
+
+
+def generate_pdf_3(request, resume_id):
+    resume = get_object_or_404(Resume, pk=resume_id)
+    user = resume.user
+
+    total_data = {
+        "resume_data": [resume],
+        "education_data": Education.objects.filter(resume=resume),
+        "work_data": Work.objects.filter(resume=resume),
+        "project_data": Project.objects.filter(resume=resume),
+    }
+
+    html_string = render_to_string(
+        "pdf_template3.html", {"user": user, "total_data": total_data}
     )
 
     pdf = HTML(string=html_string).write_pdf()

@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <title>EngiLink</title>
+  </head>
+  <body>
+    <div class="md:container md:w-1/2 my-3 m-auto shadow-lg" style="margin: 40px auto;">
+      <div class=" bg-lime-700" style="background-color: #4d7c0f;">
+          <section class="flex items-center p-4 md:px-8 py-3">
+              {% for resume in total_data.resume_data %}
+              <div class="flex flex-col items-center">
+                  {% if resume.picture %}
+                  <div class="flex items-center justify-center mb-2">
+                      <img src="{{ resume.picture.url }}" class="rounded-full w-32 h-32 border-2">
+                  </div>
+              {% endif %}
+                  <h2 class="text-white text-lg font-bold">{{ resume.name }}</h2>
+              </div>
+              <div class="ml-8">
+                  <p class="text-gray-200 text-base" style="color: #e5e7eb;">網頁工程師</p>
+                  <div class="flex">
+                      <p class="text-gray-200 text-sm" style="color: #e5e7eb;">{{ resume.address }}</p>
+                      <p class="text-gray-200 text-sm ml-5" style="color: #e5e7eb;">{{ resume.birthday }}</p>
+                  </div>
+                  <div>
+                      <p class="text-gray-200 text-sm" style="color: #e5e7eb;">{{ resume.phone_number }}</p>
+                      <div class="flex">
+                          <p class="text-gray-200 text-sm" style="color: #e5e7eb;">{{ resume.email }}</p>
+                          <a href="{{ resume.github }}" class="text-gray-200 hover:text-gray-900 flex items-center ml-3 mb-1" style="color: #e5e7eb;">
+                              <i class="fab fa-github text-base mr-2"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>   
+          </section>
+          {% endfor %}
+      </div>
+      <div class="p-4 md:px-8 py-5">
+          <section class="drag-container">
+              {% if total_data.project_data %}
+                  <h2 class="text-gray-700 text-lg font-bold">專案經驗</h2>
+                  <hr class="mb-5 w-1/6 bg-lime-700 h-1" style="background-color: #4d7c0f; margin-bottom: 1.25rem; width: 16.666667%; height: 0.25rem;">
+                  {% for project in total_data.project_data %}
+                      <div class="mb-4 drag " data-id="project-{{ project.id }}">
+                          <div>
+                              <p class="text-gray-700 font-bold text-base mb-1">{{ project.project_name }}</p>
+                              <p class="text-gray-700 text-sm mb-1">項目：<span class="text-gray-500">{{ project.responsibility }}
+                              </span></p>
+                              {% for technology in project.get_technologies %}
+                              <p class="text-gray-700 text-sm">技術：<span class="text-gray-500 text-sm">{{ technology }}</span></p>
+                              
+                              {% endfor %}
+                          </div>
+                          <div class="mt-2">
+                              <p class="text-gray-700 text-sm">說明：</p>
+                              <p class="text-gray-500 text-sm leading-relaxed">{{ project.description }}</p>
+                          </div>
+                          
+                      </div>
+                  {% endfor %}
+              {% endif %}
+          </section>
+          <section class="drag-container">
+              {% if total_data.work_data %}
+                  <h2 class="text-gray-700 text-lg font-bold">工作經驗</h2>
+                  <hr class="mb-5 w-1/6 bg-lime-700 h-1" style="background-color: #4d7c0f; margin-bottom: 1.25rem; width: 16.666667%; height: 0.25rem;">
+                  {% for work in total_data.work_data %}
+                  <div class="drag" data-id="work-{{ work.id }}">
+                      <div class="flex flex-col md:flex-row md:items-center mt-2">
+                          <p class="text-gray-700 text-base mr-4">{{work.position}} </p>
+                          <p class="text-gray-700 text-sm ml-4">{{ work.start_date}} - {{ work.end_date}}</p>
+                      </div>
+                      <ul class="list-disc ml-4 text-gray-500">
+                          <li class="text-sm">{{ work.company_name }}</li>
+                      </ul>
+                  </div>
+                  {% endfor %}
+              {% endif %}
+          </section>
+      </div>
+      <div class="bg-lime-700 p-4 md:px-8 py-4" style="background-color: #4d7c0f;">
+          <section class="drag-container">
+              {% if total_data.education_data %}
+              <h2 class="text-white text-lg font-bold">教育經驗</h2>
+              <hr class="w-full h-0.5">
+              {% for education in total_data.education_data %}
+                  <div class="my-4 drag" data-id="education-{{ education.id }}">
+                      <div class="flex flex-col md:flex-row md:items-center justify-between mt-2">
+                          <p class="text-gray-200 text-base" style="color: #e5e7eb;">{{ education.school_name }}</p>
+                          <p class="text-gray-200 text-base sm:text-base" style="color: #e5e7eb;">{{education.major}}</p>
+                          <p class="text-gray-200 text-sm sm:text-base" style="color: #e5e7eb;">{{ education.start_date}} - {{ education.end_date}}</p>
+                      </div>
+                  </div>
+                  {% endfor %}
+              {% endif %}
+          </section>
+          <section class="flex flex-col md:flex-row justify-between">
+              <div class="flex-1 mb-4 md:mb-0">
+                  <h2 class="text-white font-bold text-lg">技能</h2>
+                  <hr class="w-full h-0.5">
+                  {% for resume in total_data.resume_data %}    
+                  <div class="text-gray-200 text-sm markdown-content" style="color: #e5e7eb;">{{ resume.skills|linebreaksbr }}</div>
+              </div>
+              {% endfor %}
+          </section>
+      </div>
+  </div>
+  </body>
+</html>
+

@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <title>EngiLink</title>
+  </head>
+  <body>
+    <div class="container flex flex-col md:flex-row justify-center m-auto sm:my-10" style="display: flex; justify-content: center; width: 80%;">
+        <div class="bg-blue-900 h-auto sm:p-8 p-4" style="background-color: #1e3a8a; box-sizing: border-box;
+        flex-shrink: 0; height: auto;">
+            {% for resume in total_data.resume_data %}
+            {% if resume.picture %}
+            <div class="flex items-center justify-center mb-8">
+                <img src="{{ resume.picture.url }}" class="rounded-full w-32 border-2 h-32">
+            </div>
+            {% endif %}
+            <h2 class="text-white text-lg font-bold">簡介</h2>
+            <hr class="mb-4 w-1/6 bg-white h-0.5">
+            <p class="text-white text-lg mb-2">{{ resume.name }}</p>
+            <div class="flex justify-between">
+                <p class="text-gray-400 text-sm" style="color: #9ca3af;">{{ resume.get_gender_display }}</p>
+                <p class="text-gray-400 text-sm" style="color: #9ca3af;">{{ resume.birthday }}</p>
+            </div>
+            <p class="text-gray-400 text-sm" style="color: #9ca3af;">{{ resume.address }}</p>
+            <p class="text-gray-400 text-sm" style="color: #9ca3af;">{{ resume.email }}</p>
+            {% endfor %}
+            <section class="drag-container mt-4">
+                {% if total_data.education_data %}
+                <h2 class="text-white text-lg font-bold">教育經驗</h2>
+                <hr class="mb-5 w-1/6 bg-white h-0.5"></hr>
+                {% for education in total_data.education_data %}
+                    <div class="my-4 drag" data-id="education-{{ education.id }}">
+                        <p class="text-gray-400 text-lg" style="color: #9ca3af;">{{ education.school_name }}</p>
+                        <p class="text-gray-400 text-sm" style="color: #9ca3af;">{{education.major}} - <span text-gray-400 text-sm>{{ education.get_degree_display }}</span></p>
+                        <p class="text-gray-400 text-sm" style="color: #9ca3af";>{{ education.start_date}} - <span class="text-gray-400 text-sm" 
+                            style="color: #9ca3af;">{{ education.end_date}}</span></p>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </section>
+            {% for resume in total_data.resume_data %}
+            <h2 class="text-white text-lg font-bold">技能</h2>
+            <hr class="mb-4 w-1/6 bg-white h-0.5"></hr>
+            <div class="text-gray-400 text-sm markdown-content" style="color: #9ca3af;">{{ resume.skills|linebreaksbr }}</div>
+            {% endfor %}
+        </div>
+        <div class="bg-gray-100 md:w-[60%] w-full h-full sm:p-6" style="@media (min-width: 768px) {
+            .custom-box {
+                width: 40%;
+            }
+        } box-sizing: border-box; flex-grow: 1; height: auto;">
+            <section class="drag-container">
+                {% if total_data.project_data %}
+                <h2 class="text-gray-700 text-lg">專案經驗</h2>
+                <hr class="mb-5 w-1/6 bg-gray-700 h-1">
+                {% for project in total_data.project_data %}
+                <div class="mb-4 drag" data-id="project-{{ project.id }}">
+                    <p class="text-gray-700 text-base font-bold">{{ project.project_name }}</p>
+                    <p class="text-gray-700 text-sm">項目：<span class="text-gray-700">{{ project.responsibility }}
+                    </span></p>
+                    {% for technology in project.get_technologies %}
+                    <p class="text-gray-700 text-sm">技術：<span class="text-gray-700">{{ technology }}
+                    </span></p>
+                    {% endfor %}
+                    <p class="text-gray-700 text-sm leading-relaxed">說明：<span class="text-gray-700">{{project.description}}
+                    </span></p>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </section>
+            <section class="my-5 drag-container">
+                {% if total_data.work_data %}
+                <h2 class="text-gray-700 text-lg">工作經驗</h2>
+                <hr class="mb-5 w-1/6 bg-gray-700 h-1">
+                {% for work in total_data.work_data %}
+                <div class="drag mt-2" data-id="work-{{ work.id }}">
+                    <h3 class="text-gray-700 text-base">{{work.position}}</h3>
+                    <ul class="list-disc ml-4 text-gray-500">
+                        <li>{{ work.company_name }}</li>
+                        <li>{{ work.start_date}} - {{ work.end_date}}</li>
+                    </ul>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </section>
+        </div>
+    </div>
+  </body>
+</html>
+
