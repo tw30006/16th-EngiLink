@@ -2,12 +2,12 @@
 {% load static %}
 {% block content %}
     <div class="flex justify-center mt-8 flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
-        <div class="w-full md:w-4/5 lg:w-1/3 xl:w-1/4 bg-white p-4 shadow-lg rounded-lg">
+        <div class="w-full md:w-4/5 lg:w-1/2 xl:w-2/3 2xl:w-3/4 bg-white p-4 shadow-lg rounded-lg">
             <div id="calendar" class="w-full"><h1 class="text-center text-xl font-bold py-4">可以點擊事件查看詳細記錄!</h1></div>
         </div>
-        <div class="w-full md:w-1/3 lg:w-1/2 xl:w-2/3 flex justify-center items-center">
+        <div class="w-full md:w-1/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4 flex justify-center items-center">
             <div id="event-info" class="hidden bg-pink-200 p-6 shadow-lg rounded-lg max-w-lg w-full relative mt-1">
-                <button id="close-info" class="absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 text-gray-800 hover:text-gray-900 text-3xl">&times;</button>
+                <button id="close-info" class="absolute top-0 right-0 m-4 text-gray-800 hover:text-gray-900 text-3xl">&times;</button>
                 <p id="info-title" class="text-xl font-bold mb-4 text-center"></p>
                 <div class="text-gray-700 space-y-2 text-center">
                     <p id="info-company" class="font-semibold"></p>
@@ -19,17 +19,15 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let calendarEl = document.getElementById('calendar');
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'zh-cn',
-                height:700,
+                height: 700,
                 events: [
                     {% for interview in interviews %}
                     {
@@ -54,13 +52,6 @@
                     document.getElementById('info-time').textContent = "時間：" + interview.time;
 
                     document.getElementById('event-info').classList.remove('hidden');
-
-                    let originalColor = info.event.backgroundColor;
-                    setTimeout(function() {
-                        info.el.style.backgroundColor = originalColor;
-                    }, 2000);
-
-                    info.el.style.backgroundColor = 'green';
                 },
                 eventMouseEnter: function(info) {
                     info.el.style.cursor = 'pointer';
@@ -77,4 +68,3 @@
         });
     </script>
 {% endblock %}
-
