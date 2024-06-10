@@ -127,9 +127,7 @@ class TotalListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_template_names(self):
-        resume_id = self.kwargs.get("resume_id")
-        resume = get_object_or_404(Resume, pk=resume_id)
-        return [f"resumes/style{resume.style}.html"]
+        return ["resumes/base_template.html"]
 
     def get_queryset(self):
         resume_id = self.kwargs["resume_id"]
@@ -151,18 +149,25 @@ class TotalListView(ListView):
         resume_id = self.kwargs["resume_id"]
         user = self.request.user
 
-        resume_data = Resume.objects.filter(resume_id=resume_id, user=user)
+        resume = get_object_or_404(Resume, pk=resume_id, user=user)
         education_data = Education.objects.filter(resume_id=resume_id).order_by("posit")
         work_data = Work.objects.filter(resume_id=resume_id).order_by("posit")
         project_data = Project.objects.filter(resume_id=resume_id).order_by("posit")
 
         context["total_data"] = {
-            "resume_data": resume_data,
+            "resume_data": [resume],
             "education_data": education_data,
             "work_data": work_data,
             "project_data": project_data,
         }
         context["is_total_page"] = True
+
+        if self.request.user.user_type == 1:
+            context["base_template"] = "frontend.html"
+        elif self.request.user.user_type == 2:
+            context["base_template"] = "backend.html"
+
+        context["style_template"] = f"resumes/style{resume.style}.html"
         return context
 
 

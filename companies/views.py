@@ -258,12 +258,11 @@ class JobApplicationsView(ListView):
 
 class JobApplicationDetailView(DetailView):
     model = Job_Resume
-    context_object_name = "user"
+    context_object_name = "company"
+
 
     def get_template_names(self):
-        job_resume = self.get_object()
-        resume = job_resume.resume
-        return [f"resumes/style{resume.style}.html"]
+        return ["resumes/base_template.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -280,6 +279,14 @@ class JobApplicationDetailView(DetailView):
             "work_data": work_data,
             "project_data": project_data,
         }
+
+        if self.request.user.user_type == 1:
+            context["base_template"] = "frontend.html"
+        elif self.request.user.user_type == 2:
+            context["base_template"] = "backend.html"
+
+        context["style_template"] = f"resumes/style{resume.style}.html"
+        
         return context
 
 
