@@ -1,0 +1,8 @@
+<!-- collect_company.html -->
+<button id="collect-button-{{ company.id }}" type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in user_companies %} bg-user-blue {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-user-blue">
+    {% if company.id in user_companies %}
+        <i class="fa-solid fa-heart w-4 h-4 text-white fill-current"></i>
+    {% else %}
+        <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
+    {% endif %}
+</button>

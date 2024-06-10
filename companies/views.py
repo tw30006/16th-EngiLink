@@ -331,35 +331,17 @@ class FavoriteCompanyView(LoginRequiredMixin, View):
         user_company, created = User_Company.objects.get_or_create(
             company=company, user=request.user
         )
-        if user_company.collect:
-            user_company.collect = False
-            messages.success(request, "已取消收藏公司")
-        else:
-            user_company.collect = True
-            messages.success(request, "已收藏公司")
+        user_company.collect = not user_company.collect
         user_company.save()
-        return redirect(request.META.get("HTTP_REFERER", "companies:company_list"))
-
-
-class CollectCompanyView(LoginRequiredMixin, View):
-    def post(self, request):
-        company_id = request.POST.get("company_id")
-        company = get_object_or_404(Company, id=company_id)
-        user_company = User_Company.objects.filter(user=request.user, company=company)
-        if user_company.exists():
-            user_company.delete()
-        else:
-            user_company = User_Company.objects.create(
-                company=company, user=request.user
-            )
 
         if "HX-Request" in request.headers:
             user_companies = User_Company.objects.filter(
                 user=request.user, collect=True
             ).values_list("company_id", flat=True)
             button_html = render_to_string(
-                "shared/collect_btn.html",
+                "shared/collect_company.html",
                 {"company": company, "user_companies": user_companies},
+                request=request
             )
             return HttpResponse(button_html)
         return redirect("users:home")
@@ -368,11 +350,12 @@ class CollectCompanyView(LoginRequiredMixin, View):
         companies = Company.objects.all()
         user_companies = User_Company.objects.filter(
             user=request.user, collect=True
-        ).values_list("company_id", flat=True)
+        ).select_related('company').values_list("company_id", flat=True)
         user_jobs = User_Job.objects.filter(user=request.user).values_list(
             "job_id", flat=True
         )
         jobs = Job.objects.select_related("company").all()
+
         return render(
             request,
             "users/collect.html",
@@ -383,3 +366,4 @@ class CollectCompanyView(LoginRequiredMixin, View):
                 "user_jobs": user_jobs,
             },
         )
+

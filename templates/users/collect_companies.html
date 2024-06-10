@@ -30,12 +30,11 @@
                             </div>
                         </div>
                         <div class="z-20 self-end flex-shrink-0 p-4">
-                            <form action="{% url 'companies:favorite_company' user_company.company.id %}" method="post">
+                            <form action="{% url 'companies:favorite_company' user_company.id %}" method="post" class="inline" hx-post="{% url 'companies:favorite_company' user_company.id %}" hx-target="#collect-button-{{ user_company.id }}" hx-swap="outerHTML">
                                 {% csrf_token %}
-                                <button type="submit" class="flex items-center justify-center w-8 h-8 bg-gray-300 rounded-full hover:bg-user-blue">
-                                    <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
-                                </button>
-                            </form>
+                                <input type="hidden" name="company_id" value="{{ user_company.company.id }}">
+                                {% include 'shared/collect_company1.html' %}
+                            </form>         
                         </div>
                     </div>
                 </li>

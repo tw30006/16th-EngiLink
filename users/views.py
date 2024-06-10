@@ -65,7 +65,7 @@ class UserHomeView(PermissionRequiredMixin, TemplateView):
         jobs = Job.objects.select_related("company").all()
         search_keyword = self.request.GET.get("q")
         user_jobs = User_Job.objects.filter(user=user).values_list("job_id", flat=True)
-        favorite_company_ids = (
+        user_companies = (
             list(
                 User_Company.objects.filter(user=user, collect=True).values_list(
                     "company_id", flat=True
@@ -91,7 +91,7 @@ class UserHomeView(PermissionRequiredMixin, TemplateView):
         context["companies"] = companies
         context["jobs"] = jobs
         context["user_jobs"] = user_jobs
-        context["favorite_company_ids"] = favorite_company_ids
+        context["user_companies"] = user_companies
         return context
 
 
@@ -241,6 +241,7 @@ class CollectJobView(LoginRequiredMixin, View):
                 'user_companies': user_companies.values_list('company_id', flat=True),
                 'tab': request.GET.get('tab', 'jobs')
             }
+
 
             if request.headers.get('HX-Request'):
                 if 'tab' in request.GET:
