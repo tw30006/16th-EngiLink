@@ -63,6 +63,11 @@ class ProjectUpdateView(UpdateView):
     form_class = ProjectForm
     template_name = "projects/update.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = self.get_object()
+        context['resume_id'] = project.resume_id
+        return context
     def dispatch(self, request, *args, **kwargs):
         project = self.get_object()
         resume = project.resume

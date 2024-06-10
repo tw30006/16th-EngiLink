@@ -70,6 +70,12 @@ class WorkUpdateView(UpdateView):
     template_name = "works/update.html"
     success_url = reverse_lazy("resumes:work-show")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        work = self.get_object()
+        context['resume_id'] = work.resume_id
+        return context
+
     def dispatch(self, request, *args, **kwargs):
         work = self.get_object()
         resume = work.resume

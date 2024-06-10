@@ -70,6 +70,12 @@ class EducationUpdateView(UpdateView):
     form_class = EducationForm
     template_name = "educations/update.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        education = self.get_object()
+        context['resume_id'] = education.resume_id
+        return context
+    
     def dispatch(self, request, *args, **kwargs):
         education = self.get_object()
         resume = education.resume
