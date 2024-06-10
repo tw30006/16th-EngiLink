@@ -18,10 +18,10 @@
                 </p>
             </div>
 
-            <div class="bg-white p-8 shadow-lg rounded-lg flex justify-center items-center">
+            <div class="bg-white p-8 shadow-lg rounded-lg flex justify-center items-center md:justify-end md:items-end">
                 <div class="w-full h-64 bg-gray-200 rounded-lg flex justify-center items-center">
-                    {% if company.logo %}
-                    <span class="text-gray-500"><img src="{{ company.logo.url }}" alt="company"></span>
+                    {% if company.banner %}
+                    <span class="text-gray-500"><img src="{{ company.banner.url }}" alt="company"></span>
                     {% else %}
                         <span class="text-gray-500"><img src="{% static 'img/company.jpg' %}" alt="company"></span>
                     {% endif %}
