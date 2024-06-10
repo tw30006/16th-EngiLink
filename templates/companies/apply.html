@@ -2,12 +2,12 @@
 {% block content %}
 <br>
 {% for job, resumes in job_resume_dict.items %}
-    <div class="bg-white p-6 shadow-lg rounded-lg mb-6 mx-auto max-w-7xl">
-        <h2 class="text-3xl font-semibold mb-4">{{ job.company.company_name }} {{ job.title }}</h2>
-        <ul class="space-y-4">
-            {% for job_resume in resumes %}
-                <li class="p-4 bg-gray-100 rounded-lg">
-                    <div class="flex justify-between items-center">
+    <h2 class="text-3xl font-semibold mb-4 text-center">{{ job.company.company_name }} {{ job.title }}</h2>
+    <div class="flex flex-wrap -mx-4">
+        {% for job_resume in resumes %}
+            <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-6">
+                <div class="bg-white p-6 shadow-lg rounded-lg">
+                    <div class="flex justify-between items-center mb-4">
                         <div>
                             <p><strong>應徵者:</strong> {{ job_resume.resume.name }}</p>
                             <p><strong>應徵時間:</strong> {{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
@@ -15,9 +15,9 @@
                         {% if job_resume.status == 'withdrawn' %}
                             <p class="text-red-500"><strong>求職者已取消應徵</strong> <br>{{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
                         {% else %}
-                        <div class="text-right">
-                            <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">查看履歷</a>
-                        </div>
+                            <div class="text-right">
+                                <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">履歷</a>
+                            </div>
                         {% endif %}
                     </div>
                     {% if request.user == job_resume.job.company.custom_user %}
@@ -47,33 +47,34 @@
                                             地點：<填寫面試地點>
                                             聯絡人：<{{ company.user_name }}>
                                             聯絡方式：<{{ company.tel }} , {{ user.email }}> 
-                                            
+
                                             請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
 
                                             期待與您的面談！
 
                                             此致
-                                            {{ company.company_name }}
+                                            {{ company.company_name }}          
                                         </textarea>
                                         <button type="submit" class="mt-4 px-4 py-2 bg-company-green text-white rounded-lg">發送面試邀請</button>
                                     </form>
                                 {% endif %}
-                                    {% if job_resume.accepted ==  'accept' %}
-                                        <p class="mt-4 text-xl text-company-green">求職者同意參與此次面試</p>
-                                    {% elif job_resume.accepted == 'reject' %}
-                                        <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
-                                    {% elif not job_resume.interview_date %}
-                                    {% else %}
-                                        <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
-                                    {% endif %}
+                                {% if job_resume.accepted ==  'accept' %}
+                                    <p class="mt-4 text-xl text-company-green">求職者同意參與此次面試</p>
+                                {% elif job_resume.accepted == 'reject' %}
+                                    <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
+                                {% elif not job_resume.interview_date %}
+                                {% else %}
+                                    <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
+                                {% endif %}
                             {% endif %}
-
                         {% endif %}
                     {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endfor %}
 {% endblock %}
+
+
 
