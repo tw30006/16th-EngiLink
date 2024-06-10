@@ -4,7 +4,7 @@
     <br>
     {% for job_resume in job_resume_list %}
         <div class="bg-gray-100 p-6 shadow rounded-lg mb-8 mx-auto max-w-7xl">
-            <div class="grid grid-cols-12 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                 <div class="col-span-8">
                     <p class="text-xl mb-2"><strong>應徵公司：</strong>{{ job_resume.job.company.company_name }}</p>
                     <p class="text-xl mb-2"><strong>職缺：</strong>{{ job_resume.job.title }}</p>
@@ -18,7 +18,7 @@
                                 <div x-show="open" class="mt-2 p-4 bg-gray-200 rounded-lg">
                                     {{ job_resume.interview_invitation|linebreaks }}
                                 </div>
-                        </div>
+                            </div>
                         {% endif %}
                     {% endif %}
 
@@ -61,7 +61,7 @@
             <br>
             {% if job_resume.withdrawn_at is none %}
             <div class="flowchart-container mx-auto max-w-7xl mt-6">
-                <div class="flowchart">
+                <div class="flowchart flex flex-col md:flex-row">
                     <div class="flowchart-node {% if job_resume.status == 'applied' %}active{% endif %}">
                         <p>遞出履歷</p>
                         <span class="date">{{ job_resume.created_at|date:"Y.m.d H:i" }}</span>
@@ -102,5 +102,3 @@
     {% include 'shared/empty.html' with title="我的應徵" message="，去應徵心儀的工作吧!" link=job_list_url text="前往應徵" %}
 {% endif %}
 {% endblock %}
-
-
