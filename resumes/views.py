@@ -15,7 +15,7 @@ from django.views.generic import (
 from educations.models import Education
 from projects.models import Project
 from works.models import Work
-from weasyprint import HTML
+from weasyprint import HTML, CSS
 from .forms import ResumeForm
 from .models import Resume
 import json
@@ -186,7 +186,17 @@ def generate_pdf_1(request, resume_id):
         "pdf_template1.html", {"user": user, "total_data": total_data}
     )
 
-    pdf = HTML(string=html_string).write_pdf()
+    css = CSS(string='''
+        @font-face {
+            font-family: 'Noto Sans CJK';
+            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+        }
+        body {
+            font-family: 'Noto Sans CJK', sans-serif;
+        }
+    ''')
+
+    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = (
@@ -211,7 +221,17 @@ def generate_pdf_2(request, resume_id):
         "pdf_template2.html", {"user": user, "total_data": total_data}
     )
 
-    pdf = HTML(string=html_string).write_pdf()
+    css = CSS(string='''
+        @font-face {
+            font-family: 'Noto Sans CJK';
+            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+        }
+        body {
+            font-family: 'Noto Sans CJK', sans-serif;
+        }
+    ''')
+
+    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = (
@@ -236,7 +256,17 @@ def generate_pdf_3(request, resume_id):
         "pdf_template3.html", {"user": user, "total_data": total_data}
     )
 
-    pdf = HTML(string=html_string).write_pdf()
+    css = CSS(string='''
+        @font-face {
+            font-family: 'Noto Sans CJK';
+            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+        }
+        body {
+            font-family: 'Noto Sans CJK', sans-serif;
+        }
+    ''')
+
+    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = (
