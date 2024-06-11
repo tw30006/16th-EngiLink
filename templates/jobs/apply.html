@@ -10,7 +10,7 @@
         <form method="post" action="{% url 'users:apply' job.id %}" class="mb-4">
             {% csrf_token %}
             <input type="hidden" name="job_id" value="{{ job.id }}">
-            {% if resume %}
+            {% if resumes %}
                 <label class="block mb-2">選擇履歷：</label>
                 {% for resume in resumes %}
                 <label class="inline-flex items-center mb-2">
