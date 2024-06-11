@@ -15,11 +15,12 @@ from django.views.generic import (
 from educations.models import Education
 from projects.models import Project
 from works.models import Work
-from weasyprint import HTML, CSS
 from .forms import ResumeForm
 from .models import Resume
 import json
 import rules
+import docraptor
+import os
 
 
 class ResumeArea(PermissionRequiredMixin, TemplateView):
@@ -172,6 +173,9 @@ class TotalListView(ListView):
 
 
 def generate_pdf_1(request, resume_id):
+    docraptor_client = docraptor.DocApi()
+    docraptor_client.api_client.configuration.username = os.getenv("DOCRAPTOR_API_KEY")
+
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
@@ -186,27 +190,27 @@ def generate_pdf_1(request, resume_id):
         "pdf_template1.html", {"user": user, "total_data": total_data}
     )
 
-    css = CSS(string='''
-        @font-face {
-            font-family: 'Noto Sans TC';
-            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
+    response = docraptor_client.create_doc(
+        {
+            "document_content": html_string,
+            "name": f"resume_{user.username}.pdf",
+            "document_type": "pdf",
+            "test": os.getenv("DOCRAPTOR_TEST")
         }
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-    ''')
+    )
 
-    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
-
-    response = HttpResponse(pdf, content_type="application/pdf")
-    response["Content-Disposition"] = (
+    pdf_response = HttpResponse(response, content_type="application/pdf")
+    pdf_response["Content-Disposition"] = (
         f'attachment; filename="resume_{user.username}.pdf"'
     )
 
-    return response
+    return pdf_response
 
 
 def generate_pdf_2(request, resume_id):
+    docraptor_client = docraptor.DocApi()
+    docraptor_client.api_client.configuration.username = os.getenv("DOCRAPTOR_API_KEY")
+
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
@@ -221,27 +225,27 @@ def generate_pdf_2(request, resume_id):
         "pdf_template2.html", {"user": user, "total_data": total_data}
     )
 
-    css = CSS(string='''
-        @font-face {
-            font-family: 'Noto Sans TC';
-            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
+    response = docraptor_client.create_doc(
+        {
+            "document_content": html_string,
+            "name": f"resume_{user.username}.pdf",
+            "document_type": "pdf",
+            "test": os.getenv("DOCRAPTOR_TEST")
         }
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-    ''')
+    )
 
-    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
-
-    response = HttpResponse(pdf, content_type="application/pdf")
-    response["Content-Disposition"] = (
+    pdf_response = HttpResponse(response, content_type="application/pdf")
+    pdf_response["Content-Disposition"] = (
         f'attachment; filename="resume_{user.username}.pdf"'
     )
 
-    return response
+    return pdf_response
 
 
 def generate_pdf_3(request, resume_id):
+    docraptor_client = docraptor.DocApi()
+    docraptor_client.api_client.configuration.username = os.getenv("DOCRAPTOR_API_KEY")
+
     resume = get_object_or_404(Resume, pk=resume_id)
     user = resume.user
 
@@ -256,24 +260,21 @@ def generate_pdf_3(request, resume_id):
         "pdf_template3.html", {"user": user, "total_data": total_data}
     )
 
-    css = CSS(string='''
-        @font-face {
-            font-family: 'Noto Sans TC';
-            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
+    response = docraptor_client.create_doc(
+        {
+            "document_content": html_string,
+            "name": f"resume_{user.username}.pdf",
+            "document_type": "pdf",
+            "test": os.getenv("DOCRAPTOR_TEST")
         }
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-    ''')
+    )
 
-    pdf = HTML(string=html_string).write_pdf(stylesheets=[css])
-
-    response = HttpResponse(pdf, content_type="application/pdf")
-    response["Content-Disposition"] = (
+    pdf_response = HttpResponse(response, content_type="application/pdf")
+    pdf_response["Content-Disposition"] = (
         f'attachment; filename="resume_{user.username}.pdf"'
     )
 
-    return response
+    return pdf_response
 
 
 def update_positions(request):
