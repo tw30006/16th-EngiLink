@@ -188,11 +188,11 @@ def generate_pdf_1(request, resume_id):
 
     css = CSS(string='''
         @font-face {
-            font-family: 'Noto Sans CJK';
-            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+            font-family: 'Noto Sans TC';
+            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
         }
         body {
-            font-family: 'Noto Sans CJK', sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
         }
     ''')
 
@@ -223,11 +223,11 @@ def generate_pdf_2(request, resume_id):
 
     css = CSS(string='''
         @font-face {
-            font-family: 'Noto Sans CJK';
-            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+            font-family: 'Noto Sans TC';
+            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
         }
         body {
-            font-family: 'Noto Sans CJK', sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
         }
     ''')
 
@@ -258,11 +258,11 @@ def generate_pdf_3(request, resume_id):
 
     css = CSS(string='''
         @font-face {
-            font-family: 'Noto Sans CJK';
-            src: url('/static/fonts/NotoSansCJK-Regular.ttc') format('truetype');
+            font-family: 'Noto Sans TC';
+            src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
         }
         body {
-            font-family: 'Noto Sans CJK', sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
         }
     ''')
 
