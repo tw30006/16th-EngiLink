@@ -52,6 +52,12 @@
                     document.getElementById('info-time').textContent = "時間：" + interview.time;
 
                     document.getElementById('event-info').classList.remove('hidden');
+                    let originalColor = info.event.backgroundColor;
+                    setTimeout(function() {
+                        info.el.style.backgroundColor = originalColor;
+                    }, 2000);
+
+                    info.el.style.backgroundColor = 'green';
                 },
                 eventMouseEnter: function(info) {
                     info.el.style.cursor = 'pointer';
