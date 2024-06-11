@@ -150,7 +150,7 @@ class TotalListView(ListView):
         user = self.request.user
 
         resume = get_object_or_404(Resume, pk=resume_id, user=user)
-        education_data = Education.objects.filter(resume_id=resume_id).order_by("posit")
+        education_data = Education.edu_objects.filter(resume_id=resume.resume_id)
         work_data = Work.objects.filter(resume_id=resume_id).order_by("posit")
         project_data = Project.objects.filter(resume_id=resume_id).order_by("posit")
 

@@ -39,8 +39,9 @@
                         <div>
                             <p class="text-gray-700 font-bold text-lg mb-1">{{ project.project_name }}</p>
                             <p class="text-gray-700 text-base mb-1">項目：<span class="text-gray-500">{{ project.responsibility }}</span></p>
+                            <p class="text-gray-700 text-base">技術：</p>
                             {% for technology in project.get_technologies %}
-                            <p class="text-gray-700 text-base">技術：<span class="text-gray-500 text-base">{{ technology }}</span></p>
+                                <span class="text-gray-500 text-base inline">{{ technology }}</span>
                             {% endfor %}
                         </div>
                         <div class="mt-2">

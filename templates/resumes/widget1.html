@@ -44,10 +44,11 @@
             <div class="mb-4 drag" data-id="project-{{ project.id }}">
                 <p class="text-gray-700 text-lg font-bold">{{ project.project_name }}</p>
                 <p class="text-gray-700 text-base">項目：<span class="text-gray-700">{{ project.responsibility }}</span></p>
+                <p class="text-gray-700 text-base inline">技術：</p>
                 {% for technology in project.get_technologies %}
-                <p class="text-gray-700 text-base">技術：<span class="text-gray-700">{{ technology }}</span></p>
+                    <span class="text-gray-700">{{ technology }}</span>
                 {% endfor %}
-                <p class="text-gray-700 text-base leading-relaxed">說明：<span class="text-gray-700">{{project.description}}</span></p>
+                <p class="text-gray-700 text-base leading-relaxed">說明：<span class="text-gray-700">{{project.description}}</span>
             </div>
             {% endfor %}
             {% endif %}
