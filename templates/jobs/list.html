@@ -20,8 +20,8 @@
         <div class="mx-auto space-y-6 md:w-4/5 lg:w-2/3">
             {% for job in jobs %}
                 <div class="flex flex-col transition-shadow duration-300 bg-white rounded-lg shadow-lg hover:shadow-2xl md:flex-row">
-                    <div class="w-full h-36 md:w-1/3">
-                        <img src="{{ job.company_banner_url }}" alt="公司圖片" class="object-cover w-full h-full rounded-t-lg md:rounded-t-none md:rounded-l-lg">
+                    <div class="w-76 h-36 md:w-1/3 m-2">
+                        <img src="{{ job.company_banner_url }}" alt="公司圖片" class="object-cover w-full h-full rounded-lg">
                     </div>
                     <div class="flex flex-col justify-between p-4 space-y-4 md:flex-row md:space-y-0 md:items-center md:w-2/3">
                         <div class="flex-grow overflow-hidden md:flex md:flex-col md:justify-center md:max-w-full">
@@ -29,7 +29,9 @@
                                 <h2 class="text-2xl font-bold truncate">{{ job.title }}</h2>
                             </a>
                             <div class="flex items-center mt-2 space-x-2">
-                                <img src="{{ job.company_logo_url }}" alt="公司Logo" class="object-cover w-6 h-6 rounded">
+                                <div class="w-6 h-6 mr-2 rounded-full overflow-hidden">
+                                    <img src="{{ job.company_logo_url }}" alt="公司Logo" class="object-cover w-full h-full">
+                                </div>
                                 <p class="max-w-full text-lg truncate">{{ job.company_name }}</p>
                             </div>
                             <div class="flex items-center mt-2 space-x-2">

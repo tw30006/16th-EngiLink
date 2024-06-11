@@ -3,12 +3,12 @@
 {% block content %}
 <div class="container p-4 mx-auto">
     <div class="flex justify-center mb-4">
-        <div class="px-4 py-2 bg-user-blue">
-            <button id="jobs-tab" class="text-xl font-semibold text-white focus:outline-none"
+        <div class="mx-1">
+            <button id="jobs-tab" class="user-lg-btn-full text-xl"
                     hx-get="?tab=jobs" hx-target="#content" hx-swap="innerHTML" hx-boost="true">已收藏職缺</button>
         </div>
-        <div class="px-4 py-2 ml-4 bg-company-green">
-            <button id="companies-tab" class="text-xl font-semibold text-white focus:outline-none"
+        <div class="mx-1">
+            <button id="companies-tab" class="text-xl company-lg-btn-full"
                     hx-get="?tab=companies" hx-target="#content" hx-swap="innerHTML" hx-boost="true">已收藏公司</button>
         </div>
     </div>
