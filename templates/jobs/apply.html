@@ -10,16 +10,18 @@
         <form method="post" action="{% url 'users:apply' job.id %}" class="mb-4">
             {% csrf_token %}
             <input type="hidden" name="job_id" value="{{ job.id }}">
-            <label class="block mb-2">選擇履歷：</label>
-            {% for resume in resumes %}
-            <label class="inline-flex items-center mb-2">
-                <input type="radio" name="resume_id" value="{{ resume.resume_id }}" class="mr-2">
-                <span>{{ resume.name }}</span>
-            </label>
-            {% endfor %}
-            <div class="mt-4">
-                <button type="submit" class="user-md-btn-full">提交</button>
-            </div>
+            {% if resume %}
+                <label class="block mb-2">選擇履歷：</label>
+                {% for resume in resumes %}
+                <label class="inline-flex items-center mb-2">
+                    <input type="radio" name="resume_id" value="{{ resume.resume_id }}" class="mr-2">
+                    <span>{{ resume.name }}</span>
+                </label>
+                {% endfor %}
+                <div class="mt-4">
+                    <button type="submit" class="user-md-btn-full">提交</button>
+                </div>
+            {% endif %}
         </form>
         {% if resumes|length == 0 %}
         <div>
