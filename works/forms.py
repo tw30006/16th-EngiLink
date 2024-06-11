@@ -1,5 +1,7 @@
 from django import forms
 from .models import Work
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 
 class WorkForm(forms.ModelForm):
@@ -30,3 +32,13 @@ class WorkForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, label in self.field_labels.items():
             self.fields[field_name].label = label
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start_date")
+        end_date = cleaned_data.get("end_date")
+
+        if start_date and end_date and start_date > end_date:
+            raise ValidationError(_("入職時間不能晚於離職時間"))
+
+        return cleaned_data
