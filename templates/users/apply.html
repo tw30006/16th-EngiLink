@@ -61,6 +61,7 @@
             <br>
             {% if job_resume.withdrawn_at is none %}
             <div class="flowchart-container mx-auto max-w-7xl mt-6">
+                <p class="text-xl mb-2"><strong>應徵進度：</strong></p>
                 <div class="flowchart flex flex-col md:flex-row">
                     <div class="flowchart-node {% if job_resume.status == 'applied' %}active{% endif %}">
                         <p>遞出履歷</p>
