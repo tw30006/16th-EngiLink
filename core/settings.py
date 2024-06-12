@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "rules",
     "crispy_forms",
     "crispy_tailwind",
+    "about",
 ]
 
 
@@ -181,6 +182,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
+
 AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
     "rules.permissions.ObjectPermissionBackend",
@@ -204,5 +206,11 @@ SITE_ID = int(os.getenv("SITE_ID", 1))
 LOGIN_REDIRECT_URL = "/users/"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-
 CSRF_TRUSTED_ORIGINS = ["https://engilink.org"]
+
+LINE_PAY_API_URL = os.getenv('LINE_PAY_API_URL')
+LINE_PAY_CHANNEL_ID = os.getenv('LINE_PAY_CHANNEL_ID')
+LINE_PAY_CHANNEL_SECRET = os.getenv('LINE_PAY_CHANNEL_SECRET')
+LINE_PAY_RETURN_URL = os.getenv('LINE_PAY_RETURN_URL')
+ONLINE_URL = os.getenv('ONLINE_URL')
+
