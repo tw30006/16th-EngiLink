@@ -76,7 +76,6 @@ class ResumeCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
-        print(self.request.user)
         form.instance.user = self.request.user
         messages.success(self.request, "新增成功")
         return super().form_valid(form)
