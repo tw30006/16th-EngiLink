@@ -14,7 +14,7 @@
                 <label class="block mb-2">選擇履歷：</label>
                 {% for resume in resumes %}
                 <label class="inline-flex items-center mb-2">
-                    <input type="radio" name="resume_id" value="{{ resume.resume_id }}" class="mr-2">
+                    <input type="radio" name="resume_id" value="{{ resume.resume_id }}" class="mr-2" {% if forloop.first %}checked{% endif %}>
                     <span>{{ resume.name }}</span>
                 </label>
                 {% endfor %}
