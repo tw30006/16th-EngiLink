@@ -2,41 +2,52 @@
 {% load static %}
 {% block content %}
 <div class="container p-6 mx-auto bg-white rounded-lg shadow-md">
-    <div class="flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-bold">公司資訊</h2>
-        <a class="px-4 py-2 text-white bg-company-green rounded hover:bg-white hover:border-company-green hover:text-company-green border" href="{% url 'companies:update' company.id%}">編輯</a>
-    </div>
-    <div class="flex mb-4 leading-relaxed">
-        <div class="flex-1">
-            <p><span class="font-semibold">帳號:</span> {{ user.username }}</p>
-            <p><span class="font-semibold">公司信箱:</span> {{ user.email }}</p>
-            <p><span class="font-semibold">公司名稱:</span> {{ user.company.company_name }}</p>
-            <p><span class="font-semibold">統一編號:</span> {{ user.company.tin }}</p>
-            <p><span class="font-semibold">聯絡人:</span> {{ user.company.user_name }}</p>
-            <p><span class="font-semibold">聯絡電話:</span> {{ user.company.tel }}</p>
-            <p><span class="font-semibold">地址:</span> {{ user.company.address }}</p>
-            <p><span class="font-semibold">簡介:</span></p>
-            <div class="editor">
-                <div id="description-preview" class="editor-preview" data-description="{{ user.company.description|escapejs }}"></div>
-            </div>    
-            <p><span class="font-semibold">類型:</span> {{ user.company.type }}</p>
-        </div>
-        <div class="ml-8">
-            <p class="font-semibold">Logo:</p>
-            {% if user.company.logo %}
-                <img class="w-32 h-32 rounded-md" src="{{ user.company.logo.url }}" alt="Company Logo">
-            {% else %}
-                <img src="{% static 'img/company.jpg' %}" alt="Company Logo" class="w-32 h-32 rounded-md">
-            {% endif %}
-        </div>
-    </div>
+    <h2 class="text-2xl font-bold border-b-2 border-black pb-2 mb-4 text-center">公司資訊</h2>
     <div class="mb-4">
-        <p class="font-semibold">橫幅:</p>
         {% if user.company.banner %}
-            <img class="w-full h-auto rounded-md" src="{{ user.company.banner.url }}" alt="Company Banner">
+        <div class="w-full h-60">
+            <img class="w-full h-full rounded-md object-cover" src="{{ user.company.banner.url }}" alt="Company Banner">
+        </div> 
         {% else %}
-            <img src="{% static 'img/company.jpg' %}" alt="Company Banner" class="w-full h-auto rounded-md">
+        <div class="w-full h-60">
+            <img src="{% static 'img/company.jpg' %}" alt="Company Banner" class="w-full h-full rounded-md object-cover">
+        </div>
         {% endif %}
+    </div>
+    <div class="ml-8 flex items-center">
+        {% if user.company.logo %}
+        <div class="w-24 h-24 mr-2 rounded-full overflow-hidden">
+            <img class="w-full h-full rounded-md object-cover" src="{{ user.company.logo.url }}" alt="Company Logo">
+        </div>
+        <p class="text-xl font-bold ml-4">{{ user.company.company_name }}</p>
+        {% else %}
+        <div class="w-24 h-24 mr-2 rounded-full overflow-hidden">
+            <img src="{% static 'img/company.jpg' %}" alt="Company Logo" class="w-32 h-32 rounded-md object-cover">
+        </div>
+        <p><span class="font-semibold">公司名稱:</span> {{ user.company.company_name }}</p>
+        {% endif %}
+    </div>
+    <div class="container mx-auto p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center">
+            <div class="flex flex-col space-y-2">
+                <p><span class="font-semibold">帳號:</span> {{ user.username }}</p>
+                <p><span class="font-semibold">公司信箱:</span> {{ user.email }}</p>
+                <p><span class="font-semibold">統一編號:</span> {{ user.company.tin }}</p>
+                <p><span class="font-semibold">聯絡人:</span> {{ user.company.user_name }}</p>
+                <p><span class="font-semibold">類型:</span> {{ user.company.type }}</p>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <p><span class="font-semibold">聯絡電話:</span> {{ user.company.tel }}</p>
+                <p><span class="font-semibold">地址:</span> {{ user.company.address }}</p>
+                <p><span class="font-semibold">簡介:</span> {{ user.company.description }}</p>
+                <div class="editor">
+                    <div id="description-preview" class="editor-preview" data-description="{{ user.company.description|escapejs }}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a class="px-4 py-2 text-white bg-company-green rounded hover:bg-white hover:border-company-green hover:text-company-green border" href="{% url 'companies:update' company.id%}">編輯</a>
     </div>
 </div>
 {% endblock %}
