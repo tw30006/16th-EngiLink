@@ -9,6 +9,7 @@ from .views import (
     CompanyPasswordChangeView,
     CompanyListView,
     CompanyInfoView,
+    CollectCompanyView,
     JobApplicationsView,
     JobApplicationDetailView,
     MarkAsReadView,
@@ -44,10 +45,7 @@ urlpatterns = [
         name="interview",
     ),
     path("<int:pk>/candidate/", JobApplicationDetailView.as_view(), name="candidate"),
-    path(
-        "companies/<int:company_id>/favorite/",
-        FavoriteCompanyView.as_view(),
-        name="favorite_company",
-    ),
+    path("companies/<int:company_id>/favorite/", FavoriteCompanyView.as_view(), name="favorite_company"),
+    path("<int:company_id>/collect/", CollectCompanyView.as_view(), name="collect_company"),
     path('calendar/', CompanyInterviewsCalendarView.as_view(), name='calendar'),
 ]

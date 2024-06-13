@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="z-20 self-end flex-shrink-0 p-4">
-                            <form action="{% url 'companies:favorite_company' user_company.id %}" method="post" class="inline" hx-post="{% url 'companies:favorite_company' user_company.id %}" hx-target="#collect-button-{{ user_company.id }}" hx-swap="outerHTML">
+                            <form action="{% url 'companies:collect_company' user_company.company.id %}" method="post" class="inline" hx-post="{% url 'companies:collect_company' user_company.company.id %}" hx-target="#collect-button-{{ user_company.company.id }}" hx-swap="outerHTML">
                                 {% csrf_token %}
                                 <input type="hidden" name="company_id" value="{{ user_company.company.id }}">
                                 {% include 'shared/collect_company1.html' %}

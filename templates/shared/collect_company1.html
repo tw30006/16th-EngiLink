@@ -1,5 +1,5 @@
 <!-- collect_company1.html -->
-<button id="collect-button-{{ user_company.id }}" type="submit" class="flex items-center justify-center w-8 h-8 {% if user_company.company.id in user_companies %} bg-user-blue {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-user-blue">
+<button id="collect-button-{{ user_company.company.id }}" type="submit" class="flex items-center justify-center w-8 h-8 {% if user_company.company.id in user_companies %} bg-user-blue {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-user-blue">
     {% if user_company.company.id in user_companies %}
         <i class="fa-solid fa-heart w-4 h-4 text-white fill-current"></i>
     {% else %}

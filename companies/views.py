@@ -330,6 +330,52 @@ class CompanyInterviewsCalendarView(View):
         context = {"interviews": interviews}
         return render(request, "companies/calendar.html", context)
 
+
+class CollectCompanyView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        company = get_object_or_404(Company, id=self.kwargs["company_id"])
+        user_company, created = User_Company.objects.get_or_create(
+            company=company, user=request.user
+        )
+        user_company.collect = not user_company.collect
+        user_company.save()
+
+        if "HX-Request" in request.headers:
+            user_companies = User_Company.objects.filter(
+                user=request.user, collect=True
+            ).values_list("company_id", flat=True)
+            button_html = render_to_string(
+                "shared/collect_company.html",
+                {"company": company, "user_companies": user_companies},
+                request=request
+            )
+            return HttpResponse(button_html)
+        return redirect("users:home")
+
+    def get(self, request):
+        companies = Company.objects.all()
+        user_companies = User_Company.objects.filter(
+            user=request.user, collect=True
+        ).select_related('company').values_list("company_id", flat=True)
+        
+        user_jobs = User_Job.objects.filter(user=request.user).values_list(
+            "job_id", flat=True
+        )
+        jobs = Job.objects.select_related("company").all()
+
+        return render(
+            request,
+            "users/collect.html",
+            {
+                "companies": companies,
+                "user_companies": user_companies,
+                "jobs": jobs,
+                "user_jobs": user_jobs,
+            },
+        )
+
+
+
 class FavoriteCompanyView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         company = get_object_or_404(Company, id=self.kwargs["company_id"])
