@@ -1,7 +1,11 @@
 <br>
 <footer class="w-full py-2 mt-auto bg-gray-100">
-    <div class="container flex flex-col items-center justify-between px-4 mx-auto md:flex-row md:justify-center">
-        <a href="{% url 'about:about' %}" class="text-black hover:underline md:absolute md:left-0 md:ml-4">關於我們</a>
-        <p class="text-center text-gray-500 md:flex-1">&copy; 2024 EngiLink. ALL Right Reserved.</p>
+    <div class="container flex flex-col items-center justify-between px-4 mx-auto md:flex-row">
+        <div class="flex justify-center w-full md:w-1/2 md:justify-end">
+            <a href="{% url 'about:about' %}" class="text-user-blue hover:underline">關於我們</a>
+        </div>
+        <div class="flex justify-center w-full mt-2 md:w-1/2 md:justify-end md:mt-0">
+            <p class="text-gray-500">&copy; 2024 EngiLink. ALL Right Reserved.</p>
+        </div>
     </div>
 </footer>
