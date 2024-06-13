@@ -40,11 +40,10 @@
                         <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
                     </div>
                     {% if request.user.user_type == 1 %}
-                        <form action="{% url 'companies:favorite_company' company.id %}" method="post">
+                        <form action="{% url 'companies:favorite_company' company.id %}" method="post" class="inline" hx-post="{% url 'companies:favorite_company' company.id %}" hx-target="#collect-company-button-{{ company.id }}" hx-swap="outerHTML">                                                                       
                             {% csrf_token %}
-                            <button type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in favorite_company_ids %} bg-user-blue {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-user-blue">
-                                <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
-                            </button>
+                            <input type="hidden" name="company_id" value="{{ company.id }}">
+                            {% include 'shared/collect_company.html' %}
                         </form>
                     {% endif %}
                 </div>
