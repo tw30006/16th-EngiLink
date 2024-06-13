@@ -6,75 +6,75 @@
     <div class="flex flex-wrap -mx-4">
         {% for job_resume in resumes %}
             <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-6">
-                <div class="bg-white p-6 shadow-lg rounded-lg">
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <p><strong>應徵者:</strong> {{ job_resume.resume.name }}</p>
-                            <p><strong>應徵時間:</strong> {{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
-                        </div>
-                        {% if job_resume.status == 'withdrawn' %}
-                            <p class="text-red-500"><strong>求職者已取消應徵</strong> <br>{{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
-                        {% else %}
-                            <div class="text-right">
-                                <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">履歷</a>
+                <div class="bg-white p-6 shadow-lg rounded-lg h-96 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <p><strong>應徵者:</strong> {{ job_resume.resume.name }}</p>
+                                <p><strong>應徵時間:</strong> {{ job_resume.created_at|date:"Y.m.d H:i" }}</p>
                             </div>
-                        {% endif %}
-                    </div>
-                    {% if request.user == job_resume.job.company.custom_user %}
-                        {% if job_resume.status == 'applied' %}
-                            {% if not job_resume.read_at %}
-                                <form action="{% url 'companies:mark' job_resume.pk %}" method="post" class="mt-4">
-                                    {% csrf_token %}
-                                    <button type="submit" class="company-md-btn-full">發送面試</button>
-                                </form>
+                            {% if job_resume.status == 'withdrawn' %}
+                                <p class="text-red-500"><strong>求職者已取消應徵</strong> <br>{{ job_resume.withdrawn_at|date:"Y.m.d H:i" }}</p>
                             {% else %}
-                                {% if job_resume.interview_date %}
-                                    <p class="mt-4 text-xl text-gray-600">面試時間: {{ job_resume.interview_date|date:"Y.m.d H:i" }}</p>
-                                {% else %}
-                                    <form action="{% url 'companies:interview' job_resume.pk %}" method="post" class="mt-4">
+                                <div class="text-right">
+                                    <a href="{% url 'companies:candidate' job_resume.pk %}" class="company-md-btn-full">履歷</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if request.user == job_resume.job.company.custom_user %}
+                            {% if job_resume.status == 'applied' %}
+                                {% if not job_resume.read_at %}
+                                    <form action="{% url 'companies:mark' job_resume.pk %}" method="post">
                                         {% csrf_token %}
-                                        <input type="hidden" name="job_resume_id" value="{{ job_resume.id }}">
-                                        <label for="interview_date">面試日期:</label>
-                                        <input type="datetime-local" name="interview_date" class="block w-full mt-2 p-2 border rounded-lg" required>
-                                        <label for="interview_invitation" class="mt-2">面試信:</label>
-                                        <textarea name="interview_invitation" rows="8" class="block w-full mt-2 p-2 border rounded-lg" required>
-                                            親愛的 {{ job_resume.resume.name }}，
-
-                                            感謝您應徵 {{ job_resume.job.title }} 一職。經過初步篩選，我們很高興通知您進入了面試環節。
-
-                                            面試詳情如下：
-                                            日期：<填寫面試日期>
-                                            地點：<填寫面試地點>
-                                            聯絡人：<{{ company.user_name }}>
-                                            聯絡方式：<{{ company.tel }} , {{ user.email }}> 
-
-                                            請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
-
-                                            期待與您的面談！
-
-                                            此致
-                                            {{ company.company_name }}          
-                                        </textarea>
-                                        <button type="submit" class="mt-4 px-4 py-2 bg-company-green text-white rounded-lg">發送面試邀請</button>
+                                        <button type="submit" class="company-md-btn-full">發送面試</button>
                                     </form>
-                                {% endif %}
-                                {% if job_resume.accepted ==  'accept' %}
-                                    <p class="mt-4 text-xl text-company-green">求職者同意參與此次面試</p>
-                                {% elif job_resume.accepted == 'reject' %}
-                                    <p class="mt-4 text-xl text-red-600">求職者拒絕此次面試</p>
-                                {% elif not job_resume.interview_date %}
                                 {% else %}
-                                    <p class="mt-4 text-xl text-gray-600">求職者尚未回覆</p>
+                                    {% if job_resume.interview_date %}
+                                        <p><small class="text-gray-600">面試時間: {{ job_resume.interview_date|date:"Y.m.d H:i" }}</small></p>
+                                    {% else %}
+                                        <form action="{% url 'companies:interview' job_resume.pk %}" method="post" class="mt-4">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="job_resume_id" value="{{ job_resume.id }}">
+                                            <label for="interview_date">面試日期:</label>
+                                            <input type="datetime-local" name="interview_date" class="block w-full mt-2 p-2 border rounded-lg" required>
+                                            <label for="interview_invitation" class="mt-2">面試信:</label>
+                                            <textarea name="interview_invitation" rows="4" class="block w-full mt-2 p-2 border rounded-lg overflow-y-auto" required>
+親愛的 {{ job_resume.resume.name }}，
+
+感謝您應徵 {{ job_resume.job.title }} 一職。經過初步篩選，我們很高興通知您進入了面試環節。
+
+面試詳情如下：
+日期：<填寫面試日期>
+地點：<填寫面試地點>
+聯絡人：<{{ company.user_name }}>
+聯絡方式：<{{ company.tel }} , {{ user.email }}> 
+
+請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
+
+期待與您的面談！
+
+此致
+{{ company.company_name }}          
+                                            </textarea>
+                                            <button type="submit" class="mt-4 px-4 py-2 bg-company-green text-white rounded-lg">發送面試邀請</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if job_resume.accepted ==  'accept' %}
+                                        <p><small class="text-company-green">求職者同意參與此次面試</small></p>
+                                    {% elif job_resume.accepted == 'reject' %}
+                                        <p><small class="text-red-600">求職者拒絕此次面試</small></p>
+                                    {% elif not job_resume.interview_date %}
+                                    {% else %}
+                                        <p><small class="text-gray-600">求職者尚未回覆</small></p>
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                         {% endif %}
-                    {% endif %}
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    <hr>
 {% endfor %}
 {% endblock %}
-
-
-
