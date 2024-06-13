@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -93,6 +93,11 @@ class UserHomeView(PermissionRequiredMixin, TemplateView):
         context["user_jobs"] = user_jobs
         context["user_companies"] = user_companies
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get('HX-Request'):
+            return render(self.request, 'users/jobs_and_companies.html', context=context)
+        return super().render_to_response(context, **response_kwargs)
 
 
 class UserJobsView(TemplateView):

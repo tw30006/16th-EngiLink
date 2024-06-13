@@ -1,0 +1,94 @@
+{% load static %}
+{% load humanize %}
+
+<section class="mb-12">
+    <div class="flex items-center mb-4">
+        <i class="w-6 h-6 mr-2 text-red-500 fa-solid fa-fire"></i>
+        <h2 class="text-2xl font-bold">熱門職缺</h2>
+    </div>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {% for job in jobs %}
+            <a href="{% url 'jobs:job_detail' pk=job.id %}">
+                <div class="relative p-4 transition-shadow bg-white rounded-lg shadow hover:shadow-xl">
+                    <div class="flex items-center mb-4">
+                        {% if job.company.logo %}
+                            <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
+                        {% else %}
+                            <img src="{% static 'img/company.jpg' %}" alt="{{ job.company.company_name }}" class="w-10 h-10 mr-4">
+                        {% endif %}
+                        <div class="overflow-hidden whitespace-nowrap">
+                            <h3 class="text-lg font-semibold truncate">{{ job.title }}</h3>
+                            <p class="font-semibold text-user-blue truncate">{{ job.company.company_name }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between space-x-2">
+                        <div class="flex items-center space-x-2">
+                            <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
+                            <p class="text-gray-700">{{ job.address|slice:":3" }}</p>
+                            <i class="w-4 h-4 text-gray-500 fa-solid fa-sack-dollar"></i>
+                            <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
+  -                     </div>
+                        <form action="{% url 'users:collect' %}" method="post" class="inline" hx-post="{% url 'users:collect' %}" hx-target="#collect-button-{{ job.id }}" hx-swap="outerHTML">
+                            {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}"> 
+                            {% include 'shared/collect_btn.html' %}
+                        </form>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>            
+</section>
+<section>
+    <div class="flex items-center mb-4">
+        <i class="w-6 h-6 mr-2 text-user-blue fa-regular fa-thumbs-up"></i>
+        <h2 class="text-2xl font-bold">推薦公司</h2>
+    </div>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {% for company in companies %}
+            <a href="{% url 'companies:company_info' company.id %}">
+                <div class="flex flex-col justify-between h-full overflow-hidden transition-shadow bg-white rounded-lg shadow-md hover:shadow-xl lg:col-span-1">
+                    <div class="relative p-2">
+                        {% if company.banner %}
+                            <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
+                                <img src="{{ company.banner.url }}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                            </div>
+                        {% else %}
+                            <div class="relative w-full h-48 mb-0 flex justify-center items-center p-2.5">
+                                <img src="{% static 'img/company_banner.webp' %}" alt="{{ company.company_name }}" class="object-cover w-full h-48 rounded-lg m-2.5 mb-0">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-grow p-4">
+                        <div class="flex items-center mb-4">
+                            {% if company.logo %}
+                                <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                            {% else %}
+                                <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-5 h-5 mr-2">
+                            {% endif %}
+                            <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
+                        </div>
+                        <div class="card-description min-h-[3rem]">
+                            <p class="text-gray-600 line-clamp-3">{{ company.description }}</p>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i class="w-4 h-4 text-gray-500 fa-solid fa-location-dot"></i>
+                                <p class="flex items-center text-xs text-gray-600">{{ company.address|slice:":3" }}</p>
+                                <i class="w-4 h-4 text-gray-500 fa-solid fa-briefcase"></i>
+                                <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
+                            </div>
+                            <form action="{% url 'companies:favorite_company' company.id %}" method="post" class="inline" hx-post="{% url 'companies:favorite_company' company.id %}" hx-target="#collect-button-{{ company.id }}" hx-swap="outerHTML">                                                                       
+                                {% csrf_token %}
+                                <input type="hidden" name="company_id" value="{{ company.id }}">
+                                {% include 'shared/collect_company.html' %}
+                            </form>
+                        </div>
+                    </div>                    
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>

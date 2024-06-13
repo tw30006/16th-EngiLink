@@ -194,6 +194,11 @@ class CompanyListView(ListView):
         else:
             context["favorite_company_ids"] = []
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get('HX-Request'):
+            return render(self.request, 'companies/filter_company.html', context=context)
+        return super().render_to_response(context, **response_kwargs)
 
 
 class CompanyInfoView(DetailView):

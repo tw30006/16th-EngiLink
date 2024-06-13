@@ -1,0 +1,54 @@
+{% load static %}
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {% for company in companies_list %}
+        <a href="{% url 'companies:company_info' company.id %}"><div class="flex flex-col justify-between h-full overflow-hidden bg-white rounded-lg shadow-md hover:shadow-xl">
+            <div class="p-2">
+                {% if company.banner %}
+                    <div class="w-76 h-48 overflow-hidden rounded-md">
+                        <img src="{{ company.banner.url }}" alt="{{ company.company_name }}" class="object-cover w-full h-full">
+                    </div>
+                {% else %}
+                    <div class="w-76 h-48 overflow-hidden rounded-md">
+                        <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="object-cover w-full h-full">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="flex-grow p-4">
+
+                <div class="flex items-center mb-4">
+                    {% if company.logo %}
+                        <div class="w-5 h-5 mr-2 rounded-full overflow-hidden">
+                            <img src="{{ company.logo.url }}" alt="{{ company.company_name }}" class="w-full h-full object-cover">
+                        </div>
+                    {% else %}
+                    <div class="w-5 h-5 mr-2 rounded-full overflow-hidden">
+                        <img src="{% static 'img/company.jpg' %}" alt="{{ company.company_name }}" class="w-full h-full object-cover">
+                    </div>
+                    {% endif %}
+                    <h2 class="text-xl font-semibold truncate">{{ company.company_name }}</h2>
+                </div>
+                <div class="card-description min-h-[3rem]">
+                    <p class="text-gray-600 line-clamp-3">{{ company.description }}</p>
+                </div>
+            </div>
+            <div class="flex-shrink-0 p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="w-4 h-4 mr-1 text-gray-500 fa-solid fa-location-dot"></i>
+                        <p class="flex items-center text-xs text-gray-600">{{ company.address|slice:":3" }}</p>
+                        <i class="w-4 h-4 ml-3 mr-1 text-gray-500 fa-solid fa-briefcase"></i>
+                        <p class="flex items-center text-xs text-gray-600">{{ company.type }}</p>
+                    </div>
+                    {% if request.user.user_type == 1 %}
+                        <form action="{% url 'companies:favorite_company' company.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="flex items-center justify-center w-8 h-8 {% if company.id in favorite_company_ids %} bg-user-blue {% else %} bg-gray-300 {% endif %} rounded-full hover:bg-user-blue">
+                                <i class="w-4 h-4 text-white fill-current fa-solid fa-heart"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div></a>
+    {% endfor %}
+</div>

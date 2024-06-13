@@ -135,6 +135,11 @@ class JobListView(ListView):
         if search_keyword:
             queryset = queryset.filter(title__icontains=search_keyword)
         return queryset
+    
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get('HX-Request'):
+            return render(self.request, 'jobs/filter_job.html', context=context)
+        return super().render_to_response(context, **response_kwargs)
 
 class JobDetailView(DetailView):
     model = Job
