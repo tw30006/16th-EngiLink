@@ -45,7 +45,7 @@ def create_line_pay_request(amount, currency, order_id):
             }
         ],
         'redirectUrls': {
-            'confirmUrl': settings.ONLINE_URL + "/about/",
+            'confirmUrl': settings.ONLINE_URL + "about/",
             'cancelUrl': settings.ONLINE_URL + "/linepay/cancel/"
         }
     }
@@ -129,7 +129,7 @@ class LinePayRequestView(View):
                 }
             ],
             "redirectUrls": {
-                "confirmUrl": f"{settings.ONLINE_URL}/about/",
+                "confirmUrl": f"{settings.ONLINE_URL}about/",
                 "cancelUrl": f"{settings.ONLINE_URL}/linepay/cancel/"
             }
         }, separators=(',', ':'))
