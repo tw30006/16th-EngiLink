@@ -167,15 +167,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("users:detail", kwargs={"pk": self.object.id})
 
 
-class UserPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
+class UserPasswordChangeView(PasswordChangeView):
     template_name = "users/password_change_form.html"
     success_url = reverse_lazy("users:home")
-
-    def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("users:login"))
-        return super().handle_no_permission()
-
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.success(self.request, "更新成功")
