@@ -39,22 +39,22 @@
                                             <input type="datetime-local" name="interview_date" class="block w-full mt-2 p-2 border rounded-lg" required>
                                             <label for="interview_invitation" class="mt-2">面試信:</label>
                                             <textarea name="interview_invitation" rows="4" class="block w-full mt-2 p-2 border rounded-lg overflow-y-auto" required>
-親愛的 {{ job_resume.resume.name }}，
-
-感謝您應徵 {{ job_resume.job.title }} 一職。經過初步篩選，我們很高興通知您進入了面試環節。
-
-面試詳情如下：
-日期：<填寫面試日期>
-地點：<填寫面試地點>
-聯絡人：<{{ company.user_name }}>
-聯絡方式：<{{ company.tel }} , {{ user.email }}> 
-
-請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
-
-期待與您的面談！
-
-此致
-{{ company.company_name }}          
+                                                親愛的 {{ job_resume.resume.name }}，
+                                                                                            
+                                                感謝您應徵 {{ job_resume.job.title }} 一職。經過初步篩選，我們很高興通知您進入了面試環節。
+                                                                                            
+                                                面試詳情如下：
+                                                日期：<填寫面試日期>
+                                                地點：<填寫面試地點>
+                                                聯絡人：<{{ company.user_name }}>
+                                                聯絡方式：<{{ company.tel }} , {{ user.email }}> 
+                                                                                            
+                                                請攜帶相關證件及資料準時參加面試。如有任何疑問，請隨時聯絡我們。
+                                                                                            
+                                                期待與您的面談！
+                                                                                            
+                                                此致
+                                                {{ company.company_name }}          
                                             </textarea>
                                             <button type="submit" class="mt-4 px-4 py-2 bg-company-green text-white rounded-lg">發送面試邀請</button>
                                         </form>
