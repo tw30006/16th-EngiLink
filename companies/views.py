@@ -356,6 +356,7 @@ class FavoriteCompanyView(LoginRequiredMixin, View):
         user_companies = User_Company.objects.filter(
             user=request.user, collect=True
         ).select_related('company').values_list("company_id", flat=True)
+        
         user_jobs = User_Job.objects.filter(user=request.user).values_list(
             "job_id", flat=True
         )

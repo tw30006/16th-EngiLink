@@ -327,8 +327,6 @@ class InterviewsCalendarView(View):
 
 
 class FavoriteCompaniesView(LoginRequiredMixin, TemplateView):
-    template_name = "users/favorite_companies.html"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["companies"] = Company.objects.all()
