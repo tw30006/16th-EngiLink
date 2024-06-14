@@ -135,30 +135,30 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if settings.DEBUG:
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "console": {
-                "level": "DEBUG",
-                "class": "rich.logging.RichHandler",
-                "show_time": False,
-            },
-            "file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": "logs/development.log",
-            },
-        },
-        "loggers": {
-            "django.db.backends": {
-                "handlers": ["console", "file"],
-                "level": "DEBUG",
-                "propagate": False,
-            },
-        },
-    }
+# if settings.DEBUG:
+#     LOGGING = {
+#         "version": 1,
+#         "disable_existing_loggers": False,
+#         "handlers": {
+#             "console": {
+#                 "level": "DEBUG",
+#                 "class": "rich.logging.RichHandler",
+#                 "show_time": False,
+#             },
+#             "file": {
+#                 "level": "DEBUG",
+#                 "class": "logging.FileHandler",
+#                 "filename": "logs/development.log",
+#             },
+#         },
+#         "loggers": {
+#             "django.db.backends": {
+#                 "handlers": ["console", "file"],
+#                 "level": "DEBUG",
+#                 "propagate": False,
+#             },
+#         },
+#     }
 
 SWEETIFY_SWEETALERT_LIBRARY = "sweetalert2"
 SWEETIFY_DEFAULT_ARGUMENTS = {
