@@ -33,9 +33,9 @@
                     </form>
                     {% else %}
                     <div class="text-right">
+                        <a href="{% url 'users:login' %}" class="text-user-blue hover:underline">立即登入</a>
                         <p class="text-gray-700">有找到合適職缺嗎？</p>
                         <p class="text-gray-700">EngiLink協助您找到更多心儀職缺！</p>
-                        <a href="{% url 'users:login' %}" class="text-user-blue hover:underline">立即登入</a>
                     </div>
                     {% endif %}
                 </div>
