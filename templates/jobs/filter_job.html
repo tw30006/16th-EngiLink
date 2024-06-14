@@ -21,7 +21,7 @@
                         <p class="text-gray-700">NT${{ job.salary|intcomma }}</p>
                     </div>
                 </div>
-                <div class="absolute bottom-5 right-4 flex justify-end flex-shrink-0 space-x-4 md:justify-center md:flex-col md:items-end md:space-y-4 md:space-x-0 md:bottom-4">
+                <div class="absolute bottom-5 right-4 flex justify-end flex-shrink-0 space-x-4 md:justify-center md:flex-col md:items-end md:space-y-4 md:space-x-0 md:bottom-2">
                     {% if request.user.user_type == 1 %}
                     <a href="{% url 'users:apply' job.id %}" class="user-md-btn-full">
                         立即應徵
