@@ -61,10 +61,8 @@
                     <p class="text-gray-700 text-base font-bold">{{ project.project_name }}</p>
                     <p class="text-gray-700 text-sm">項目：<span class="text-gray-700">{{ project.responsibility }}
                     </span></p>
-                    {% for technology in project.get_technologies %}
-                    <p class="text-gray-700 text-sm">技術：<span class="text-gray-700">{{ technology }}
+                    <p class="text-gray-700 text-sm">技術：<span class="text-gray-700">{{ project.get_technologies }}
                     </span></p>
-                    {% endfor %}
                     <p class="text-gray-700 text-sm leading-relaxed">說明：<span class="text-gray-700">{{project.description}}
                     </span></p>
                 </div>
