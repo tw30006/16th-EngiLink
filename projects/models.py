@@ -37,7 +37,4 @@ class Project(models.Model):
         ordering = ['posit']
 
     def get_technologies(self):
-        try:
-            return ast.literal_eval(self.technologies_used)
-        except:
-            return []
+        return ', '.join(ast.literal_eval(self.technologies_used))
