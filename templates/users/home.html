@@ -11,7 +11,7 @@
                     <input type="text" name="q" placeholder="找工作、公司..." class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-indigo-500" value="{{ request.GET.q|default:'' }}"/>
                     <button type="submit" class="p-2 text-white bg-user-blue rounded-r-lg">搜尋</button>
                     {% if request.GET.q %}
-                        <a href="{% url 'users:home' %}" class="p-2 ml-2 text-white bg-red-500 rounded-lg">取消搜尋</a>
+                        <a href="{% url 'users:home' %}" id="home-list" class="p-2 ml-2 text-white bg-red-500 rounded-lg">取消搜尋</a>
                     {% endif %}
                 </form>
             </div>
