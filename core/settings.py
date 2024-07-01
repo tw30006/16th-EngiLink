@@ -206,7 +206,7 @@ SITE_ID = int(os.getenv("SITE_ID", 1))
 LOGIN_REDIRECT_URL = "/users/"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-CSRF_TRUSTED_ORIGINS = ["https://engilink.org"]
+CSRF_TRUSTED_ORIGINS = ["https://engilink.org", "https://engilink.zeabur.app"]
 
 LINE_PAY_API_URL = os.getenv('LINE_PAY_API_URL')
 LINE_PAY_CHANNEL_ID = os.getenv('LINE_PAY_CHANNEL_ID')
