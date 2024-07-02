@@ -1,6 +1,15 @@
 # EngiLink
 ### 點擊進入網站 ☟
-**https://engilink.org/**
+**https://engilink.zeabur.app**
+
+測試帳號、密碼
+求職者
+帳號：happy
+密碼：test55555
+
+公司
+帳號：company
+密碼：test55555
 
 
 ### Demo Day 精彩回顧 ☟
